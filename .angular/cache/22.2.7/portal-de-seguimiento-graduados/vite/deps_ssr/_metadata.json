@@ -1,0 +1,80 @@
+{
+  "hash": "8621d229",
+  "configHash": "8ee1eb32",
+  "lockfileHash": "f9611cb9",
+  "browserHash": "f148aa20",
+  "optimized": {
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "33c48ce5",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "9fc0f341",
+      "needsInterop": false
+    },
+    "@angular/platform-server/init": {
+      "src": "../../../../../../node_modules/@angular/platform-server/fesm2022/init.mjs",
+      "file": "@angular_platform-server_init.js",
+      "fileHash": "e43d2a68",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "5cf1b67c",
+      "needsInterop": false
+    },
+    "@angular/ssr": {
+      "src": "../../../../../../node_modules/@angular/ssr/fesm2022/ssr.mjs",
+      "file": "@angular_ssr.js",
+      "fileHash": "88940ee7",
+      "needsInterop": false
+    },
+    "@angular/ssr/node": {
+      "src": "../../../../../../node_modules/@angular/ssr/fesm2022/node.mjs",
+      "file": "@angular_ssr_node.js",
+      "fileHash": "8516c1b2",
+      "needsInterop": false
+    },
+    "express": {
+      "src": "../../../../../../node_modules/express/index.js",
+      "file": "express.js",
+      "fileHash": "51ef53ae",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "bundled-domino-BIpWWdja": {
+      "file": "bundled-domino-BIpWWdja.js",
+      "isDynamicEntry": false
+    },
+    "core-DhJ3xqxv": {
+      "file": "core-DhJ3xqxv.js",
+      "isDynamicEntry": false
+    },
+    "platform-browser-Boe5le2T": {
+      "file": "platform-browser-Boe5le2T.js",
+      "isDynamicEntry": false
+    },
+    "rolldown-runtime-DYf_mQCB": {
+      "file": "rolldown-runtime-DYf_mQCB.js",
+      "isDynamicEntry": false
+    },
+    "router-jMZWkDTO": {
+      "file": "router-jMZWkDTO.js",
+      "isDynamicEntry": false
+    },
+    "ssr-DlnvA8MX": {
+      "file": "ssr-DlnvA8MX.js",
+      "isDynamicEntry": false
+    },
+    "xhr2-Z3iAOjXs": {
+      "file": "xhr2-Z3iAOjXs.js",
+      "isDynamicEntry": true
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<div class="auth-layout">
+  <!-- Panel Izquierdo Institucional -->
+  <div class="auth-sidebar">
+    <div class="sidebar-top">
+      <div class="brand-box">
+        <span class="ues-badge">UES</span>
+        <div>
+          <strong>Portal de Graduados</strong>
+          <small>Ingeniería de Sistemas Informáticos</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-content">
+      <span class="sub-title">COMUNIDAD PROFESIONAL UES</span>
+      <h1>Talento que transforma El Salvador.</h1>
+      <p>Conectamos el conocimiento y la experiencia de nuestros graduados con organizaciones que construyen el futuro.</p>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="testimonial-card">
+        <p>"El portal me permitió encontrar mi primera oportunidad profesional en tecnología."</p>
+        <div class="author-info">
+          <span class="avatar">AM</span>
+          <div>
+            <strong>Andrea Menjívar</strong>
+            <small>Graduada EISI · 2023</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel Derecho  -->
+  <div class="auth-main">
+    <div class="auth-form-container">
+      <a routerLink="/" class="back-link">&larr; Volver al inicio</a>
+      
+      <div class="form-header">
+        <h2>Bienvenido de nuevo</h2>
+        <p>Ingresa tus datos para acceder al portal.</p>
+      </div>
+
+      <div class="user-tabs">
+        <a routerLink="/login" class="tab active">Graduado</a>
+        <a routerLink="/login-empresa" class="tab">Empresa</a>
+      </div>
+
+      <form class="form" (submit)="$event.preventDefault()">
+        <div class="input-group">
+          <label>Correo electrónico</label>
+          <input type="email" placeholder="graduado@ues.edu.sv" class="input-control">
+        </div>
+
+        <div class="input-group">
+          <div class="label-row">
+            <label>Contraseña</label>
+            <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
+          </div>
+          <input type="password" placeholder="Mínimo 8 caracteres" class="input-control">
+        </div>
+
+        <button type="submit" class="btn-primary" routerLink="/dashboard">Iniciar sesión</button>
+
+        <p class="switch-auth">¿Aún no tienes una cuenta? <a routerLink="/registro-graduado">Regístrate</a></p>
+      </form>
+    </div>
+  </div>
+</div>

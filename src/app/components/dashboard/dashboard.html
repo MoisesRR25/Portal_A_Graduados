@@ -1,0 +1,164 @@
+<div class="dashboard-layout">
+  <!-- Menú lateral izquierdo -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <span class="badge-ues">UES</span>
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+    </div>
+
+    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" class="nav-item active">🏠 Resumen</a>
+      <a routerLink="/dashboard" class="nav-item">👤 Mi perfil</a>
+      <a routerLink="/bolsa-trabajo" class="nav-item">💼 Bolsa de trabajo</a>
+      <a routerLink="/dashboard" class="nav-item">📄 Mis postulaciones</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
+        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+      </nav>
+      <div class="sidebar-footer-card">
+        <small>Universidad de El Salvador</small>
+        <span>Facultad de Ingeniería</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <header class="dashboard-topbar">
+      <span></span>
+      <div class="user-profile-badge">
+        <span class="notification-icon">🔔</span>
+        <div class="user-avatar-name">
+          <strong>Carlos Martínez</strong>
+          <small>Graduado</small>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div class="welcome-header">
+        <span class="mi-portal">MI PORTAL</span>
+        <h1>¡Hola, Carlos!</h1>
+        <p>Aquí tienes un resumen de tu actividad profesional.</p>
+      </div>
+
+      <!-- Tarjetas Superiores -->
+      <div class="top-stats-grid">
+        <div class="card progress-card">
+          <div class="progress-header">
+            <h3>Completa tu perfil</h3>
+            <span class="progress-percent">72%</span>
+          </div>
+          <p class="card-sub">Mejora tus recomendaciones</p>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 72%;"></div>
+          </div>
+          <div class="progress-checklist">
+            <span>✓ Datos personales</span>
+            <span>✓ Información académica</span>
+            <span class="pending">3 Agregar experiencia laboral (Completar)</span>
+            <span class="pending">4 Subir currículum vitae (Completar)</span>
+          </div>
+        </div>
+
+        <div class="card activity-card">
+          <h3>Tu actividad</h3>
+          <p class="card-sub">Últimos 30 días</p>
+          <div class="activity-numbers">
+            <div>
+              <h2>8</h2>
+              <small>Postulaciones</small>
+            </div>
+            <div>
+              <h2>3</h2>
+              <small>En revisión</small>
+            </div>
+            <div>
+              <h2>12</h2>
+              <small>Vistas al perfil</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vacantes Recomendadas -->
+      <div class="recommended-section">
+        <div class="section-title-row">
+          <h3>Vacantes recomendadas para ti</h3>
+          <a routerLink="/bolsa-trabajo" class="see-all">Ver todas &gt;</a>
+        </div>
+        <p class="section-desc">Basadas en tus habilidades y preferencias.</p>
+
+        <div class="vacancies-grid">
+          <div class="job-card-mini">
+            <div class="job-header">
+              <span class="badge-comp as">AS</span>
+              <div>
+                <small>Applaudo Studios</small>
+                <h4>Desarrollador Frontend Jr.</h4>
+              </div>
+              <span class="match-badge">87% compatible</span>
+            </div>
+            <div class="job-loc">📍 San Salvador · 💼 Híbrido</div>
+            <div class="tags"><span>React</span><span>TypeScript</span><span>Sin experiencia</span></div>
+            <div class="job-footer">
+              <small>🕒 Hace 2 días</small>
+              <a href="#" class="view-offer">Ver oferta &gt;</a>
+            </div>
+          </div>
+
+          <div class="job-card-mini">
+            <div class="job-header">
+              <span class="badge-comp ba">BA</span>
+              <div>
+                <small>Banco Agrícola</small>
+                <h4>Analista de Datos</h4>
+              </div>
+              <span class="match-badge">87% compatible</span>
+            </div>
+            <div class="job-loc">📍 Antiguo Cuscatlán · 💼 Presencial</div>
+            <div class="tags"><span>SQL</span><span>Power BI</span><span>Python</span></div>
+            <div class="job-footer">
+              <small>🕒 Hace 4 días</small>
+              <a href="#" class="view-offer">Ver oferta &gt;</a>
+            </div>
+          </div>
+
+          <div class="job-card-mini">
+            <div class="job-header">
+              <span class="badge-comp el">EL</span>
+              <div>
+                <small>Elaniin</small>
+                <h4>QA Tester Trainee</h4>
+              </div>
+              <span class="match-badge">87% compatible</span>
+            </div>
+            <div class="job-loc">📍 San Salvador · 💼 Remoto</div>
+            <div class="tags"><span>Testing</span><span>Pasantía</span></div>
+            <div class="job-footer">
+              <small>🕒 Hace 1 semana</small>
+              <a href="#" class="view-offer">Ver oferta &gt;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banner inferior de actualización -->
+      <div class="update-banner">
+        <div>
+          <h4>Mantén tu información actualizada</h4>
+          <p>Tu última actualización fue hace 2 meses. Los perfiles recientes reciben más visitas.</p>
+        </div>
+        <button class="btn-update">Actualizar perfil</button>
+      </div>
+
+    </div>
+  </main>
+</div>

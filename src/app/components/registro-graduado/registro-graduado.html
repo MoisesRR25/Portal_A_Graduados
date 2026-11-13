@@ -1,0 +1,65 @@
+<div class="auth-layout">
+  <div class="auth-sidebar">
+    <!-- Mismo panel institucional izquierdo -->
+    <div class="brand-box">
+      <span class="ues-badge">UES</span>
+      <div><strong>Portal de Graduados</strong><small>Ingeniería de Sistemas Informáticos</small></div>
+    </div>
+    <div class="sidebar-content">
+      <span class="sub-title">COMUNIDAD PROFESIONAL UES</span>
+      <h1>Talento que transforma El Salvador.</h1>
+      <p>Conectamos el conocimiento y la experiencia de nuestros graduados con organizaciones que construyen el futuro.</p>
+    </div>
+    <div class="testimonial-card">
+      <p>"El portal me permitió encontrar mi primera oportunidad profesional en tecnología."</p>
+      <div class="author-info"><span class="avatar">AM</span><div><strong>Andrea Menjívar</strong><small>Graduada EISI · 2023</small></div></div>
+    </div>
+  </div>
+
+  <div class="auth-main">
+    <div class="auth-form-container">
+      <a routerLink="/" class="back-link">&larr; Volver al inicio</a>
+      
+      <div class="form-header">
+        <h2>Crea tu cuenta</h2>
+        <p>Selecciona tu tipo de cuenta para comenzar.</p>
+      </div>
+
+      <div class="user-tabs">
+        <a routerLink="/registro-graduado" class="tab active">Graduado</a>
+        <a routerLink="/registro-empresa" class="tab">Empresa</a>
+      </div>
+
+      <form class="form" (submit)="$event.preventDefault()">
+        <div class="input-group">
+          <label>Nombre completo</label>
+          <input type="text" placeholder="Ej. María López" class="input-control">
+        </div>
+
+        <div class="input-group">
+          <label>Carnet universitario</label>
+          <input type="text" placeholder="Ej. LM18001" class="input-control">
+        </div>
+
+        <div class="input-group">
+          <label>Correo electrónico</label>
+          <input type="email" placeholder="correo@ejemplo.com" class="input-control">
+        </div>
+
+        <div class="input-group">
+          <label>Contraseña</label>
+          <input type="password" placeholder="Mínimo 8 caracteres" class="input-control">
+        </div>
+
+        <div class="checkbox-group" style="margin-bottom: 1rem; font-size: 0.825rem; display: flex; gap: 0.5rem; align-items: center;">
+          <input type="checkbox" id="terms">
+          <label for="terms" style="margin: 0; color: #64748b;">Acepto los términos de uso y la política de privacidad.</label>
+        </div>
+
+        <button type="submit" class="btn-primary" routerLink="/dashboard">Crear cuenta</button>
+
+        <p class="switch-auth">¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
+      </form>
+    </div>
+  </div>
+</div>

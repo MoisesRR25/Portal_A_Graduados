@@ -1,0 +1,106 @@
+<div class="bolsa-container">
+  <!-- Cabecera de la sección -->
+  <div class="bolsa-header">
+    <h2>Bolsa de trabajo</h2>
+    <p>Encuentra oportunidades que se adapten a tu perfil profesional.</p>
+  </div>
+
+  <!--Buscador Principal-->
+  <div class="search-bar-box">
+    <input type="text" placeholder="Buscar por puesto, empresa o habilidad..." class="search-input">
+    <button class="btn-buscar">Buscar</button>
+  </div>
+
+  <!--Contenido principal: Filtros y Listado-->
+  <div class="bolsa-content-grid">
+    
+    <!--Filtros laterales (Colapsables o adaptables en móvil)-->
+    <aside class="filters-sidebar">
+      <div class="filters-header">
+        <h3>Filtros</h3>
+        <button class="btn-clear">Limpiar</button>
+      </div>
+
+      <div class="filter-group">
+        <label>Área</label>
+        <select class="filter-select">
+          <option>Todas las áreas</option>
+          <option>Desarrollo de software</option>
+          <option>Datos y analítica</option>
+          <option>Soporte técnico</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>Modalidad</label>
+        <div class="checkbox-list">
+          <label><input type="checkbox"> Presencial</label>
+          <label><input type="checkbox"> Híbrido</label>
+          <label><input type="checkbox"> Remoto</label>
+        </div>
+      </div>
+    </aside>
+
+    <!--Listado de Ofertas-->
+    <main class="jobs-list">
+      <div class="jobs-meta-info">
+        <span>30 oportunidades encontradas</span>
+        <select class="sort-select">
+          <option>Más recientes</option>
+          <option>Más compatibles</option>
+        </select>
+      </div>
+
+      <!--Tarjeta de Oferta 1-->
+      <div class="job-card">
+        <div class="job-card-header">
+          <div class="company-badge as">AS</div>
+          <div class="job-titles">
+            <span class="company-name">Applaudo Studios</span>
+            <h4>Desarrollador Frontend Jr.</h4>
+          </div>
+          <span class="compatibility-tag">87% compatible</span>
+        </div>
+        <div class="job-location">
+          <span>📍 San Salvador</span>
+          <span>💼 Híbrido</span>
+        </div>
+        <div class="job-tags">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Sin experiencia</span>
+        </div>
+        <div class="job-card-footer">
+          <span class="time-ago">🕒 Hace 2 días</span>
+          <a href="#" class="link-offer">Ver oferta &gt;</a>
+        </div>
+      </div>
+
+      <!--Tarjeta de Oferta-->
+      <div class="job-card">
+        <div class="job-card-header">
+          <div class="company-badge ba">BA</div>
+          <div class="job-titles">
+            <span class="company-name">Banco Agrícola</span>
+            <h4>Analista de Datos</h4>
+          </div>
+          <span class="compatibility-tag">87% compatible</span>
+        </div>
+        <div class="job-location">
+          <span>📍 Antiguo Cuscatlán</span>
+          <span>💼 Presencial</span>
+        </div>
+        <div class="job-tags">
+          <span class="tag">SQL</span>
+          <span class="tag">Power BI</span>
+          <span class="tag">Python</span>
+        </div>
+        <div class="job-card-footer">
+          <span class="time-ago">🕒 Hace 4 días</span>
+          <a href="#" class="link-offer">Ver oferta &gt;</a>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>

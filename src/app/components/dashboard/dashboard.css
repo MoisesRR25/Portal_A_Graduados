@@ -1,0 +1,397 @@
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.dashboard-sidebar {
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.badge-ues {
+  background: #b91c1c;
+  color: white;
+  font-weight: 800;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}
+
+.sidebar-brand strong {
+  font-size: 0.9rem;
+  color: #0f172a;
+  display: block;
+}
+
+.sidebar-brand small {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.nav-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-item {
+  padding: 0.65rem 0.875rem;
+  border-radius: 8px;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-item:hover, .nav-item.active {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.text-red {
+  color: #b91c1c;
+}
+
+.sidebar-footer-card {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.sidebar-footer-card span {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* Topbar */
+.dashboard-topbar {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notification-icon {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.user-avatar-name {
+  text-align: right;
+  line-height: 1.2;
+}
+
+.user-avatar-name strong {
+  display: block;
+  font-size: 0.875rem;
+  color: #0f172a;
+}
+
+.user-avatar-name small {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Content */
+.dashboard-content {
+  padding: 2rem;
+  max-width: 1100px;
+}
+
+.welcome-header {
+  margin-bottom: 1.5rem;
+}
+
+.mi-portal {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #b91c1c;
+  letter-spacing: 0.5px;
+}
+
+.welcome-header h1 {
+  font-size: 1.75rem;
+  color: #0f172a;
+  margin: 0.2rem 0;
+}
+
+.welcome-header p {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Top Stats */
+.top-stats-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.progress-header h3 {
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.progress-percent {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.card-sub {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-bg {
+  background: #f1f5f9;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.progress-bar-fill {
+  background: #b91c1c;
+  height: 100%;
+}
+
+.progress-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #166534;
+}
+
+.progress-checklist .pending {
+  color: #b91c1c;
+}
+
+.activity-numbers {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.activity-numbers h2 {
+  font-size: 1.5rem;
+  color: #0f172a;
+  margin-bottom: 0.1rem;
+}
+
+.activity-numbers small {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Recommended */
+.recommended-section {
+  margin-bottom: 2rem;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title-row h3 {
+  font-size: 1.15rem;
+  color: #0f172a;
+}
+
+.see-all {
+  font-size: 0.85rem;
+  color: #b91c1c;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.section-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.vacancies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.job-card-mini {
+  background: white;
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.job-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+.badge-comp {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.badge-comp.as { background: #2563eb; }
+.badge-comp.ba { background: #059669; }
+.badge-comp.el { background: #7c3aed; }
+
+.job-header h4 {
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.job-header small {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.match-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.4rem;
+  border-radius: 10px;
+}
+
+.job-loc {
+  font-size: 0.8rem;
+  color: #475569;
+  margin-bottom: 0.75rem;
+}
+
+.tags {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tags span {
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.job-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.view-offer {
+  color: #b91c1c;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Update Banner */
+.update-banner {
+  background: white;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.update-banner h4 {
+  font-size: 0.95rem;
+  color: #0f172a;
+  margin-bottom: 0.1rem;
+}
+
+.update-banner p {
+  font-size: 0.825rem;
+  color: #64748b;
+}
+
+.btn-update {
+  background: white;
+  border: 1px solid #cbd5e1;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-update:hover {
+  background: #f8fafc;
+}
