@@ -1,0 +1,189 @@
+<div class="dashboard-layout">
+  <!-- Menú Lateral Graduado -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <span class="badge-ues">UES</span>
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+    </div>
+
+    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" class="nav-item">🏠 Resumen</a>
+      <a routerLink="/perfil-graduado" class="nav-item">👤 Mi perfil</a>
+      <a routerLink="/bolsa-interna" class="nav-item">💼 Bolsa de trabajo</a>
+      <a routerLink="/mis-postulaciones" class="nav-item active">📄 Mis postulaciones</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
+        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+      </nav>
+      <div class="sidebar-footer-card">
+        <small>Universidad de El Salvador</small>
+        <span>Facultad de Ingeniería</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <header class="dashboard-topbar">
+      <span></span>
+      <div class="user-profile-badge">
+        <span class="notification-icon">🔔</span>
+        <div class="user-avatar-name">
+          <strong>Carlos Martínez</strong>
+          <small>Graduado</small>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Encabezado -->
+      <div class="welcome-header">
+        <span class="mi-portal">SEGUIMIENTO</span>
+        <h1>Mis postulaciones</h1>
+        <p>Monitorea el estado de tus procesos de selección activos y pasados.</p>
+      </div>
+
+      <!-- Tarjetas de Resumen (Métricas) -->
+      <div class="stats-cards-grid">
+        <div class="stat-card">
+          <span class="stat-num">8</span>
+          <small>Total postulaciones</small>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num yellow">3</span>
+          <small>En revisión</small>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num green">2</span>
+          <small>Entrevista programada</small>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num gray">3</span>
+          <small>Procesos finalizados</small>
+        </div>
+      </div>
+
+      <!-- Barra de Filtros y Búsqueda -->
+      <div class="postulations-filter-row">
+        <div class="tabs-filter">
+          <button class="tab-btn active">Todas (8)</button>
+          <button class="tab-btn">Activas (5)</button>
+          <button class="tab-btn">Finalizadas (3)</button>
+        </div>
+        <div class="search-mini-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Filtrar por empresa o puesto..." class="search-mini-input">
+        </div>
+      </div>
+
+      <!-- Tabla de Postulaciones -->
+      <div class="card table-card">
+        <table class="postulations-table">
+          <thead>
+            <tr>
+              <th>Empresa y Puesto</th>
+              <th>Fecha de postulación</th>
+              <th>Modalidad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Fila 1 -->
+            <tr>
+              <td>
+                <div class="table-job-info">
+                  <span class="badge-comp as">AS</span>
+                  <div>
+                    <strong>Desarrollador Frontend Jr.</strong>
+                    <small>Applaudo Studios</small>
+                  </div>
+                </div>
+              </td>
+              <td>12 Nov, 2026</td>
+              <td>Híbrido</td>
+              <td><span class="status-badge review">En revisión</span></td>
+              <td><a href="#" class="btn-details">Ver detalle &gt;</a></td>
+            </tr>
+
+            <!-- Fila 2 -->
+            <tr>
+              <td>
+                <div class="table-job-info">
+                  <span class="badge-comp ba">BA</span>
+                  <div>
+                    <strong>Analista de Datos</strong>
+                    <small>Banco Agrícola</small>
+                  </div>
+                </div>
+              </td>
+              <td>10 Nov, 2026</td>
+              <td>Presencial</td>
+              <td><span class="status-badge interview">Entrevista</span></td>
+              <td><a href="#" class="btn-details">Ver detalle &gt;</a></td>
+            </tr>
+
+            <!-- Fila 3 -->
+            <tr>
+              <td>
+                <div class="table-job-info">
+                  <span class="badge-comp el">EL</span>
+                  <div>
+                    <strong>QA Tester Trainee</strong>
+                    <small>Elaniin</small>
+                  </div>
+                </div>
+              </td>
+              <td>01 Nov, 2026</td>
+              <td>Remoto</td>
+              <td><span class="status-badge review">En revisión</span></td>
+              <td><a href="#" class="btn-details">Ver detalle &gt;</a></td>
+            </tr>
+
+            <!-- Fila 4 -->
+            <tr>
+              <td>
+                <div class="table-job-info">
+                  <span class="badge-comp ha">HA</span>
+                  <div>
+                    <strong>Backend Developer</strong>
+                    <small>Hugo App</small>
+                  </div>
+                </div>
+              </td>
+              <td>20 Oct, 2026</td>
+              <td>Híbrido</td>
+              <td><span class="status-badge closed">Finalizado</span></td>
+              <td><a href="#" class="btn-details">Ver detalle &gt;</a></td>
+            </tr>
+
+            <!-- Fila 5 -->
+            <tr>
+              <td>
+                <div class="table-job-info">
+                  <span class="badge-comp se">SE</span>
+                  <div>
+                    <strong>Pasantía de Desarrollo</strong>
+                    <small>Sertracen</small>
+                  </div>
+                </div>
+              </td>
+              <td>15 Oct, 2026</td>
+              <td>Presencial</td>
+              <td><span class="status-badge closed">Finalizado</span></td>
+              <td><a href="#" class="btn-details">Ver detalle &gt;</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </main>
+</div>

@@ -1,0 +1,260 @@
+<div class="dashboard-layout">
+  <!-- Menú Lateral Graduado -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <span class="badge-ues">UES</span>
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+    </div>
+
+    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" class="nav-item">🏠 Resumen</a>
+      <a routerLink="/perfil-graduado" class="nav-item">👤 Mi perfil</a>
+      <a routerLink="/bolsa-interna" class="nav-item active">💼 Bolsa de trabajo</a>
+      <a routerLink="/mis-postulaciones" class="nav-item">📄 Mis postulaciones</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
+        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+      </nav>
+      <div class="sidebar-footer-card">
+        <small>Universidad de El Salvador</small>
+        <span>Facultad de Ingeniería</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <header class="dashboard-topbar">
+      <span></span>
+      <div class="user-profile-badge">
+        <span class="notification-icon">🔔</span>
+        <div class="user-avatar-name">
+          <strong>Carlos Martínez</strong>
+          <small>Graduado</small>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Encabezado de la Sección -->
+      <div class="welcome-header">
+        <span class="mi-portal">OPORTUNIDADES</span>
+        <h1>Bolsa de trabajo</h1>
+        <p>Encuentra oportunidades que se adapten a tu perfil profesional.</p>
+      </div>
+
+      <!-- Barra de Búsqueda Superior -->
+      <div class="search-bar-container">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Buscar por puesto, empresa o habilidad..." class="search-input-control">
+        </div>
+        <button class="btn-search-primary">Buscar</button>
+      </div>
+
+      <!-- Layout de Dos Columnas: Filtros a la izquierda, Vacantes a la derecha -->
+      <div class="job-board-grid">
+        
+        <!-- Columna de Filtros -->
+        <aside class="filters-card">
+          <div class="filters-header">
+            <div class="filters-title">
+              <span>⚡</span>
+              <h3>Filtros</h3>
+            </div>
+            <a href="#" class="clear-filters">Limpiar</a>
+          </div>
+
+          <!-- Filtro Área -->
+          <div class="filter-group">
+            <label class="filter-label">Área</label>
+            <select class="filter-select">
+              <option>Todas las áreas</option>
+              <option>Desarrollo de Software</option>
+              <option>Bases de Datos</option>
+              <option>QA y Testing</option>
+            </select>
+          </div>
+
+          <!-- Filtro Ubicación -->
+          <div class="filter-group">
+            <label class="filter-label">Ubicación</label>
+            <select class="filter-select">
+              <option>Todo El Salvador</option>
+              <option>San Salvador</option>
+              <option>Santa Ana</option>
+              <option>San Miguel</option>
+            </select>
+          </div>
+
+          <!-- Filtro Modalidad -->
+          <div class="filter-group">
+            <label class="filter-label">Modalidad</label>
+            <div class="checkbox-list">
+              <label><input type="checkbox"> Presencial <span class="count">14</span></label>
+              <label><input type="checkbox"> Híbrido <span class="count">9</span></label>
+              <label><input type="checkbox"> Remoto <span class="count">7</span></label>
+            </div>
+          </div>
+
+          <!-- Filtro Clasificación -->
+          <div class="filter-group">
+            <label class="filter-label">Clasificación</label>
+            <div class="checkbox-list">
+              <label><input type="checkbox"> Recién graduados <span class="count">18</span></label>
+              <label><input type="checkbox"> Sin experiencia <span class="count">8</span></label>
+              <label><input type="checkbox"> Pasantía <span class="count">5</span></label>
+            </div>
+          </div>
+
+          <!-- Filtro Habilidades -->
+          <div class="filter-group">
+            <label class="filter-label">Habilidades</label>
+            <div class="filter-tags-grid">
+              <span>React</span>
+              <span>Java</span>
+              <span>SQL</span>
+              <span>Python</span>
+              <span>Soporte</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Columna de Listado de Vacantes -->
+        <div class="job-results-container">
+          <div class="results-meta-row">
+            <small><strong>30</strong> oportunidades encontradas</small>
+            <select class="sort-select">
+              <option>Más recientes</option>
+              <option>Mayor compatibilidad</option>
+            </select>
+          </div>
+
+          <!-- Cuadrícula de Ofertas (2 columnas) -->
+          <div class="jobs-grid-2">
+            
+            <!-- Oferta 1 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp as">AS</span>
+                <div>
+                  <small>Applaudo Studios</small>
+                  <h4>Desarrollador Frontend Jr.</h4>
+                </div>
+                <span class="match-badge">87% compatible</span>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 San Salvador · 💼 Híbrido</div>
+              <div class="tags"><span>React</span><span>TypeScript</span><span>Sin experiencia</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 2 días</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+            <!-- Oferta 2 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp ba">BA</span>
+                <div>
+                  <small>Banco Agrícola</small>
+                  <h4>Analista de Datos</h4>
+                </div>
+                <span class="match-badge">87% compatible</span>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 Antiguo Cuscatlán · 💼 Presencial</div>
+              <div class="tags"><span>SQL</span><span>Power BI</span><span>Python</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 4 días</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+            <!-- Oferta 3 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp el">EL</span>
+                <div>
+                  <small>Elaniin</small>
+                  <h4>QA Tester Trainee</h4>
+                </div>
+                <span class="match-badge">87% compatible</span>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 San Salvador · 💼 Remoto</div>
+              <div class="tags"><span>Testing</span><span>Pasantía</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 1 semana</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+            <!-- Oferta 4 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp tt">TT</span>
+                <div>
+                  <small>Telefónica Tech</small>
+                  <h4>Soporte Técnico N1</h4>
+                </div>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 San Salvador · 💼 Presencial</div>
+              <div class="tags"><span>Redes</span><span>Servicio al cliente</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 3 días</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+            <!-- Oferta 5 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp ha">HA</span>
+                <div>
+                  <small>Hugo App</small>
+                  <h4>Backend Developer</h4>
+                </div>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 La Libertad · 💼 Híbrido</div>
+              <div class="tags"><span>Node.js</span><span>PostgreSQL</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 5 días</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+            <!-- Oferta 6 -->
+            <div class="job-card-mini">
+              <div class="job-header">
+                <span class="badge-comp se">SE</span>
+                <div>
+                  <small>Sertracen</small>
+                  <h4>Pasantía de Desarrollo</h4>
+                </div>
+                <span class="favorite-icon">♡</span>
+              </div>
+              <div class="job-loc">📍 Soyapango · 💼 Presencial</div>
+              <div class="tags"><span>Pasantía</span><span>Sin experiencia</span></div>
+              <div class="job-footer">
+                <small>🕒 Hace 1 semana</small>
+                <a href="#" class="view-offer">Ver oferta &gt;</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>

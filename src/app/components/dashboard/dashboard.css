@@ -1,19 +1,35 @@
 .dashboard-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
+  display: flex;
   min-height: 100vh;
   background: #f8fafc;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .dashboard-sidebar {
+  width: 260px;
   background: white;
   border-right: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding: 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
 .sidebar-brand {
   display: flex;
   align-items: center;
@@ -87,7 +103,6 @@
   color: #0f172a;
 }
 
-/* Topbar */
 .dashboard-topbar {
   background: white;
   border-bottom: 1px solid #e2e8f0;
@@ -124,13 +139,12 @@
   color: #64748b;
 }
 
-/* Content */
 .dashboard-content {
   padding: 2rem;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
-.welcome-header {
+.welcome-banner {
   margin-bottom: 1.5rem;
 }
 
@@ -141,19 +155,18 @@
   letter-spacing: 0.5px;
 }
 
-.welcome-header h1 {
+.welcome-banner h1 {
   font-size: 1.75rem;
   color: #0f172a;
   margin: 0.2rem 0;
 }
 
-.welcome-header p {
+.welcome-banner p {
   color: #64748b;
   font-size: 0.9rem;
 }
 
-/* Top Stats */
-.top-stats-grid {
+.dashboard-stats-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 1.5rem;
@@ -162,39 +175,38 @@
 
 .card {
   background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
   border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
 }
 
-.progress-header {
+.comp-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
-.progress-header h3 {
+.comp-header h3 {
   font-size: 1rem;
   color: #0f172a;
 }
 
-.progress-percent {
-  font-size: 1.25rem;
+.comp-percent {
   font-weight: 700;
   color: #b91c1c;
 }
 
-.card-sub {
-  font-size: 0.8rem;
+.completion-card p, .activity-card small {
   color: #64748b;
+  font-size: 0.825rem;
   margin-bottom: 1rem;
 }
 
 .progress-bar-bg {
   background: #f1f5f9;
-  height: 8px;
-  border-radius: 4px;
+  height: 6px;
+  border-radius: 3px;
   overflow: hidden;
   margin-bottom: 1.25rem;
 }
@@ -204,68 +216,73 @@
   height: 100%;
 }
 
-.progress-checklist {
+.checklist {
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-size: 0.8rem;
+  font-size: 0.825rem;
+}
+
+.checklist .checked {
   color: #166534;
 }
 
-.progress-checklist .pending {
+.checklist .pending {
   color: #b91c1c;
 }
 
-.activity-numbers {
-  display: flex;
-  justify-content: space-between;
+.activity-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
   text-align: center;
   margin-top: 1.5rem;
 }
 
-.activity-numbers h2 {
+.metric-num {
+  display: block;
   font-size: 1.5rem;
+  font-weight: 700;
   color: #0f172a;
-  margin-bottom: 0.1rem;
 }
 
-.activity-numbers small {
-  font-size: 0.75rem;
+.metric-item small {
   color: #64748b;
+  font-size: 0.75rem;
 }
 
-/* Recommended */
-.recommended-section {
+.section-recommended {
   margin-bottom: 2rem;
 }
 
-.section-title-row {
+.section-header-flex {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.section-title-row h3 {
+.section-header-flex h3 {
   font-size: 1.15rem;
   color: #0f172a;
 }
 
-.see-all {
+.view-all-link {
   font-size: 0.85rem;
   color: #b91c1c;
   font-weight: 600;
   text-decoration: none;
 }
 
-.section-desc {
-  font-size: 0.85rem;
+.section-sub {
   color: #64748b;
+  font-size: 0.85rem;
   margin-bottom: 1rem;
 }
 
-.vacancies-grid {
+.jobs-grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
@@ -274,6 +291,7 @@
   padding: 1.25rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
+  position: relative;
 }
 
 .job-header {
@@ -302,7 +320,7 @@
 .badge-comp.el { background: #7c3aed; }
 
 .job-header h4 {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #0f172a;
 }
 
@@ -317,14 +335,14 @@
   right: 0;
   background: #dcfce7;
   color: #166534;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   padding: 0.15rem 0.4rem;
   border-radius: 10px;
 }
 
 .job-loc {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #475569;
   margin-bottom: 0.75rem;
 }
@@ -340,7 +358,7 @@
   background: #f1f5f9;
   color: #334155;
   font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
+  padding: 0.15rem 0.4rem;
   border-radius: 4px;
 }
 
@@ -360,38 +378,43 @@
   text-decoration: none;
 }
 
-/* Update Banner */
-.update-banner {
-  background: white;
-  padding: 1.25rem 1.5rem;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
+.update-banner-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #fef2f2;
+  border-color: #fecdd3;
 }
 
-.update-banner h4 {
-  font-size: 0.95rem;
-  color: #0f172a;
-  margin-bottom: 0.1rem;
+.update-banner-card h3 {
+  font-size: 1rem;
+  color: #991b1b;
+  margin-bottom: 0.2rem;
 }
 
-.update-banner p {
-  font-size: 0.825rem;
-  color: #64748b;
+.update-banner-card p {
+  font-size: 0.85rem;
+  color: #7f1d1d;
 }
 
-.btn-update {
-  background: white;
-  border: 1px solid #cbd5e1;
-  padding: 0.5rem 1rem;
+.btn-update-profile {
+  background: #b91c1c;
+  color: white;
+  border: none;
+  padding: 0.65rem 1.25rem;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.85rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-.btn-update:hover {
-  background: #f8fafc;
+.btn-update-profile:hover {
+  background: #991b1b;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-stats-grid, .jobs-grid-3 {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,0 +1,222 @@
+<div class="dashboard-layout">
+  <!-- Menú Lateral Graduado -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <span class="badge-ues">UES</span>
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+    </div>
+
+    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <nav class="sidebar-nav">
+      <a routerLink="/dashboard" class="nav-item">🏠 Resumen</a>
+      <a routerLink="/perfil-graduado" class="nav-item active">👤 Mi perfil</a>
+      <a routerLink="/bolsa-interna" class="nav-item">💼 Bolsa de trabajo</a>
+      <a routerLink="/mis-postulaciones" class="nav-item">📄 Mis postulaciones</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <nav class="sidebar-nav">
+        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
+        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+      </nav>
+      <div class="sidebar-footer-card">
+        <small>Universidad de El Salvador</small>
+        <span>Facultad de Ingeniería</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <header class="dashboard-topbar">
+      <span></span>
+      <div class="user-profile-badge">
+        <span class="notification-icon">🔔</span>
+        <div class="user-avatar-name">
+          <strong>Carlos Martínez</strong>
+          <small>Graduado</small>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content profile-content">
+      <div class="profile-header-row">
+        <div>
+          <span class="mi-portal">MI INFORMACIÓN</span>
+          <h1>Mi perfil profesional</h1>
+          <p>Mantén tu información actualizada para recibir mejores oportunidades.</p>
+        </div>
+        <button class="btn-save-changes">✓ Guardar cambios</button>
+      </div>
+
+      <div class="profile-grid">
+        <!-- Columna Izquierda: Formularios -->
+        <div class="profile-forms-col">
+          <div class="card form-section-card">
+            <div class="section-card-title">
+              <h3>Datos personales</h3>
+              <small>Información básica de contacto.</small>
+            </div>
+            <div class="form-row-2">
+              <div class="input-group">
+                <label>Nombre completo</label>
+                <input type="text" class="input-control" value="Carlos Eduardo Martínez López">
+              </div>
+              <div class="input-group">
+                <label>Correo electrónico</label>
+                <input type="email" class="input-control" value="carlos.martinez@gmail.com">
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="input-group">
+                <label>Teléfono</label>
+                <input type="text" class="input-control" value="+503 7777-1234">
+              </div>
+              <div class="input-group">
+                <label>Ubicación</label>
+                <select class="input-control">
+                  <option>San Salvador</option>
+                  <option>San Miguel</option>
+                  <option>Santa Ana</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Biografía profesional</label>
+              <textarea class="input-control textarea-control">Desarrollador frontend con interés en crear productos digitales accesibles y de alto impacto.</textarea>
+            </div>
+          </div>
+
+          <div class="card form-section-card">
+            <div class="section-card-title">
+              <h3>Información académica y laboral</h3>
+              <small>Cuéntanos sobre tu situación actual.</small>
+            </div>
+            <div class="form-row-2">
+              <div class="input-group">
+                <label>Estado académico</label>
+                <select class="input-control">
+                  <option>Graduado</option>
+                  <option>Egresado</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label>Año de graduación</label>
+                <select class="input-control">
+                  <option>2023</option>
+                  <option>2022</option>
+                  <option>2021</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Estado laboral</label>
+              <div class="radio-group-flex">
+                <label><input type="radio" name="laboral" checked> Empleado en TI</label>
+                <label><input type="radio" name="laboral"> Fuera de TI</label>
+                <label><input type="radio" name="laboral"> Emprendedor</label>
+                <label><input type="radio" name="laboral"> Buscando empleo</label>
+                <label><input type="radio" name="laboral"> Estudiando</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card form-section-card">
+            <div class="section-card-title-action">
+              <div>
+                <h3>Experiencia y proyectos</h3>
+                <small>Muestra lo que has construido.</small>
+              </div>
+              <button class="btn-add-item">+ Agregar</button>
+            </div>
+
+            <div class="experience-item">
+              <div class="exp-icon sv">SV</div>
+              <div class="exp-details">
+                <h4>Desarrollador Frontend Junior</h4>
+                <p class="company-sub">Soluciones Digitales SV · Tiempo completo</p>
+                <small class="date-sub">Enero 2024 - Actualidad</small>
+                <p class="exp-desc">Desarrollo de interfaces web responsivas y mantenimiento de plataformas internas.</p>
+              </div>
+              <button class="btn-edit-icon">✏️</button>
+            </div>
+
+            <div class="experience-item">
+              <div class="exp-icon pf">PF</div>
+              <div class="exp-details">
+                <h4>Plataforma de gestión académica</h4>
+                <p class="company-sub">Proyecto personal</p>
+                <small class="date-sub">2023</small>
+                <p class="exp-desc">Aplicación web para seguimiento de actividades y calificaciones.</p>
+              </div>
+              <button class="btn-edit-icon">✏️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha -->
+        <div class="profile-sidebar-col">
+          <div class="card profile-user-card text-center">
+            <div class="avatar-large-container">
+              <span class="avatar-large">CM</span>
+              <span class="edit-avatar-badge">✏️</span>
+            </div>
+            <h3>Carlos Martínez</h3>
+            <p class="user-role-title">Desarrollador Frontend</p>
+            <div class="verified-badge-pill">✓ Graduado verificado</div>
+            <div class="profile-completion-box">
+              <div class="comp-flex">
+                <span class="comp-num">72%</span>
+                <small>Perfil completo</small>
+              </div>
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 72%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-title-row">
+              <h3>Habilidades</h3>
+              <span class="edit-icon-sm">✏️</span>
+            </div>
+            <div class="tags-container">
+              <span>React</span>
+              <span>TypeScript</span>
+              <span>JavaScript</span>
+              <span>HTML & CSS</span>
+              <span>Git</span>
+              <span>Figma</span>
+              <span class="tag-add">+ Agregar</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Enlaces y documentos</h3>
+            <div class="link-item-group">
+              <label>Portafolio</label>
+              <input type="text" class="input-control" value="carlosmartinez.dev" readonly>
+            </div>
+            <div class="link-item-group">
+              <label>LinkedIn</label>
+              <input type="text" class="input-control" value="linkedin.com/in/cmartinez" readonly>
+            </div>
+            <div class="cv-upload-box">
+              <div class="cv-info">
+                <span class="cv-file-icon">📄</span>
+                <div>
+                  <strong>CV_Carlos_Martinez.pdf</strong>
+                  <small>Actualizado hace 2 meses</small>
+                </div>
+              </div>
+              <button class="btn-upload-icon">📤</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

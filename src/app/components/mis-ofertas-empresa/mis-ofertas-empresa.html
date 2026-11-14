@@ -1,0 +1,204 @@
+<div class="dashboard-layout">
+  <!-- Menú Lateral Empresa -->
+  <aside class="dashboard-sidebar">
+    <div class="sidebar-brand">
+      <span class="badge-ues">UES</span>
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+    </div>
+
+    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <nav class="sidebar-nav">
+      <a routerLink="/mis-ofertas-empresa" class="nav-item active">💼 Mis ofertas</a>
+      <a routerLink="/mis-ofertas-empresa" class="nav-item">➕ Publicar oferta</a>
+      <a routerLink="/mis-ofertas-empresa" class="nav-item">👥 Candidatos</a>
+      <a routerLink="/mis-ofertas-empresa" class="nav-item">🔍 Buscar perfiles</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+      <nav class="sidebar-nav">
+        <a routerLink="/mis-ofertas-empresa" class="nav-item">🔒 Acceso y seguridad</a>
+        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+      </nav>
+      <div class="sidebar-footer-card">
+        <span class="mini-ues">UES</span>
+        <div>
+          <small>Universidad de El Salvador</small>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="dashboard-main">
+    <header class="dashboard-topbar">
+      <span></span>
+      <div class="user-profile-badge">
+        <span class="notification-icon">🔔</span>
+        <div class="company-avatar-pill">SV</div>
+        <div class="user-avatar-name">
+          <strong>Soluciones SV</strong>
+          <small>Empresa</small>
+        </div>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <!-- Encabezado -->
+      <div class="welcome-header-flex">
+        <div>
+          <span class="mi-portal">GESTIÓN DE VACANTES</span>
+          <h1>Mis ofertas</h1>
+          <p>Administra las oportunidades laborales de tu empresa.</p>
+        </div>
+        <button class="btn-primary-ues">+ Publicar oferta</button>
+      </div>
+
+      <!-- Banner de Verificación -->
+      <div class="verification-banner">
+        <div class="banner-left">
+          <span class="banner-icon">🕒</span>
+          <div>
+            <strong>Cuenta en proceso de verificación</strong>
+            <p>Puedes crear ofertas, pero serán visibles cuando la Escuela apruebe tu cuenta.</p>
+          </div>
+        </div>
+        <a href="javascript:void(0)" class="banner-link">Ver estado</a>
+      </div>
+
+      <!-- Tarjetas de Métricas -->
+      <div class="stats-cards-grid">
+        <div class="stat-card-row">
+          <div class="stat-icon-box blue">💼</div>
+          <div>
+            <span class="stat-num">6</span>
+            <small>Ofertas publicadas</small>
+          </div>
+        </div>
+        <div class="stat-card-row">
+          <div class="stat-icon-box pink">👁️</div>
+          <div>
+            <span class="stat-num">842</span>
+            <small>Visualizaciones</small>
+          </div>
+        </div>
+        <div class="stat-card-row">
+          <div class="stat-icon-box green">👥</div>
+          <div>
+            <span class="stat-num">48</span>
+            <small>Postulaciones</small>
+          </div>
+        </div>
+        <div class="stat-card-row">
+          <div class="stat-icon-box yellow">🕒</div>
+          <div>
+            <span class="stat-num">2</span>
+            <small>Pendientes de aprobación</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenedor de Pestañas y Tabla -->
+      <div class="card table-card">
+        <div class="table-tabs-header">
+          <button class="tab-pill active">Todas (6)</button>
+          <button class="tab-pill">Activas (3)</button>
+          <button class="tab-pill">Borradores (1)</button>
+          <button class="tab-pill">Cerradas (2)</button>
+        </div>
+
+        <table class="postulations-table">
+          <thead>
+            <tr>
+              <th>OFERTA</th>
+              <th>PUBLICACIÓN</th>
+              <th>POSTULANTES</th>
+              <th>ESTADO</th>
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="offer-title-cell">
+                  <strong>Desarrollador Frontend Jr.</strong>
+                  <small>San Salvador · Híbrido</small>
+                </div>
+              </td>
+              <td>16 jun. 2025</td>
+              <td>👥 18</td>
+              <td><span class="status-badge active">Activa</span></td>
+              <td>
+                <div class="action-icons-row">
+                  <button class="icon-action-btn" title="Ver">👁️</button>
+                  <button class="icon-action-btn" title="Editar">✏️</button>
+                  <button class="icon-action-btn" title="Cerrar">✕</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="offer-title-cell">
+                  <strong>Analista de soporte técnico</strong>
+                  <small>San Salvador · Híbrido</small>
+                </div>
+              </td>
+              <td>10 jun. 2025</td>
+              <td>👥 12</td>
+              <td><span class="status-badge pending">Pendiente</span></td>
+              <td>
+                <div class="action-icons-row">
+                  <button class="icon-action-btn" title="Ver">👁️</button>
+                  <button class="icon-action-btn" title="Editar">✏️</button>
+                  <button class="icon-action-btn" title="Cerrar">✕</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="offer-title-cell">
+                  <strong>Pasantía de desarrollo web</strong>
+                  <small>San Salvador · Híbrido</small>
+                </div>
+              </td>
+              <td>2 jun. 2025</td>
+              <td>👥 9</td>
+              <td><span class="status-badge active">Activa</span></td>
+              <td>
+                <div class="action-icons-row">
+                  <button class="icon-action-btn" title="Ver">👁️</button>
+                  <button class="icon-action-btn" title="Editar">✏️</button>
+                  <button class="icon-action-btn" title="Cerrar">✕</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="offer-title-cell">
+                  <strong>Diseñador UX/UI</strong>
+                  <small>San Salvador · Híbrido</small>
+                </div>
+              </td>
+              <td>20 may. 2025</td>
+              <td>👥 9</td>
+              <td><span class="status-badge closed">Cerrada</span></td>
+              <td>
+                <div class="action-icons-row">
+                  <button class="icon-action-btn" title="Ver">👁️</button>
+                  <button class="icon-action-btn" title="Editar">✏️</button>
+                  <button class="icon-action-btn" title="Cerrar">✕</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>

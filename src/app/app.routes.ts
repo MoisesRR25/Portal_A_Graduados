@@ -6,6 +6,10 @@ import { LoginEmpresa } from './components/login-empresa/login-empresa';
 import { RegistroGraduado } from './components/registro-graduado/registro-graduado';
 import { RegistroEmpresa } from './components/registro-empresa/registro-empresa';
 import { Dashboard } from './components/dashboard/dashboard';
+import { PerfilGraduado } from './components/perfil-graduado/perfil-graduado';
+import { BolsaInterna } from './components/bolsa-interna/bolsa-interna';
+import { MisPostulaciones } from './components/mis-postulaciones/mis-postulaciones';
+import { MisOfertasEmpresa } from './components/mis-ofertas-empresa/mis-ofertas-empresa';
 
 export const routes: Routes = [
   { path: '', component: Inicio },
@@ -15,5 +19,9 @@ export const routes: Routes = [
   { path: 'registro-graduado', component: RegistroGraduado },
   { path: 'registro-empresa', component: RegistroEmpresa },
   { path: 'dashboard', component: Dashboard },
+  { path: 'perfil-graduado', component: PerfilGraduado },
+  { path: 'bolsa-interna', component: BolsaInterna },
+  { path: 'mis-postulaciones', component: MisPostulaciones },
+  { path: 'mis-ofertas-empresa', component: MisOfertasEmpresa },
   { path: '**', redirectTo: '' }
 ];
