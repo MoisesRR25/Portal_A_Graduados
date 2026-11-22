@@ -1,0 +1,143 @@
+<div class="portal-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-title">Portal de Graduados</span>
+        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <nav class="sidebar-nav">
+        <a routerLink="/panel-general" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span>Panel general</span>
+        </a>
+        <a routerLink="/aprobaciones" class="nav-item is-active">
+          <span class="nav-icon">✓</span>
+          <span>Aprobaciones</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a routerLink="/carga-masiva" class="nav-item">
+          <span class="nav-icon">⬆</span>
+          <span>Carga masiva</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" class="footer-link">
+        <span>🔒</span>
+        <span>Acceso y seguridad</span>
+      </a>
+      <a routerLink="/login" class="footer-link">
+        <span>↪</span>
+        <span>Cerrar sesión</span>
+      </a>
+
+      <div class="institution-badge">
+        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <div class="institution-info">
+          <strong>UES</strong>
+          <span>Universidad de El Salvador</span>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" aria-label="Notificaciones">
+          <span>🔔</span>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="admin-chip">
+          <span class="admin-avatar">AR</span>
+          <div class="admin-meta">
+            <span class="admin-name">Ana Rodríguez</span>
+            <span class="admin-role">Administradora</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+      <div class="page-header">
+        <span class="eyebrow">CONTROL DE CALIDAD</span>
+        <h1>Aprobaciones</h1>
+        <p class="page-subtitle">Verifica empresas y oportunidades antes de su publicación.</p>
+      </div>
+
+      <div class="tabs-bar">
+        <button type="button" class="tab-btn is-active">
+          <span>Pendientes</span>
+          <span class="tab-count">5</span>
+        </button>
+        <button type="button" class="tab-btn">Aprobadas</button>
+        <button type="button" class="tab-btn">Rechazadas</button>
+      </div>
+
+      <section class="approvals-list">
+        <article class="approval-card">
+          <span class="type-icon icon-blue">🏢</span>
+          <div class="approval-info">
+            <span class="type-pill">Empresa</span>
+            <h2>Data Solutions SV</h2>
+            <p>NIT 0614-120824-101-8 · Solicitado el 17 jun. 2025</p>
+          </div>
+          <div class="approval-actions">
+            <button type="button" class="btn-review">👁 Revisar</button>
+            <button type="button" class="btn-reject">Rechazar</button>
+            <button type="button" class="btn-approve">✓ Aprobar</button>
+          </div>
+        </article>
+
+        <article class="approval-card">
+          <span class="type-icon icon-blue">🏢</span>
+          <div class="approval-info">
+            <span class="type-pill">Empresa</span>
+            <h2>Grupo Tecnológico Cuscatlán</h2>
+            <p>NIT 0614-090421-103-2 · Solicitado el 16 jun. 2025</p>
+          </div>
+          <div class="approval-actions">
+            <button type="button" class="btn-review">👁 Revisar</button>
+            <button type="button" class="btn-reject">Rechazar</button>
+            <button type="button" class="btn-approve">✓ Aprobar</button>
+          </div>
+        </article>
+
+        <article class="approval-card">
+          <span class="type-icon icon-pink">💼</span>
+          <div class="approval-info">
+            <span class="type-pill">Oferta</span>
+            <h2>Desarrollador Java Junior</h2>
+            <p>TechLab El Salvador · Solicitado el 18 jun. 2025</p>
+          </div>
+          <div class="approval-actions">
+            <button type="button" class="btn-review">👁 Revisar</button>
+            <button type="button" class="btn-reject">Rechazar</button>
+            <button type="button" class="btn-approve">✓ Aprobar</button>
+          </div>
+        </article>
+
+        <article class="approval-card">
+          <span class="type-icon icon-pink">💼</span>
+          <div class="approval-info">
+            <span class="type-pill">Oferta</span>
+            <h2>Analista de ciberseguridad</h2>
+            <p>Banco Azul · Solicitado el 17 jun. 2025</p>
+          </div>
+          <div class="approval-actions">
+            <button type="button" class="btn-review">👁 Revisar</button>
+            <button type="button" class="btn-reject">Rechazar</button>
+            <button type="button" class="btn-approve">✓ Aprobar</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</div>

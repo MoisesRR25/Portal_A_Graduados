@@ -1,0 +1,201 @@
+<div class="portal-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-title">Portal de Graduados</span>
+        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <nav class="sidebar-nav">
+        <a routerLink="/mis-ofertas-empresa" class="nav-item">
+          <span class="nav-icon">💼</span>
+          <span>Mis ofertas</span>
+        </a>
+        <a routerLink="/publicar-oferta" class="nav-item">
+          <span class="nav-icon">＋</span>
+          <span>Publicar oferta</span>
+        </a>
+        <a routerLink="/candidatos" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span>Candidatos</span>
+        </a>
+        <a routerLink="/buscar-perfiles" class="nav-item is-active">
+          <span class="nav-icon">🔍</span>
+          <span>Buscar perfiles</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" class="footer-link">
+        <span>🔒</span>
+        <span>Acceso y seguridad</span>
+      </a>
+      <a routerLink="/login-empresa" class="footer-link">
+        <span>↪</span>
+        <span>Cerrar sesión</span>
+      </a>
+
+      <div class="institution-badge">
+        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <div class="institution-info">
+          <strong>UES</strong>
+          <span>Universidad de El Salvador</span>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" aria-label="Notificaciones">
+          <span>🔔</span>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="company-chip">
+          <span class="company-avatar">SV</span>
+          <div class="company-meta">
+            <span class="company-name">Soluciones SV</span>
+            <span class="company-role">Empresa</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+      <div class="page-header">
+        <span class="eyebrow">BANCO DE TALENTO</span>
+        <h1>Buscar perfiles</h1>
+        <p class="page-subtitle">Encuentra graduados según las necesidades de tu equipo.</p>
+      </div>
+
+      <form class="search-bar" (submit)="$event.preventDefault()">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          placeholder="Buscar por nombre, habilidad o perfil..."
+        />
+        <button type="submit" class="btn-primary">Buscar</button>
+      </form>
+
+      <div class="filters-grid">
+        <select aria-label="Estado académico">
+          <option value="">Estado académico</option>
+          <option value="graduado">Graduado</option>
+          <option value="egresado">Egresado</option>
+          <option value="estudiante">Estudiante activo</option>
+        </select>
+
+        <select aria-label="Área profesional">
+          <option value="">Área profesional</option>
+          <option value="desarrollo">Desarrollo de software</option>
+          <option value="datos">Datos y analítica</option>
+          <option value="qa">Aseguramiento de calidad (QA)</option>
+          <option value="infraestructura">Infraestructura y redes</option>
+        </select>
+
+        <select aria-label="Experiencia">
+          <option value="">Experiencia</option>
+          <option value="sin-experiencia">Sin experiencia</option>
+          <option value="1-2">1 a 2 años</option>
+          <option value="3-mas">3 años o más</option>
+        </select>
+
+        <select aria-label="Disponibilidad">
+          <option value="">Disponibilidad</option>
+          <option value="inmediata">Inmediata</option>
+          <option value="tiempo-completo">Tiempo completo</option>
+          <option value="pasantia">Pasantía / Medio tiempo</option>
+        </select>
+      </div>
+
+      <section class="candidates-grid">
+        <article class="candidate-card">
+          <div class="card-top">
+            <span class="avatar-circle avatar-pink">MM</span>
+            <span class="match-badge">92% compatible</span>
+          </div>
+          <div class="candidate-info">
+            <h2>María Fernanda Mejía</h2>
+            <p class="candidate-role">Desarrolladora Full Stack</p>
+            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2022</p>
+          </div>
+          <div class="skills-row">
+            <span class="skill-pill">React</span>
+            <span class="skill-pill">Node.js</span>
+            <span class="skill-pill">PostgreSQL</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-outline">👁 Ver perfil</button>
+          </div>
+        </article>
+
+        <article class="candidate-card">
+          <div class="card-top">
+            <span class="avatar-circle avatar-blue">JL</span>
+            <span class="match-badge">88% compatible</span>
+          </div>
+          <div class="candidate-info">
+            <h2>José Luis Ramírez</h2>
+            <p class="candidate-role">Analista de Datos</p>
+            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2023</p>
+          </div>
+          <div class="skills-row">
+            <span class="skill-pill">Python</span>
+            <span class="skill-pill">SQL</span>
+            <span class="skill-pill">Power BI</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-outline">👁 Ver perfil</button>
+          </div>
+        </article>
+
+        <article class="candidate-card">
+          <div class="card-top">
+            <span class="avatar-circle avatar-purple">AV</span>
+            <span class="match-badge">84% compatible</span>
+          </div>
+          <div class="candidate-info">
+            <h2>Andrea Vásquez</h2>
+            <p class="candidate-role">QA Engineer Jr.</p>
+            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2024</p>
+          </div>
+          <div class="skills-row">
+            <span class="skill-pill">Testing</span>
+            <span class="skill-pill">Cypress</span>
+            <span class="skill-pill">Jira</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-outline">👁 Ver perfil</button>
+          </div>
+        </article>
+
+        <article class="candidate-card">
+          <div class="card-top">
+            <span class="avatar-circle avatar-green">RC</span>
+            <span class="match-badge">79% compatible</span>
+          </div>
+          <div class="candidate-info">
+            <h2>Roberto Castillo</h2>
+            <p class="candidate-role">Soporte e Infraestructura</p>
+            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2025</p>
+          </div>
+          <div class="skills-row">
+            <span class="skill-pill">Linux</span>
+            <span class="skill-pill">Redes</span>
+            <span class="skill-pill">Azure</span>
+          </div>
+          <div class="card-actions">
+            <button type="button" class="btn-outline">👁 Ver perfil</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,295 @@
+<div class="portal-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-title">Portal de Graduados</span>
+        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <nav class="sidebar-nav">
+        <a routerLink="/panel-general" class="nav-item is-active">
+          <span class="nav-icon">📊</span>
+          <span>Panel general</span>
+        </a>
+        <a routerLink="/aprobaciones" class="nav-item">
+          <span class="nav-icon">✓</span>
+          <span>Aprobaciones</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a routerLink="/carga-masiva" class="nav-item">
+          <span class="nav-icon">⬆</span>
+          <span>Carga masiva</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" class="footer-link">
+        <span>🔒</span>
+        <span>Acceso y seguridad</span>
+      </a>
+      <a routerLink="/login" class="footer-link">
+        <span>↪</span>
+        <span>Cerrar sesión</span>
+      </a>
+
+      <div class="institution-badge">
+        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <div class="institution-info">
+          <strong>UES</strong>
+          <span>Universidad de El Salvador</span>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" aria-label="Notificaciones">
+          <span>🔔</span>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="admin-chip">
+          <span class="admin-avatar">AR</span>
+          <div class="admin-meta">
+            <span class="admin-name">Ana Rodríguez</span>
+            <span class="admin-role">Administradora</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+      <div class="page-header-row">
+        <div>
+          <span class="eyebrow">ADMINISTRACIÓN</span>
+          <h1>Panel general</h1>
+          <p class="page-subtitle">Indicadores de empleabilidad y actividad del portal.</p>
+        </div>
+
+        <div class="header-buttons">
+          <button type="button" class="btn-outline-sm">⬇ Excel</button>
+          <button type="button" class="btn-primary-sm">⬇ Exportar PDF</button>
+        </div>
+      </div>
+
+      <section class="kpi-grid">
+        <article class="kpi-card">
+          <span class="kpi-icon icon-pink">👥</span>
+          <div>
+            <div class="kpi-value">1,248</div>
+            <div class="kpi-label">Graduados registrados</div>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-icon icon-green">💼</span>
+          <div>
+            <div class="kpi-value">78%</div>
+            <div class="kpi-label">Tasa de empleabilidad</div>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-icon icon-blue">🏢</span>
+          <div>
+            <div class="kpi-value">86</div>
+            <div class="kpi-label">Empresas aliadas</div>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-icon icon-amber">📄</span>
+          <div>
+            <div class="kpi-value">142</div>
+            <div class="kpi-label">Ofertas activas</div>
+          </div>
+        </article>
+      </section>
+
+      <section class="charts-row">
+        <article class="panel-card chart-main">
+          <div class="card-header-flex">
+            <div>
+              <h2>Graduados por año</h2>
+              <p class="card-sub">Registro histórico de graduados</p>
+            </div>
+            <select aria-label="Rango de años" class="period-select">
+              <option value="6">Últimos 6 años</option>
+              <option value="3">Últimos 3 años</option>
+              <option value="all">Todos los registros</option>
+            </select>
+          </div>
+
+          <div class="bar-chart">
+            <div class="bar-col">
+              <span class="bar-val">52</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 55%;"></div></div>
+              <span class="bar-year">2020</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">68</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 72%;"></div></div>
+              <span class="bar-year">2021</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">59</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 62%;"></div></div>
+              <span class="bar-year">2022</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">82</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 86%;"></div></div>
+              <span class="bar-year">2023</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">74</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 78%;"></div></div>
+              <span class="bar-year">2024</span>
+            </div>
+            <div class="bar-col">
+              <span class="bar-val">91</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 96%;"></div></div>
+              <span class="bar-year">2025</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel-card status-card">
+          <h2>Estado laboral</h2>
+          <p class="card-sub">Distribución actual</p>
+
+          <div class="status-body">
+            <div class="status-total">
+              <strong>1,248</strong>
+              <span>total</span>
+            </div>
+
+            <ul class="status-list">
+              <li>
+                <span class="dot dot-red"></span>
+                <span class="status-name">Empleado en TI</span>
+                <strong>58%</strong>
+              </li>
+              <li>
+                <span class="dot dot-blue"></span>
+                <span class="status-name">Buscando empleo</span>
+                <strong>18%</strong>
+              </li>
+              <li>
+                <span class="dot dot-amber"></span>
+                <span class="status-name">Fuera de TI</span>
+                <strong>12%</strong>
+              </li>
+              <li>
+                <span class="dot dot-purple"></span>
+                <span class="status-name">Emprendedor</span>
+                <strong>7%</strong>
+              </li>
+              <li>
+                <span class="dot dot-green"></span>
+                <span class="status-name">Estudiando</span>
+                <strong>5%</strong>
+              </li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="bottom-row">
+        <article class="panel-card area-card">
+          <h2>Empleabilidad por área</h2>
+          <p class="card-sub">Principales áreas de desempeño</p>
+
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-meta">
+                <span>Desarrollo de software</span>
+                <strong>86%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 86%;"></div>
+              </div>
+            </div>
+
+            <div class="progress-item">
+              <div class="progress-meta">
+                <span>Datos y analítica</span>
+                <strong>68%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 68%;"></div>
+              </div>
+            </div>
+
+            <div class="progress-item">
+              <div class="progress-meta">
+                <span>Infraestructura y redes</span>
+                <strong>54%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 54%;"></div>
+              </div>
+            </div>
+
+            <div class="progress-item">
+              <div class="progress-meta">
+                <span>Soporte técnico</span>
+                <strong>42%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 42%;"></div>
+              </div>
+            </div>
+
+            <div class="progress-item">
+              <div class="progress-meta">
+                <span>Gestión de proyectos</span>
+                <strong>31%</strong>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 31%;"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel-card pending-card">
+          <div class="card-header-flex">
+            <div>
+              <h2>Pendientes de aprobación</h2>
+              <p class="card-sub">Requieren tu atención</p>
+            </div>
+            <a routerLink="/aprobaciones" class="ver-todos-link">Ver todos</a>
+          </div>
+
+          <div class="pending-stack">
+            <a routerLink="/aprobaciones" class="pending-box">
+              <span class="pending-icon icon-amber">🏢</span>
+              <div class="pending-text">
+                <strong>3 empresas</strong>
+                <span>Esperando verificación</span>
+              </div>
+              <span class="chevron">›</span>
+            </a>
+
+            <a routerLink="/aprobaciones" class="pending-box">
+              <span class="pending-icon icon-blue">💼</span>
+              <div class="pending-text">
+                <strong>2 ofertas laborales</strong>
+                <span>Pendientes de revisión</span>
+              </div>
+              <span class="chevron">›</span>
+            </a>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+</div>

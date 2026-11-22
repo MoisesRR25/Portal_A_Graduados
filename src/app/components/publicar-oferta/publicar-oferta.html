@@ -1,0 +1,249 @@
+<div class="portal-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-title">Portal de Graduados</span>
+        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <nav class="sidebar-nav">
+        <a routerLink="/mis-ofertas-empresa" class="nav-item">
+          <span class="nav-icon">💼</span>
+          <span>Mis ofertas</span>
+        </a>
+        <a routerLink="/publicar-oferta" class="nav-item is-active">
+          <span class="nav-icon">＋</span>
+          <span>Publicar oferta</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item">
+          <span class="nav-icon">👥</span>
+          <span>Candidatos</span>
+        </a>
+        <a href="javascript:void(0)" class="nav-item">
+          <span class="nav-icon">🔍</span>
+          <span>Buscar perfiles</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" class="footer-link">
+        <span>🔒</span>
+        <span>Acceso y seguridad</span>
+      </a>
+      <a routerLink="/login-empresa" class="footer-link">
+        <span>↪</span>
+        <span>Cerrar sesión</span>
+      </a>
+
+      <div class="institution-badge">
+        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <div class="institution-info">
+          <strong>UES</strong>
+          <span>Universidad de El Salvador</span>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" aria-label="Notificaciones">
+          <span>🔔</span>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="company-chip">
+          <span class="company-avatar">SV</span>
+          <div class="company-meta">
+            <span class="company-name">Soluciones SV</span>
+            <span class="company-role">Empresa</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+      <div class="page-header">
+        <span class="eyebrow">NUEVA VACANTE</span>
+        <h1>Publicar oferta laboral</h1>
+        <p class="page-subtitle">Completa la información para conectar con el talento de la UES.</p>
+      </div>
+
+      <div class="form-layout">
+        <form class="offer-form" (submit)="$event.preventDefault()">
+          <section class="form-card">
+            <div class="section-heading">
+              <span class="step-badge">1</span>
+              <div>
+                <h2>Información general</h2>
+                <p>Datos principales de la oportunidad.</p>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="tituloOferta">Título de la oferta</label>
+              <input
+                id="tituloOferta"
+                type="text"
+                placeholder="Ej. Desarrollador Frontend Jr."
+              />
+            </div>
+
+            <div class="field-grid-2">
+              <div class="field-group">
+                <label for="areaOferta">Área</label>
+                <select id="areaOferta">
+                  <option value="">Seleccionar área</option>
+                  <option value="desarrollo">Desarrollo de software</option>
+                  <option value="datos">Datos y analítica</option>
+                  <option value="infraestructura">Infraestructura y redes</option>
+                  <option value="soporte">Soporte técnico</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="tipoContrato">Tipo de contrato</label>
+                <select id="tipoContrato">
+                  <option value="tiempo-completo">Tiempo completo</option>
+                  <option value="medio-tiempo">Medio tiempo</option>
+                  <option value="pasantia">Pasantía</option>
+                  <option value="proyecto">Por proyecto</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-grid-2">
+              <div class="field-group">
+                <label for="ubicacionOferta">Ubicación</label>
+                <input
+                  id="ubicacionOferta"
+                  type="text"
+                  placeholder="Ej. San Salvador"
+                />
+              </div>
+
+              <div class="field-group">
+                <label for="modalidadOferta">Modalidad</label>
+                <select id="modalidadOferta">
+                  <option value="hibrido">Híbrido</option>
+                  <option value="presencial">Presencial</option>
+                  <option value="remoto">Remoto</option>
+                </select>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <div class="section-heading">
+              <span class="step-badge">2</span>
+              <div>
+                <h2>Descripción y requisitos</h2>
+                <p>Describe el rol y el perfil que buscas.</p>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="descripcionOferta">Descripción de la oportunidad</label>
+              <textarea
+                id="descripcionOferta"
+                rows="3"
+                placeholder="Cuéntale a los candidatos sobre el rol..."
+              ></textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="requisitosOferta">Requisitos</label>
+              <textarea
+                id="requisitosOferta"
+                rows="3"
+                placeholder="Agrega un requisito por línea..."
+              ></textarea>
+            </div>
+
+            <div class="field-group">
+              <label for="habilidadesOferta">Habilidades requeridas</label>
+              <input
+                id="habilidadesOferta"
+                type="text"
+                placeholder="Escribe una habilidad y presiona Enter"
+              />
+              <div class="tags-list">
+                <span class="skill-tag">JavaScript <button type="button" aria-label="Quitar JavaScript">×</button></span>
+                <span class="skill-tag">React <button type="button" aria-label="Quitar React">×</button></span>
+                <span class="skill-tag">Git <button type="button" aria-label="Quitar Git">×</button></span>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-card">
+            <div class="section-heading">
+              <span class="step-badge">3</span>
+              <div>
+                <h2>Clasificación y vigencia</h2>
+                <p>Ayuda a los candidatos a encontrar tu oferta.</p>
+              </div>
+            </div>
+
+            <div class="field-grid-2">
+              <div class="field-group">
+                <label for="fechaLimite">Fecha límite</label>
+                <input id="fechaLimite" type="date" />
+              </div>
+
+              <div class="field-group">
+                <label for="plazasDisponibles">Plazas disponibles</label>
+                <input id="plazasDisponibles" type="number" min="1" value="1" />
+              </div>
+            </div>
+
+            <div class="field-group">
+              <span class="field-label">Clasificación</span>
+              <div class="checkbox-row">
+                <label class="checkbox-pill">
+                  <input type="checkbox" />
+                  <span>Recién graduados</span>
+                </label>
+                <label class="checkbox-pill">
+                  <input type="checkbox" />
+                  <span>Sin experiencia</span>
+                </label>
+                <label class="checkbox-pill">
+                  <input type="checkbox" />
+                  <span>Pasantía</span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary">Guardar borrador</button>
+            <button type="submit" class="btn-primary">Enviar a revisión</button>
+          </div>
+        </form>
+
+        <aside class="side-panel">
+          <div class="tips-card">
+            <h3>Antes de publicar</h3>
+            <ul class="tips-list">
+              <li>Usa un título claro y específico.</li>
+              <li>Detalla responsabilidades reales.</li>
+              <li>No incluyas criterios discriminatorios.</li>
+              <li>Indica la modalidad correctamente.</li>
+            </ul>
+          </div>
+
+          <div class="notice-card">
+            <span class="notice-icon">🕒</span>
+            <p>Las ofertas son revisadas en un plazo máximo de 2 días hábiles.</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>

@@ -10,6 +10,12 @@ import { PerfilGraduado } from './components/perfil-graduado/perfil-graduado';
 import { BolsaInterna } from './components/bolsa-interna/bolsa-interna';
 import { MisPostulaciones } from './components/mis-postulaciones/mis-postulaciones';
 import { MisOfertasEmpresa } from './components/mis-ofertas-empresa/mis-ofertas-empresa';
+import { PublicarOferta } from './components/publicar-oferta/publicar-oferta';
+import { Candidatos } from './components/candidatos/candidatos';
+import { BuscarPerfiles } from './components/buscar-perfiles/buscar-perfiles';
+import { PanelGeneral } from './components/panel-general/panel-general';
+import { Aprobaciones } from './components/aprobaciones/aprobaciones';
+import { CargaMasiva } from './components/carga-masiva/carga-masiva';
 
 export const routes: Routes = [
   { path: '', component: Inicio },
@@ -23,5 +29,11 @@ export const routes: Routes = [
   { path: 'bolsa-interna', component: BolsaInterna },
   { path: 'mis-postulaciones', component: MisPostulaciones },
   { path: 'mis-ofertas-empresa', component: MisOfertasEmpresa },
+  { path: 'publicar-oferta', component: PublicarOferta },
+  { path: 'candidatos', component: Candidatos },
+  { path: 'buscar-perfiles', component: BuscarPerfiles },
+  { path: 'panel-general', component: PanelGeneral },
+  { path: 'aprobaciones', component: Aprobaciones },
+  { path: 'carga-masiva', component: CargaMasiva },
   { path: '**', redirectTo: '' }
 ];

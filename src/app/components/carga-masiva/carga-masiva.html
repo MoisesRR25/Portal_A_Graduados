@@ -1,0 +1,137 @@
+<div class="portal-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <div class="brand-text">
+        <span class="brand-title">Portal de Graduados</span>
+        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <nav class="sidebar-nav">
+        <a routerLink="/panel-general" class="nav-item">
+          <span class="nav-icon">📊</span>
+          <span>Panel general</span>
+        </a>
+        <a routerLink="/aprobaciones" class="nav-item">
+          <span class="nav-icon">✓</span>
+          <span>Aprobaciones</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a routerLink="/carga-masiva" class="nav-item is-active">
+          <span class="nav-icon">⬆</span>
+          <span>Carga masiva</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <a href="javascript:void(0)" class="footer-link">
+        <span>🔒</span>
+        <span>Acceso y seguridad</span>
+      </a>
+      <a routerLink="/login" class="footer-link">
+        <span>↪</span>
+        <span>Cerrar sesión</span>
+      </a>
+
+      <div class="institution-badge">
+        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <div class="institution-info">
+          <strong>UES</strong>
+          <span>Universidad de El Salvador</span>
+          <span>Facultad de Ingeniería</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar-actions">
+        <button type="button" class="icon-btn" aria-label="Notificaciones">
+          <span>🔔</span>
+          <span class="notif-dot"></span>
+        </button>
+        <div class="admin-chip">
+          <span class="admin-avatar">AR</span>
+          <div class="admin-meta">
+            <span class="admin-name">Ana Rodríguez</span>
+            <span class="admin-role">Administradora</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content-container">
+      <div class="page-header-row">
+        <div>
+          <span class="eyebrow">GESTIÓN DE DATOS</span>
+          <h1>Carga masiva de graduados</h1>
+          <p class="page-subtitle">Importa registros de graduados mediante archivos Excel (.xlsx).</p>
+        </div>
+
+        <button type="button" class="btn-outline-sm">⬇ Descargar plantilla</button>
+      </div>
+
+      <section class="upload-card">
+        <div class="dropzone">
+          <div class="upload-circle">⬆</div>
+          <h2>Arrastra tu archivo Excel aquí</h2>
+          <p>o selecciona un archivo desde tu equipo (.xlsx, máximo 10 MB)</p>
+          <label class="btn-primary-sm file-label">
+            Seleccionar archivo
+            <input type="file" accept=".xlsx,.xls" hidden />
+          </label>
+        </div>
+
+        <div class="requirements-box">
+          <h3>Requisitos del archivo</h3>
+          <ul>
+            <li>Utiliza la plantilla oficial con columnas: Nombre completo, Correo, Carnet, Año de graduación y Estado laboral.</li>
+            <li>Los correos electrónicos deben tener formato válido y no estar duplicados.</li>
+            <li>El año de graduación debe estar entre 1990 y el año actual.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="summary-card">
+        <div class="summary-header">
+          <div>
+            <h2>Resumen de última carga</h2>
+            <p class="card-sub">graduados_2025_semestre1.xlsx · 15 jun. 2025</p>
+          </div>
+          <span class="status-pill">Procesado con observaciones</span>
+        </div>
+
+        <div class="summary-stats">
+          <div class="stat-box">
+            <strong>120</strong>
+            <span>Total procesados</span>
+          </div>
+          <div class="stat-box">
+            <strong class="text-green">116</strong>
+            <span>Importados</span>
+          </div>
+          <div class="stat-box">
+            <strong class="text-red">4</strong>
+            <span>Rechazados</span>
+          </div>
+        </div>
+
+        <div class="rejected-alert">
+          <div class="alert-left">
+            <span class="alert-icon">⚠</span>
+            <div>
+              <strong>4 registros rechazados</strong>
+              <p>Filas 14, 38, 72 y 105: correo inválido o carnet duplicado.</p>
+            </div>
+          </div>
+          <button type="button" class="btn-download-error">⬇ Reporte de errores</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
