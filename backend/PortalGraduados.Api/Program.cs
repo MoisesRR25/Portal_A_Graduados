@@ -1,14 +1,23 @@
+
+using Microsoft.EntityFrameworkCore;
+using PortalGraduados.Api.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Servicios de la API
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+// Conexión con PostgreSQL mediante Entity Framework Core
+builder.Services.AddDbContext<PortalGraduadosDbContext>(options =>
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("PortalGraduados")
+    )
+);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del entorno de desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
