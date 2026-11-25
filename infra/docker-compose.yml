@@ -1,5 +1,6 @@
 
 services:
+  # API ASP.NET Core 10
   api:
     build:
       context: ../backend/PortalGraduados.Api
@@ -11,3 +12,42 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_HTTP_PORTS: "8080"
     restart: "no"
+
+  # Base de datos PostgreSQL 18
+  postgres:
+    image: postgres:18
+    container_name: portal-graduados-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?Falta POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:?Falta POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: "no"
+
+  # Administrador de PostgreSQL
+  pgadmin:
+    image: dpage/pgadmin4:9.19
+    container_name: portal-graduados-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:?Falta PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Falta PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "127.0.0.1:5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+volumes:
+  postgres_data:
+  pgadmin_data:

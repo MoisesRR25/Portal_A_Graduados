@@ -11,3 +11,6 @@ frontend/.angular/
 **/.vs/
 *.csproj.user
 *.suo
+
+# Credenciales locales de Docker
+infra/.env
