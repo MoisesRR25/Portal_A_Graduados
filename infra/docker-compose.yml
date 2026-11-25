@@ -1,0 +1,13 @@
+
+services:
+  api:
+    build:
+      context: ../backend/PortalGraduados.Api
+      dockerfile: Dockerfile
+    container_name: portal-graduados-api
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: "8080"
+    restart: "no"

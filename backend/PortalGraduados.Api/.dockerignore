@@ -1,0 +1,20 @@
+
+# Archivos temporales de .NET
+**/bin/
+**/obj/
+
+# Archivos de Visual Studio
+**/.vs/
+*.csproj.user
+*.suo
+
+# Archivos de Git
+.git/
+.gitignore
+
+# Archivos de configuración privada
+.env
+.env.*
+*.pfx
+*.pem
+*.key
