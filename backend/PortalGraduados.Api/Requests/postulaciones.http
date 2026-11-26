@@ -1,0 +1,168 @@
+@base = http://localhost:8080/api/postulaciones
+@graduados = http://localhost:8080/api/graduados
+@ofertas = http://localhost:8080/api/ofertas
+
+### 1. Postular, graduado verificado (201)
+# @name post1
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 1, "idOferta": 1, "cvEnviado": "cv-ana-lopez.pdf" }
+
+### 2. Postulacion duplicada (409)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 1, "idOferta": 1, "cvEnviado": "cv-ana-lopez.pdf" }
+
+### 3. Registrar un segundo graduado, sin verificar (201)
+# @name grad2
+POST {{graduados}}
+Content-Type: application/json
+
+{
+  "correo": "luis.mendez@ejemplo.com",
+  "contrasena": "Prueba12345",
+  "nombres": "Luis Alberto",
+  "apellidos": "Mendez Rivas",
+  "telefono": "70004444",
+  "anioGraduacion": 2023,
+  "estadoAcademico": "Graduado",
+  "estadoLaboral": "Desempleado",
+  "areaTrabajo": "Redes",
+  "ubicacion": "Santa Ana",
+  "consentimiento": true
+}
+
+### 4. Postular sin estar verificado (409)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": {{grad2.response.body.idGraduado}}, "idOferta": 1, "cvEnviado": "cv-luis.pdf" }
+
+### 5. Verificar al segundo graduado (200)
+PUT {{graduados}}/{{grad2.response.body.idGraduado}}/verificacion
+Content-Type: application/json
+
+{ "verificado": true }
+
+### 6. Sin CV en la peticion ni en el perfil (400)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": {{grad2.response.body.idGraduado}}, "idOferta": 1 }
+
+### 7. Postular con CV (201)
+# @name post2
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": {{grad2.response.body.idGraduado}}, "idOferta": 1, "cvEnviado": "cv-luis.pdf" }
+
+### 8. Oferta inexistente (400)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 1, "idOferta": 999, "cvEnviado": "cv.pdf" }
+
+### 9. Graduado inexistente (400)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 999, "idOferta": 1, "cvEnviado": "cv.pdf" }
+
+### 10. Datos invalidos (400)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 0, "idOferta": 0 }
+
+### 11. Crear una oferta desechable (201)
+# @name cerrada
+POST {{ofertas}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "Oferta de prueba para cerrar",
+  "area": "Pruebas",
+  "ubicacion": "San Salvador",
+  "descripcionCorta": "Oferta que se cerrara en la prueba",
+  "descripcion": "Oferta desechable usada para probar la regla de cierre.",
+  "requisitos": "Ninguno, es solo una prueba.",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 12. Cerrarla (200)
+PUT {{ofertas}}/{{cerrada.response.body.idOferta}}/estado
+Content-Type: application/json
+
+{ "estado": "Cerrada" }
+
+### 13. Postular a una oferta cerrada (409)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 1, "idOferta": {{cerrada.response.body.idOferta}}, "cvEnviado": "cv-ana-lopez.pdf" }
+
+### 14. Eliminar la oferta desechable (204)
+DELETE {{ofertas}}/{{cerrada.response.body.idOferta}}
+
+### 15. Listar (200, X-Total-Count debe ser 2)
+GET {{base}}
+
+### 16. Listar con filtros (200)
+GET {{base}}?idOferta=1&estado=Pendiente
+
+### 17. Paginacion invalida (400)
+GET {{base}}?pagina=0
+
+### 18. Detalle (200)
+GET {{base}}/{{post1.response.body.idPostulacion}}
+
+### 19. Postulacion inexistente (404)
+GET {{base}}/999
+
+### 20. Salto de estado no permitido, Pendiente a Aceptada (409)
+PUT {{base}}/{{post1.response.body.idPostulacion}}/estado
+Content-Type: application/json
+
+{ "estado": "Aceptada" }
+
+### 21. Estado fuera del catalogo (400)
+PUT {{base}}/{{post1.response.body.idPostulacion}}/estado
+Content-Type: application/json
+
+{ "estado": "Pendiente" }
+
+### 22. Pasar a En revision (200)
+PUT {{base}}/{{post1.response.body.idPostulacion}}/estado
+Content-Type: application/json
+
+{ "estado": "En revision" }
+
+### 23. Aceptar (200)
+PUT {{base}}/{{post1.response.body.idPostulacion}}/estado
+Content-Type: application/json
+
+{ "estado": "Aceptada" }
+
+### 24. Rechazar una postulacion ya aceptada (409)
+PUT {{base}}/{{post1.response.body.idPostulacion}}/estado
+Content-Type: application/json
+
+{ "estado": "Rechazada" }
+
+### 25. Retirar una postulacion que ya no esta pendiente (409)
+DELETE {{base}}/{{post1.response.body.idPostulacion}}
+
+### 26. Retirar una postulacion pendiente (204)
+DELETE {{base}}/{{post2.response.body.idPostulacion}}
+
+### 27. Retirarla otra vez (404)
+DELETE {{base}}/{{post2.response.body.idPostulacion}}
+
+### 28. Eliminar la oferta 1, que tiene postulaciones (409)
+DELETE {{ofertas}}/1
