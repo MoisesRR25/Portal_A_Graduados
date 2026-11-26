@@ -1,0 +1,71 @@
+@base = http://localhost:8080/api/empresas
+
+### 1. Registrar empresa (201)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "contacto@techsv.com",
+  "contrasena": "Prueba12345",
+  "nombreComercial": "TechSV",
+  "razonSocial": "TechSV Sociedad Anonima",
+  "telefonoContacto": "22223333"
+}
+
+### 2. Correo duplicado (409)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "CONTACTO@techsv.com",
+  "contrasena": "Prueba12345",
+  "nombreComercial": "Otra",
+  "razonSocial": "Otra SA",
+  "telefonoContacto": "22224444"
+}
+
+### 3. Datos inválidos (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "no-es-correo",
+  "contrasena": "123",
+  "nombreComercial": "",
+  "razonSocial": "",
+  "telefonoContacto": "1"
+}
+
+### 4. Listar (200)
+GET {{base}}
+
+### 5. Listar solo pendientes (200)
+GET {{base}}?aprobada=false
+
+### 6. Obtener por id (200)
+GET {{base}}/1
+
+### 7. Inexistente (404)
+GET {{base}}/999
+
+### 8. Actualizar datos (200)
+PUT {{base}}/1
+Content-Type: application/json
+
+{
+  "nombreComercial": "TechSV Group",
+  "razonSocial": "TechSV Sociedad Anonima",
+  "telefonoContacto": "22225555"
+}
+
+### 9. Aprobar empresa (200)
+PUT {{base}}/1/aprobacion
+Content-Type: application/json
+
+{ "aprobada": true }
+
+### 10. Aprobación sin cuerpo válido (400)
+PUT {{base}}/1/aprobacion
+Content-Type: application/json
+
+{}

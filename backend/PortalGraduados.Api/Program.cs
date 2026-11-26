@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using PortalGraduados.Api.Data;
+using Microsoft.AspNetCore.Identity;
+using PortalGraduados.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddDbContext<PortalGraduadosDbContext>(options =>
         builder.Configuration.GetConnectionString("PortalGraduados")
     )
 );
+
+builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 
 var app = builder.Build();
 
