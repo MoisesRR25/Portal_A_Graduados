@@ -1,0 +1,105 @@
+@base = http://localhost:8080/api/graduados
+
+### 1. Crear experiencia (201)
+# @name exp
+POST {{base}}/1/experiencias
+Content-Type: application/json
+
+{
+  "empresa": "TechSV",
+  "cargo": "Desarrolladora junior",
+  "descripcion": "Desarrollo de servicios web con ASP.NET Core.",
+  "fechaInicio": "2024-03-01",
+  "fechaFin": null
+}
+
+### 2. Fecha de fin anterior al inicio (400)
+POST {{base}}/1/experiencias
+Content-Type: application/json
+
+{
+  "empresa": "TechSV",
+  "cargo": "Analista",
+  "descripcion": "Prueba de validacion.",
+  "fechaInicio": "2024-03-01",
+  "fechaFin": "2023-01-01"
+}
+
+### 3. Graduado inexistente (404)
+POST {{base}}/999/experiencias
+Content-Type: application/json
+
+{
+  "empresa": "TechSV",
+  "cargo": "Analista",
+  "descripcion": "Prueba.",
+  "fechaInicio": "2024-03-01"
+}
+
+### 4. Listar experiencias (200)
+GET {{base}}/1/experiencias
+
+### 5. Obtener experiencia (200)
+GET {{base}}/1/experiencias/{{exp.response.body.idExperiencia}}
+
+### 6. Experiencia inexistente (404)
+GET {{base}}/1/experiencias/999
+
+### 7. Actualizar experiencia (200)
+PUT {{base}}/1/experiencias/{{exp.response.body.idExperiencia}}
+Content-Type: application/json
+
+{
+  "empresa": "TechSV",
+  "cargo": "Desarrolladora",
+  "descripcion": "Desarrollo y mantenimiento de APIs.",
+  "fechaInicio": "2024-03-01",
+  "fechaFin": "2025-06-30"
+}
+
+### 8. Crear proyecto (201)
+# @name proy
+POST {{base}}/1/proyectos
+Content-Type: application/json
+
+{
+  "nombreProyecto": "Portal de graduados",
+  "descripcion": "API y base de datos del portal.",
+  "tecnologiasUtilizadas": "ASP.NET Core, PostgreSQL, Docker",
+  "urlProyecto": "https://github.com/ejemplo/portal"
+}
+
+### 9. Proyecto con datos invalidos (400)
+POST {{base}}/1/proyectos
+Content-Type: application/json
+
+{
+  "nombreProyecto": "",
+  "urlProyecto": "no-es-url"
+}
+
+### 10. Listar proyectos (200)
+GET {{base}}/1/proyectos
+
+### 11. Obtener proyecto (200)
+GET {{base}}/1/proyectos/{{proy.response.body.idProyecto}}
+
+### 12. Actualizar proyecto (200)
+PUT {{base}}/1/proyectos/{{proy.response.body.idProyecto}}
+Content-Type: application/json
+
+{
+  "nombreProyecto": "Portal de graduados v2",
+  "descripcion": "API, base de datos y Angular.",
+  "tecnologiasUtilizadas": "ASP.NET Core, PostgreSQL, Docker, Angular",
+  "urlProyecto": "https://github.com/ejemplo/portal"
+}
+
+### 13. Eliminar proyecto (204)
+DELETE {{base}}/1/proyectos/{{proy.response.body.idProyecto}}
+
+### 14. Eliminarlo otra vez (404)
+DELETE {{base}}/1/proyectos/{{proy.response.body.idProyecto}}
+
+### 15. Eliminar experiencia (204)
+DELETE {{base}}/1/experiencias/{{exp.response.body.idExperiencia}}
