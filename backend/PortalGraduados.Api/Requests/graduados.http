@@ -1,0 +1,146 @@
+@base = http://localhost:8080/api/graduados
+
+### 1. Registrar graduado (201)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "ana.lopez@ejemplo.com",
+  "contrasena": "Prueba12345",
+  "nombres": "Ana Maria",
+  "apellidos": "Lopez Perez",
+  "telefono": "70001111",
+  "anioGraduacion": 2024,
+  "estadoAcademico": "Egresado",
+  "estadoLaboral": "Empleado",
+  "areaTrabajo": "Desarrollo de software",
+  "ubicacion": "San Salvador",
+  "portafolioEnlace": "https://ejemplo.com/ana",
+  "consentimiento": true
+}
+
+### 2. Correo duplicado (409)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "ANA.LOPEZ@ejemplo.com",
+  "contrasena": "Prueba12345",
+  "nombres": "Otra",
+  "apellidos": "Persona",
+  "telefono": "70002222",
+  "anioGraduacion": 2023,
+  "estadoAcademico": "Egresado",
+  "estadoLaboral": "Desempleado",
+  "areaTrabajo": "Redes",
+  "ubicacion": "Santa Ana",
+  "consentimiento": true
+}
+
+### 3. Sin consentimiento (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "sin.consentimiento@ejemplo.com",
+  "contrasena": "Prueba12345",
+  "nombres": "Carlos",
+  "apellidos": "Ramos",
+  "telefono": "70003333",
+  "anioGraduacion": 2022,
+  "estadoAcademico": "Egresado",
+  "estadoLaboral": "Empleado",
+  "areaTrabajo": "Datos",
+  "ubicacion": "San Miguel",
+  "consentimiento": false
+}
+
+### 4. Datos invalidos (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "correo": "no-es-correo",
+  "contrasena": "123",
+  "nombres": "",
+  "apellidos": "",
+  "telefono": "1",
+  "anioGraduacion": 1800,
+  "estadoAcademico": "",
+  "estadoLaboral": "",
+  "areaTrabajo": "",
+  "ubicacion": "",
+  "portafolioEnlace": "no-es-url",
+  "consentimiento": true
+}
+
+### 5. Listar (200, revisa el encabezado X-Total-Count)
+GET {{base}}
+
+### 6. Listar con filtros y paginacion (200)
+GET {{base}}?estadoLaboral=empleado&pagina=1&tamano=10
+
+### 7. Paginacion invalida (400)
+GET {{base}}?tamano=500
+
+### 8. Obtener por id (200)
+GET {{base}}/1
+
+### 9. Id inexistente (404)
+GET {{base}}/999
+
+### 10. Actualizar perfil (200)
+PUT {{base}}/1
+Content-Type: application/json
+
+{
+  "nombres": "Ana Maria",
+  "apellidos": "Lopez Perez",
+  "telefono": "70009999",
+  "anioGraduacion": 2024,
+  "estadoAcademico": "Graduado",
+  "estadoLaboral": "Empleado",
+  "areaTrabajo": "Desarrollo web",
+  "ubicacion": "San Salvador",
+  "portafolioEnlace": "https://ejemplo.com/ana"
+}
+
+### 11. Verificar perfil (200)
+PUT {{base}}/1/verificacion
+Content-Type: application/json
+
+{ "verificado": true }
+
+### 12. Verificacion sin cuerpo valido (400)
+PUT {{base}}/1/verificacion
+Content-Type: application/json
+
+{}
+
+### 13. Crear una habilidad para asignar (201)
+# @name habilidad
+POST http://localhost:8080/api/habilidades
+Content-Type: application/json
+
+{ "nombreHabilidad": "SQL", "categoria": "Base de datos" }
+
+### 14. Asignar habilidad al graduado (204)
+PUT {{base}}/1/habilidades/{{habilidad.response.body.idHabilidad}}
+
+### 15. Asignarla otra vez, es idempotente (204)
+PUT {{base}}/1/habilidades/{{habilidad.response.body.idHabilidad}}
+
+### 16. Habilidad inexistente (404)
+PUT {{base}}/1/habilidades/999
+
+### 17. Listar habilidades del graduado (200)
+GET {{base}}/1/habilidades
+
+### 18. Borrar la habilidad estando en uso (409)
+DELETE http://localhost:8080/api/habilidades/{{habilidad.response.body.idHabilidad}}
+
+### 19. Quitar la habilidad al graduado (204)
+DELETE {{base}}/1/habilidades/{{habilidad.response.body.idHabilidad}}
+
+### 20. Quitarla otra vez (404)
+DELETE {{base}}/1/habilidades/{{habilidad.response.body.idHabilidad}}
