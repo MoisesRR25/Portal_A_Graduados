@@ -1,0 +1,52 @@
+@base = http://localhost:8080/api/habilidades
+
+### 1. Listar (vacío al inicio)
+GET {{base}}
+
+### 2. Crear (espera 201)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "nombreHabilidad": "C#",
+  "categoria": "Backend"
+}
+
+### 3. Crear duplicado (espera 409)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "nombreHabilidad": "C#",
+  "categoria": "Backend"
+}
+
+### 4. Datos inválidos (espera 400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "nombreHabilidad": "",
+  "categoria": "X"
+}
+
+### 5. Obtener por id (espera 200)
+GET {{base}}/1
+
+### 6. Id inexistente (espera 404)
+GET {{base}}/999
+
+### 7. Actualizar (espera 200)
+PUT {{base}}/1
+Content-Type: application/json
+
+{
+  "nombreHabilidad": "C# y .NET",
+  "categoria": "Backend"
+}
+
+### 8. Filtrar por categoría
+GET {{base}}?categoria=Backend
+
+### 9. Eliminar (espera 204)
+DELETE {{base}}/1
