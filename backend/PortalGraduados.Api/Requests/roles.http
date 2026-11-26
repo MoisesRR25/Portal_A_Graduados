@@ -1,0 +1,37 @@
+@base = http://localhost:8080/api/roles
+
+### 1. Crear Administrador (201)
+POST {{base}}
+Content-Type: application/json
+
+{ "nombreRol": "Administrador", "descripcion": "Gestiona el portal" }
+
+### 2. Crear Graduado (201)
+POST {{base}}
+Content-Type: application/json
+
+{ "nombreRol": "Graduado", "descripcion": "Egresado que busca oportunidades" }
+
+### 3. Crear Empresa (201)
+POST {{base}}
+Content-Type: application/json
+
+{ "nombreRol": "Empresa", "descripcion": "Empresa que publica ofertas" }
+
+### 4. Duplicado (409)
+POST {{base}}
+Content-Type: application/json
+
+{ "nombreRol": "empresa" }
+
+### 5. Inválido (400)
+POST {{base}}
+Content-Type: application/json
+
+{ "nombreRol": "" }
+
+### 6. Listar (200)
+GET {{base}}
+
+### 7. Inexistente (404)
+GET {{base}}/999
