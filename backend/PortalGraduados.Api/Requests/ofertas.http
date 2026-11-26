@@ -1,0 +1,190 @@
+@base = http://localhost:8080/api/ofertas
+
+### 1. Publicar oferta, empresa aprobada (201)
+# @name oferta
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "Desarrollador backend .NET",
+  "area": "Desarrollo de software",
+  "ubicacion": "San Salvador",
+  "descripcionCorta": "Desarrollo de APIs con ASP.NET Core",
+  "descripcion": "Diseno y mantenimiento de APIs REST con ASP.NET Core y PostgreSQL.",
+  "requisitos": "Conocimientos de C#, SQL y Git. Deseable Docker.",
+  "rangoSalarial": "$800 - $1200",
+  "modalidad": "Hibrido",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 2. Empresa no aprobada (409)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 2,
+  "cargo": "Analista",
+  "area": "Datos",
+  "ubicacion": "Santa Ana",
+  "descripcionCorta": "Analisis de datos",
+  "descripcion": "Analisis y reportes de datos del negocio.",
+  "requisitos": "SQL y Excel avanzado.",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 3. Empresa inexistente (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 999,
+  "cargo": "Analista",
+  "area": "Datos",
+  "ubicacion": "Santa Ana",
+  "descripcionCorta": "Analisis de datos",
+  "descripcion": "Analisis y reportes de datos del negocio.",
+  "requisitos": "SQL y Excel avanzado.",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 4. Datos invalidos: modalidad y campos vacios (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "",
+  "area": "",
+  "ubicacion": "",
+  "descripcionCorta": "x",
+  "descripcion": "corta",
+  "requisitos": "corta",
+  "modalidad": "Volando",
+  "clasificacionOportunidad": "",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 5. Fecha de cierre en el pasado (400)
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "Analista",
+  "area": "Datos",
+  "ubicacion": "Santa Ana",
+  "descripcionCorta": "Analisis de datos",
+  "descripcion": "Analisis y reportes de datos del negocio.",
+  "requisitos": "SQL y Excel avanzado.",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2026-01-01T00:00:00"
+}
+
+### 6. Listar (200, revisa X-Total-Count)
+GET {{base}}
+
+### 7. Listar con filtros (200)
+GET {{base}}?idEmpresa=1&estado=Activa&vigentes=true&area=desarrollo de software
+
+### 8. Paginacion invalida (400)
+GET {{base}}?tamano=500
+
+### 9. Detalle (200)
+GET {{base}}/{{oferta.response.body.idOferta}}
+
+### 10. Oferta inexistente (404)
+GET {{base}}/999
+
+### 11. Actualizar (200)
+PUT {{base}}/{{oferta.response.body.idOferta}}
+Content-Type: application/json
+
+{
+  "cargo": "Desarrollador backend .NET senior",
+  "area": "Desarrollo de software",
+  "ubicacion": "San Salvador",
+  "descripcionCorta": "APIs con ASP.NET Core y PostgreSQL",
+  "descripcion": "Diseno y mantenimiento de APIs REST con ASP.NET Core y PostgreSQL.",
+  "requisitos": "Conocimientos de C#, SQL, Git y Docker.",
+  "rangoSalarial": "$1000 - $1500",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-04-30T23:59:00"
+}
+
+### 12. Cerrar oferta (200)
+PUT {{base}}/{{oferta.response.body.idOferta}}/estado
+Content-Type: application/json
+
+{ "estado": "Cerrada" }
+
+### 13. Reabrir oferta (200)
+PUT {{base}}/{{oferta.response.body.idOferta}}/estado
+Content-Type: application/json
+
+{ "estado": "Activa" }
+
+### 14. Estado invalido (400)
+PUT {{base}}/{{oferta.response.body.idOferta}}/estado
+Content-Type: application/json
+
+{ "estado": "Pausada" }
+
+### 15. Crear habilidad para asignar (201; 409 si ya existe: usa su id real)
+# @name hab
+POST http://localhost:8080/api/habilidades
+Content-Type: application/json
+
+{ "nombreHabilidad": "Docker", "categoria": "DevOps" }
+
+### 16. Asignar habilidad a la oferta (204)
+PUT {{base}}/{{oferta.response.body.idOferta}}/habilidades/{{hab.response.body.idHabilidad}}
+
+### 17. Asignarla otra vez, idempotente (204)
+PUT {{base}}/{{oferta.response.body.idOferta}}/habilidades/{{hab.response.body.idHabilidad}}
+
+### 18. Habilidad inexistente (404)
+PUT {{base}}/{{oferta.response.body.idOferta}}/habilidades/999
+
+### 19. Listar habilidades de la oferta (200)
+GET {{base}}/{{oferta.response.body.idOferta}}/habilidades
+
+### 20. Quitar habilidad (204)
+DELETE {{base}}/{{oferta.response.body.idOferta}}/habilidades/{{hab.response.body.idHabilidad}}
+
+### 21. Quitarla otra vez (404)
+DELETE {{base}}/{{oferta.response.body.idOferta}}/habilidades/{{hab.response.body.idHabilidad}}
+
+### 22. Crear una oferta desechable (201)
+# @name temp
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "Pasante de soporte",
+  "area": "Soporte tecnico",
+  "ubicacion": "San Miguel",
+  "descripcionCorta": "Soporte a usuarios internos",
+  "descripcion": "Atencion de tickets de soporte tecnico a usuarios.",
+  "requisitos": "Estudiante de ingenieria de sistemas.",
+  "modalidad": "Presencial",
+  "clasificacionOportunidad": "Pasantia",
+  "fechaCierre": "2027-02-28T23:59:00"
+}
+
+### 23. Asignarle una habilidad (204)
+PUT {{base}}/{{temp.response.body.idOferta}}/habilidades/{{hab.response.body.idHabilidad}}
+
+### 24. Eliminarla, borra tambien sus habilidades (204)
+DELETE {{base}}/{{temp.response.body.idOferta}}
+
+### 25. Eliminarla otra vez (404)
+DELETE {{base}}/{{temp.response.body.idOferta}}
