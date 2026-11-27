@@ -21,6 +21,13 @@ builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 
 var app = builder.Build();
 
+// Aplica las migraciones pendientes y la semilla de roles al iniciar la API
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<PortalGraduadosDbContext>();
+    db.Database.Migrate();
+}
+
 // Configuración del entorno de desarrollo
 if (app.Environment.IsDevelopment())
 {
