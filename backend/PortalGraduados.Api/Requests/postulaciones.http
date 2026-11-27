@@ -164,3 +164,30 @@ DELETE {{base}}/{{post2.response.body.idPostulacion}}
 
 ### 28. Eliminar la oferta 1, que tiene postulaciones (409)
 DELETE {{ofertas}}/1
+
+### 29. Crear oferta sin rango salarial: queda En revision (201)
+# @name enrevision
+POST {{ofertas}}
+Content-Type: application/json
+
+{
+  "idEmpresa": 1,
+  "cargo": "Oferta en revision de prueba",
+  "area": "Pruebas",
+  "ubicacion": "San Salvador",
+  "descripcionCorta": "Oferta sin rango salarial",
+  "descripcion": "Oferta desechable para probar que no se puede postular en revision.",
+  "requisitos": "Ninguno, es solo una prueba.",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-03-31T23:59:00"
+}
+
+### 30. Postular a una oferta En revision (409)
+POST {{base}}
+Content-Type: application/json
+
+{ "idGraduado": 1, "idOferta": {{enrevision.response.body.idOferta}}, "cvEnviado": "cv-ana-lopez.pdf" }
+
+### 31. Eliminar la oferta de prueba (204)
+DELETE {{ofertas}}/{{enrevision.response.body.idOferta}}
