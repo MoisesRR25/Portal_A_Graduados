@@ -1,0 +1,527 @@
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-layout {
+    display: block;
+  }
+
+}
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-publicar-oferta) .portal-shell {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8f9fb;
+  color: #1f2937;
+  font-family: inherit;
+}
+
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-publicar-oferta) .portal-shell {
+    display: block;
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-main {
+    width: 100%;
+    min-width: 0;
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .badge-ues {
+  background: #b91c1c;
+  color: white;
+  font-weight: 800;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .text-red {
+  color: #b91c1c;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-publicar-oferta) .main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-publicar-oferta) .main-area {
+    width: 100%;
+    min-width: 0;
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .user-profile-badge {
+    gap: 0.5rem;
+  }
+
+}
+:where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .icon-btn:hover {
+  background-color: #f3f4f6;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-panel-general, app-publicar-oferta) .icon-btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 8px;
+}
+
+:where(app-aprobaciones, app-carga-masiva, app-panel-general) .admin-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+:where(app-buscar-perfiles, app-publicar-oferta) .icon-btn:hover {
+  background: #f3f4f6;
+}
+
+:where(app-aprobaciones, app-panel-general) .admin-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+@media (max-width: 600px) {
+  :where(app-aprobaciones, app-panel-general) .admin-name {
+    font-size: 11.5px;
+  }
+
+}
+:where(app-aprobaciones, app-panel-general) .admin-role {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+  :where(app-aprobaciones, app-panel-general) .admin-role {
+    font-size: 10px;
+  }
+
+}
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .company-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .company-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #111827;
+}
+
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .company-name {
+    font-size: 11.5px;
+  }
+
+}
+:where(app-buscar-perfiles, app-candidatos) .company-role {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .company-role {
+    font-size: 10px;
+  }
+
+}
+:where(app-bolsa-interna, app-mis-ofertas-empresa) .dashboard-content {
+  padding: 2rem;
+  max-width: 1250px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:where(app-dashboard, app-perfil-graduado) .dashboard-content {
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+:where(app-bolsa-interna, app-mis-postulaciones) .welcome-header {
+  margin-bottom: 1.5rem;
+}
+
+:where(app-carga-masiva, app-panel-general) .page-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .mi-portal {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #b91c1c;
+  letter-spacing: 0.5px;
+}
+
+:where(app-carga-masiva, app-panel-general) .page-header-row h1 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+:where(app-bolsa-interna, app-mis-postulaciones) .welcome-header h1 {
+  font-size: 1.75rem;
+  color: #0f172a;
+  margin: 0.2rem 0;
+}
+
+@media (max-width: 600px) {
+  :where(app-bolsa-interna, app-mis-postulaciones) .welcome-header h1 {
+    font-size: 1.5rem;
+  }
+
+}
+:where(app-aprobaciones, app-carga-masiva, app-panel-general, app-publicar-oferta) .content-container {
+  padding: 24px 28px 40px;
+  max-width: 1180px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+:where(app-bolsa-interna, app-mis-postulaciones) .welcome-header p {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  :where(app-bolsa-interna, app-mis-postulaciones) .welcome-header p {
+    font-size: 0.85rem;
+  }
+
+}
+:where(app-aprobaciones, app-carga-masiva) .page-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .eyebrow {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #b91c1c;
+  margin-bottom: 4px;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .page-header {
+  margin-bottom: 20px;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .content-container {
+  padding: 24px 28px 40px;
+  max-width: 1180px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 960px) {
+  :where(app-buscar-perfiles, app-candidatos) .content-container {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+}
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .content-container {
+    padding: 18px 16px 32px;
+  }
+
+}
+@media (max-width: 360px) {
+  :where(app-buscar-perfiles, app-candidatos) .content-container {
+    padding: 14px 12px 28px;
+  }
+
+}
+:where(app-bolsa-interna, app-bolsa-trabajo) .filter-group {
+  margin-bottom: 1.25rem;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .page-header h1 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+@media (max-width: 360px) {
+  :where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .page-header h1 {
+    font-size: 21px;
+  }
+
+}
+:where(app-buscar-perfiles, app-candidatos, app-panel-general, app-publicar-oferta) .page-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .search-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .search-bar input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: 13px;
+  color: #111827;
+  background: transparent;
+  font-family: inherit;
+}
+
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .search-bar input {
+    flex: 1 1 calc(100% - 30px);
+    font-size: 16px;
+  }
+
+}
+:where(app-aprobaciones, app-panel-general) .icon-pink {
+  background-color: #fee2e2;
+}
+
+:where(app-aprobaciones, app-panel-general) .icon-blue {
+  background-color: #dbeafe;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .candidates-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .candidate-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .candidate-card {
+    padding: 16px;
+  }
+
+}
+@media (max-width: 360px) {
+  :where(app-buscar-perfiles, app-candidatos) .candidate-card {
+    padding: 14px;
+  }
+
+}
+:where(app-buscar-perfiles, app-candidatos) .card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+:where(app-mis-ofertas-empresa, app-mis-postulaciones) .postulations-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+:where(app-mis-ofertas-empresa, app-mis-postulaciones) .postulations-table tr:last-child td {
+  border-bottom: none;
+}
+
+:where(app-dashboard, app-perfil-graduado) .progress-bar-fill {
+  background: #b91c1c;
+  height: 100%;
+}
+
+:where(app-bolsa-interna, app-dashboard) .job-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .match-badge {
+  background-color: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .candidate-info h2 {
+  margin: 0 0 3px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+  overflow-wrap: anywhere;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .candidate-role {
+  margin: 0 0 3px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .candidate-career {
+  margin: 0;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones) .badge-comp {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones) .badge-comp.as {
+  background: #2563eb;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .skills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones) .badge-comp.ba {
+  background: #059669;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .skill-pill {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones) .badge-comp.el {
+  background: #7c3aed;
+}
+
+:where(app-bolsa-interna, app-dashboard) .job-header small {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+:where(app-mis-ofertas-empresa, app-mis-postulaciones) .status-badge.closed {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+:where(app-bolsa-interna, app-mis-postulaciones) .badge-comp.ha {
+  background: #ea580c;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .empty-results > span {
+  font-size: 30px;
+}
+
+:where(app-bolsa-interna, app-mis-postulaciones) .badge-comp.se {
+  background: #0f172a;
+}
+
+:where(app-bolsa-interna, app-dashboard) .tags {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .empty-results h2 {
+  margin: 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+:where(app-bolsa-interna, app-dashboard) .job-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 0.75rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 600px) {
+  :where(app-bolsa-interna, app-dashboard) .job-footer {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard) .view-offer {
+  color: #b91c1c;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  :where(app-bolsa-interna, app-dashboard) .job-header > div {
+    flex: 1 1 150px;
+    min-width: 0;
+  }
+
+  :where(app-bolsa-interna, app-dashboard) .job-header .match-badge {
+    position: static;
+    align-self: flex-start;
+    white-space: nowrap;
+  }
+
+}

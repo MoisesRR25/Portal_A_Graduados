@@ -1,181 +1,21 @@
-.dashboard-layout {
-  display: flex;
-  min-height: 100vh;
-  background: #f8fafc;
-  width: 100%;
-  box-sizing: border-box;
-}
 
-.dashboard-sidebar {
-  width: 260px;
-  background: white;
-  border-right: 1px solid #e2e8f0;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  flex-shrink: 0;
-  box-sizing: border-box;
-}
+/* ==========================================
+   BOLSA INTERNA - ESTILOS ESPECÍFICOS
+   Los estilos compartidos están en styles.css
+   ========================================== */
 
-.sidebar-bottom {
-  margin-top: auto;
-}
+/* 1. BUSCADOR */
 
-.dashboard-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-.sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-.badge-ues {
-  background: #b91c1c;
-  color: white;
-  font-weight: 800;
-  padding: 0.35rem 0.6rem;
-  border-radius: 6px;
-}
-
-.sidebar-brand strong {
-  font-size: 0.9rem;
-  color: #0f172a;
-  display: block;
-}
-
-.sidebar-brand small {
-  font-size: 0.7rem;
-  color: #64748b;
-}
-
-.nav-section-title {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #94a3b8;
-  letter-spacing: 0.5px;
-  margin-bottom: 0.75rem;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.nav-item {
-  padding: 0.65rem 0.875rem;
-  border-radius: 8px;
-  color: #475569;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.nav-item:hover, .nav-item.active {
-  background: #fef2f2;
-  color: #b91c1c;
-}
-
-.text-red {
-  color: #b91c1c;
-}
-
-.sidebar-footer-card {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #f1f5f9;
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-.sidebar-footer-card span {
-  display: block;
-  font-weight: 600;
-  color: #0f172a;
-}
-
-.dashboard-topbar {
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 0.75rem 2rem;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.user-profile-badge {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.notification-icon {
-  font-size: 1.1rem;
-  cursor: pointer;
-}
-
-.user-avatar-name {
-  text-align: right;
-  line-height: 1.2;
-}
-
-.user-avatar-name strong {
-  display: block;
-  font-size: 0.875rem;
-  color: #0f172a;
-}
-
-.user-avatar-name small {
-  font-size: 0.75rem;
-  color: #64748b;
-}
-
-.dashboard-content {
-  padding: 2rem;
-  max-width: 1250px;
-}
-
-.welcome-header {
-  margin-bottom: 1.5rem;
-}
-
-.mi-portal {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #b91c1c;
-  letter-spacing: 0.5px;
-}
-
-.welcome-header h1 {
-  font-size: 1.75rem;
-  color: #0f172a;
-  margin: 0.2rem 0;
-}
-
-.welcome-header p {
-  color: #64748b;
-  font-size: 0.9rem;
-}
-
-/* Buscador superior */
 .search-bar-container {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
+  gap: .75rem;
+  margin-bottom: 1.5rem;
 }
 
 .search-input-wrapper {
   position: relative;
   flex: 1;
+  min-width: 0;
 }
 
 .search-icon {
@@ -183,108 +23,120 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 .search-input-control {
   width: 100%;
-  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  box-sizing: border-box;
+  padding: .8rem 1rem .8rem 2.5rem;
   border: 1px solid #cbd5e1;
   border-radius: 10px;
-  font-size: 0.9rem;
-  background: white;
+  font-size: .9rem;
+  background: #fff;
   outline: none;
 }
 
-.search-input-control:focus {
+.search-input-control:focus,
+.filter-select:focus,
+.sort-select:focus {
   border-color: #b91c1c;
+  outline: 2px solid #fecaca;
+  outline-offset: 1px;
 }
 
 .btn-search-primary {
   background: #b91c1c;
-  color: white;
-  border: none;
-  padding: 0 1.75rem;
+  color: #fff;
+  border: 0;
+  padding: .75rem 1.5rem;
   border-radius: 10px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: .9rem;
   cursor: pointer;
+  font-family: inherit;
 }
 
-.btn-search-primary:hover {
-  background: #991b1b;
-}
+.btn-search-primary:hover { background: #991b1b; }
+.btn-search-primary:disabled { opacity: .55; cursor: not-allowed; }
 
-/* Layout Bolsa de Trabajo */
+/* 2. DISTRIBUCIÓN Y FILTROS */
+
 .job-board-grid {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 280px minmax(0, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
 
-/* Tarjeta de Filtros Lateral */
 .filters-card {
-  background: white;
+  background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.25rem;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .filters-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: .75rem;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .filters-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: .5rem;
 }
 
-.filters-title h3 {
-  font-size: 0.95rem;
-  color: #0f172a;
-}
+.filters-title h3 { font-size: .95rem; color: #0f172a; margin: 0; }
 
 .clear-filters {
-  font-size: 0.75rem;
+  font-size: .75rem;
   color: #b91c1c;
   text-decoration: none;
   font-weight: 600;
 }
 
-.filter-group {
-  margin-bottom: 1.25rem;
+.bolsa-enlace-boton {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
 }
 
 .filter-label {
   display: block;
-  font-size: 0.8rem;
+  font-size: .8rem;
   font-weight: 700;
   color: #334155;
-  margin-bottom: 0.5rem;
+  margin-bottom: .5rem;
 }
 
 .filter-select {
   width: 100%;
-  padding: 0.6rem;
+  box-sizing: border-box;
+  padding: .6rem;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  font-size: 0.825rem;
-  background: white;
+  font-size: .825rem;
+  background: #fff;
   outline: none;
 }
+
+/* 3. CASILLAS Y HABILIDADES */
 
 .checkbox-list {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  font-size: 0.825rem;
+  gap: .5rem;
+  font-size: .825rem;
   color: #475569;
 }
 
@@ -292,163 +144,418 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   cursor: pointer;
 }
 
-.checkbox-list .count {
-  color: #94a3b8;
-  font-size: 0.75rem;
+.checkbox-list label > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
+
+.checkbox-list input { accent-color: #b91c1c; cursor: pointer; }
+.checkbox-list .count { color: #94a3b8; font-size: .75rem; }
 
 .filter-tags-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: .35rem;
 }
 
-.filter-tags-grid span {
+.bolsa-habilidad {
   background: #f1f5f9;
   color: #334155;
-  font-size: 0.75rem;
-  padding: 0.2rem 0.5rem;
+  font: inherit;
+  font-size: .75rem;
+  padding: .25rem .55rem;
   border-radius: 6px;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
-/* Resultados y Cuadrícula */
+.bolsa-habilidad.seleccionada {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fca5a5;
+  font-weight: 700;
+}
+
+/* 4. RESULTADOS Y OFERTAS */
+
+.job-results-container { min-width: 0; }
+
 .results-meta-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: .75rem;
   margin-bottom: 1rem;
-  font-size: 0.85rem;
+  font-size: .85rem;
   color: #64748b;
 }
 
 .sort-select {
-  padding: 0.4rem 0.6rem;
+  padding: .4rem .6rem;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
-  font-size: 0.825rem;
-  background: white;
+  font-size: .825rem;
+  background: #fff;
   outline: none;
+  max-width: 100%;
 }
 
 .jobs-grid-2 {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
 .job-card-mini {
-  background: white;
+  background: #fff;
   padding: 1.25rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
-  position: relative;
-}
-
-.job-header {
+  min-width: 0;
+  box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-  position: relative;
+  flex-direction: column;
+  gap: .8rem;
 }
 
-.badge-comp {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 0.75rem;
-  flex-shrink: 0;
-}
-
-.badge-comp.as { background: #2563eb; }
-.badge-comp.ba { background: #059669; }
-.badge-comp.el { background: #7c3aed; }
 .badge-comp.tt { background: #be123c; }
-.badge-comp.ha { background: #ea580c; }
-.badge-comp.se { background: #0f172a; }
+.job-header { gap: .6rem; min-width: 0; }
 
 .job-header h4 {
-  font-size: 0.95rem;
+  font-size: .95rem;
   color: #0f172a;
+  margin: .2rem 0 0;
+  overflow-wrap: anywhere;
 }
 
-.job-header small {
-  color: #64748b;
-  font-size: 0.75rem;
-}
+.bolsa-titulo-oferta { min-width: 0; flex: 1; }
 
 .match-badge {
-  position: absolute;
-  top: 0;
-  right: 1.5rem;
+  position: static;
   background: #dcfce7;
   color: #166534;
-  font-size: 0.7rem;
+  font-size: .7rem;
   font-weight: 600;
-  padding: 0.15rem 0.4rem;
+  padding: .2rem .4rem;
   border-radius: 10px;
+  white-space: normal;
+  text-align: center;
+  align-self: flex-start;
+  max-width: 92px;
 }
 
 .favorite-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 1.1rem;
+  position: static;
+  flex-shrink: 0;
+  border: 0;
+  background: none;
+  padding: 0 .1rem;
   color: #94a3b8;
+  font-size: 1.35rem;
   cursor: pointer;
+  line-height: 1;
 }
+
+.favorite-icon.es-favorita { color: #b91c1c; }
 
 .job-loc {
-  font-size: 0.8rem;
+  font-size: .8rem;
   color: #475569;
-  margin-bottom: 0.75rem;
-}
-
-.tags {
-  display: flex;
-  gap: 0.3rem;
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
+  line-height: 1.5;
 }
 
 .tags span {
   background: #f1f5f9;
   color: #334155;
-  font-size: 0.7rem;
-  padding: 0.15rem 0.5rem;
+  font-size: .7rem;
+  padding: .2rem .5rem;
   border-radius: 4px;
 }
 
-.job-footer {
+.job-footer { margin-top: auto; }
+.view-offer { color: #b91c1c; font-weight: 700; font-size: .8rem; }
+
+.view-offer:hover,
+.clear-filters:hover { text-decoration: underline; }
+
+/* 5. NAVEGACIÓN Y MENSAJES */
+
+.bolsa-nav-boton {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.bolsa-aviso-demo,
+.bolsa-mensaje {
+  margin: 0 0 1rem;
+  padding: .85rem 1rem;
+  border-radius: 9px;
+  font-size: .8rem;
+  line-height: 1.6;
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.bolsa-mensaje {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bolsa-mensaje button,
+.bolsa-notificaciones-titulo button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+  font-size: 1rem;
+}
+
+.bolsa-aclaracion {
+  font-size: .72rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 1rem 0 0;
+}
+
+/* 6. SIN RESULTADOS */
+
+.bolsa-sin-resultados {
+  grid-column: 1 / -1;
+  border: 1px dashed #cbd5e1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.bolsa-sin-resultados > span { font-size: 2rem; }
+.bolsa-sin-resultados h3 { color: #0f172a; font-size: 1rem; }
+
+.bolsa-sin-resultados p {
+  color: #64748b;
+  font-size: .85rem;
+  line-height: 1.5;
+}
+
+/* 7. NOTIFICACIONES */
+
+.bolsa-notificaciones-contenedor { position: relative; }
+
+.bolsa-notificaciones-boton {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: .4rem;
+  font-size: 1.1rem;
+}
+
+.bolsa-notificaciones {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -40px;
+  z-index: 100;
+  width: 290px;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px #0f172a22;
+  padding: 1rem;
+}
+
+.bolsa-notificaciones-titulo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #f1f5f9;
-  padding-top: 0.75rem;
-  font-size: 0.75rem;
-  color: #94a3b8;
+  gap: 10px;
+  font-size: .85rem;
 }
 
-.view-offer {
-  color: #b91c1c;
-  font-weight: 600;
-  text-decoration: none;
+.bolsa-notificaciones p {
+  color: #64748b;
+  font-size: .8rem;
+  line-height: 1.5;
 }
+
+/* 8. VENTANAS EMERGENTES */
+
+.bolsa-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: #0f172a99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.bolsa-dialog {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  box-shadow: 0 18px 45px #0003;
+  color: #1f2937;
+}
+
+.bolsa-dialog-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.bolsa-dialog-cabecera h2 {
+  font-size: 1.35rem;
+  color: #0f172a;
+  margin: .25rem 0 0;
+}
+
+.bolsa-cerrar {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: .5rem;
+  color: #475569;
+}
+
+/* 9. DETALLE DE OFERTA */
+
+.bolsa-datos-oferta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 1rem 0;
+}
+
+.bolsa-datos-oferta > div {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: .7rem;
+  min-width: 0;
+}
+
+.bolsa-datos-oferta dt {
+  font-size: .7rem;
+  color: #64748b;
+  margin-bottom: .25rem;
+}
+
+.bolsa-datos-oferta dd {
+  font-size: .85rem;
+  font-weight: 600;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.bolsa-dialog-aviso {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: .8rem;
+  color: #1e40af;
+  font-size: .8rem;
+  line-height: 1.6;
+}
+
+.bolsa-confirmacion {
+  color: #166534;
+  background: #f0fdf4;
+  border-radius: 8px;
+  padding: .7rem;
+  font-size: .8rem;
+}
+
+.bolsa-dialog-acciones {
+  display: flex;
+  gap: .6rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 1.2rem;
+}
+
+.bolsa-boton-secundario {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  padding: .7rem 1rem;
+  color: #334155;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 10. ADAPTACIÓN A PANTALLAS */
 
 @media (max-width: 1024px) {
-  .job-board-grid {
-    grid-template-columns: 1fr;
+  .job-board-grid { grid-template-columns: minmax(0, 1fr); }
+  .jobs-grid-2 { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .dashboard-content {
+    padding: 1.5rem;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .jobs-grid-2 {
-    grid-template-columns: 1fr;
+
+  .job-board-grid { gap: 1rem; }
+  .filters-card,
+  .job-results-container { width: 100%; min-width: 0; }
+}
+
+@media (max-width: 600px) {
+  .dashboard-content { padding: 1rem; }
+
+  .search-bar-container {
+    flex-direction: column;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
   }
+
+  .search-input-wrapper { width: 100%; flex: none; }
+  .btn-search-primary { width: 100%; min-height: 42px; }
+  .filters-card { padding: 1rem; }
+  .filter-group { margin-bottom: 1rem; }
+
+  .results-meta-row {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .sort-select { width: 100%; min-height: 38px; }
+  .job-card-mini { padding: 1rem; }
+  .job-header { flex-wrap: wrap; }
+  .match-badge { margin-left: auto; }
+  .bolsa-dialog { padding: 1rem; }
+  .bolsa-datos-oferta { grid-template-columns: 1fr; }
+  .bolsa-dialog-acciones { flex-direction: column; }
+  .bolsa-dialog-acciones button { width: 100%; }
+  .bolsa-notificaciones { right: -70px; }
 }

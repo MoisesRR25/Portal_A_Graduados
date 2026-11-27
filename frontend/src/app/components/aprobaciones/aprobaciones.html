@@ -1,143 +1,967 @@
+
 <div class="portal-shell">
-  <aside class="sidebar">
+
+  <!-- MENÚ LATERAL DEL ADMINISTRADOR -->
+  <aside
+    id="menu-lateral-admin"
+    class="sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
-      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <img
+        src="/ues.png"
+        alt="Logo UES"
+        class="brand-logo"
+      />
+
       <div class="brand-text">
-        <span class="brand-title">Portal de Graduados</span>
-        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+        <span class="brand-title">
+          Portal de Graduados
+        </span>
+
+        <span class="brand-sub">
+          Ingeniería de Sistemas Informáticos
+        </span>
       </div>
     </div>
 
+    <!-- CERRAR MENÚ EN TELÉFONOS -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
+    <!-- NAVEGACIÓN -->
     <div class="sidebar-section">
-      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+
+      <p class="sidebar-label">
+        MENÚ PRINCIPAL
+      </p>
+
       <nav class="sidebar-nav">
-        <a routerLink="/panel-general" class="nav-item">
+
+        <a
+          routerLink="/panel-general"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">📊</span>
           <span>Panel general</span>
         </a>
-        <a routerLink="/aprobaciones" class="nav-item is-active">
+
+        <a
+          routerLink="/aprobaciones"
+          class="nav-item is-active"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">✓</span>
           <span>Aprobaciones</span>
-          <span class="nav-badge">5</span>
+
+          @if (totalPendientes > 0) {
+            <span class="nav-badge">
+              {{ totalPendientes }}
+            </span>
+          }
         </a>
-        <a routerLink="/carga-masiva" class="nav-item">
+
+        <a
+          routerLink="/carga-masiva"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">⬆</span>
           <span>Carga masiva</span>
         </a>
+
       </nav>
     </div>
 
+    <!-- PIE DEL MENÚ -->
     <div class="sidebar-footer">
-      <a href="javascript:void(0)" class="footer-link">
+
+      <button
+        type="button"
+        class="footer-link footer-button"
+        (click)="abrirSeguridad()"
+      >
         <span>🔒</span>
         <span>Acceso y seguridad</span>
-      </a>
-      <a routerLink="/login" class="footer-link">
+      </button>
+
+      <a
+        routerLink="/"
+        class="footer-link"
+        (click)="cerrarMenu()"
+      >
         <span>↪</span>
         <span>Cerrar sesión</span>
       </a>
 
       <div class="institution-badge">
-        <img src="/ues.png" alt="UES" class="institution-logo" />
+
+        <img
+          src="/ues.png"
+          alt="UES"
+          class="institution-logo"
+        />
+
         <div class="institution-info">
           <strong>UES</strong>
           <span>Universidad de El Salvador</span>
           <span>Facultad de Ingeniería</span>
         </div>
+
       </div>
     </div>
   </aside>
 
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
+  <!-- ÁREA PRINCIPAL -->
   <div class="main-area">
+
+    <!-- BARRA SUPERIOR -->
     <header class="topbar">
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="
+          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
+        "
+        aria-controls="menu-lateral-admin"
+      >
+        ☰
+      </button>
+
       <div class="topbar-actions">
-        <button type="button" class="icon-btn" aria-label="Notificaciones">
-          <span>🔔</span>
-          <span class="notif-dot"></span>
-        </button>
-        <div class="admin-chip">
-          <span class="admin-avatar">AR</span>
-          <div class="admin-meta">
-            <span class="admin-name">Ana Rodríguez</span>
-            <span class="admin-role">Administradora</span>
-          </div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+
+            <div
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones administrativas"
+            >
+
+              <div class="notifications-header">
+
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+              <div class="notifications-empty">
+
+                <span aria-hidden="true">🔔</span>
+
+                <strong>
+                  Sin notificaciones reales
+                </strong>
+
+                <p>
+                  Los avisos del servidor aparecerán
+                  aquí cuando se conecte la API.
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
         </div>
+
+        <!-- ADMINISTRADORA -->
+        <div class="admin-chip">
+
+          <span class="admin-avatar">
+            AR
+          </span>
+
+          <div class="admin-meta">
+            <span class="admin-name">
+              Ana Rodríguez
+            </span>
+            <span class="admin-role">
+              Administradora
+            </span>
+          </div>
+
+        </div>
+
       </div>
+
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
+
+      <!-- ENCABEZADO -->
       <div class="page-header">
-        <span class="eyebrow">CONTROL DE CALIDAD</span>
+
+        <span class="eyebrow">
+          CONTROL DE CALIDAD
+        </span>
+
         <h1>Aprobaciones</h1>
-        <p class="page-subtitle">Verifica empresas y oportunidades antes de su publicación.</p>
+
+        <p class="page-subtitle">
+          Verifica empresas y oportunidades
+          antes de su publicación.
+        </p>
+
       </div>
 
-      <div class="tabs-bar">
-        <button type="button" class="tab-btn is-active">
+      <!-- AVISO -->
+      <div class="demo-notice">
+
+        <span aria-hidden="true">ℹ️</span>
+
+        <p>
+          <strong>Modo demostración.</strong>
+          Estas solicitudes son ejemplos.
+          Las aprobaciones y los rechazos solamente
+          cambiarán el estado en esta pantalla.
+          No se modificarán registros reales.
+        </p>
+
+      </div>
+
+      <!-- MENSAJE DESPUÉS DE APROBAR O RECHAZAR -->
+      @if (mensajeResultado) {
+
+        <div
+          class="result-notice"
+          role="status"
+        >
+
+          <span aria-hidden="true">✓</span>
+
+          <p>
+            {{ mensajeResultado }}
+          </p>
+
+          <button
+            type="button"
+            aria-label="Cerrar mensaje"
+            (click)="cerrarMensajeResultado()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+      }
+
+      <!-- PESTAÑAS -->
+      <div
+        class="tabs-bar"
+        aria-label="Filtrar aprobaciones por estado"
+      >
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.is-active]="pestanaActual === 'Pendiente'"
+          [attr.aria-pressed]="pestanaActual === 'Pendiente'"
+          (click)="seleccionarPestana('Pendiente')"
+        >
           <span>Pendientes</span>
-          <span class="tab-count">5</span>
+
+          <span class="tab-count">
+            {{ totalPendientes }}
+          </span>
         </button>
-        <button type="button" class="tab-btn">Aprobadas</button>
-        <button type="button" class="tab-btn">Rechazadas</button>
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.is-active]="pestanaActual === 'Aprobada'"
+          [attr.aria-pressed]="pestanaActual === 'Aprobada'"
+          (click)="seleccionarPestana('Aprobada')"
+        >
+          <span>Aprobadas</span>
+
+          <span class="tab-count">
+            {{ totalAprobadas }}
+          </span>
+        </button>
+
+        <button
+          type="button"
+          class="tab-btn"
+          [class.is-active]="pestanaActual === 'Rechazada'"
+          [attr.aria-pressed]="pestanaActual === 'Rechazada'"
+          (click)="seleccionarPestana('Rechazada')"
+        >
+          <span>Rechazadas</span>
+
+          <span class="tab-count">
+            {{ totalRechazadas }}
+          </span>
+        </button>
+
       </div>
 
+      <!-- LISTADO DE SOLICITUDES -->
       <section class="approvals-list">
-        <article class="approval-card">
-          <span class="type-icon icon-blue">🏢</span>
-          <div class="approval-info">
-            <span class="type-pill">Empresa</span>
-            <h2>Data Solutions SV</h2>
-            <p>NIT 0614-120824-101-8 · Solicitado el 17 jun. 2025</p>
-          </div>
-          <div class="approval-actions">
-            <button type="button" class="btn-review">👁 Revisar</button>
-            <button type="button" class="btn-reject">Rechazar</button>
-            <button type="button" class="btn-approve">✓ Aprobar</button>
-          </div>
-        </article>
 
-        <article class="approval-card">
-          <span class="type-icon icon-blue">🏢</span>
-          <div class="approval-info">
-            <span class="type-pill">Empresa</span>
-            <h2>Grupo Tecnológico Cuscatlán</h2>
-            <p>NIT 0614-090421-103-2 · Solicitado el 16 jun. 2025</p>
-          </div>
-          <div class="approval-actions">
-            <button type="button" class="btn-review">👁 Revisar</button>
-            <button type="button" class="btn-reject">Rechazar</button>
-            <button type="button" class="btn-approve">✓ Aprobar</button>
-          </div>
-        </article>
+        @for (
+          solicitud of solicitudesVisibles;
+          track solicitud.id
+        ) {
 
-        <article class="approval-card">
-          <span class="type-icon icon-pink">💼</span>
-          <div class="approval-info">
-            <span class="type-pill">Oferta</span>
-            <h2>Desarrollador Java Junior</h2>
-            <p>TechLab El Salvador · Solicitado el 18 jun. 2025</p>
-          </div>
-          <div class="approval-actions">
-            <button type="button" class="btn-review">👁 Revisar</button>
-            <button type="button" class="btn-reject">Rechazar</button>
-            <button type="button" class="btn-approve">✓ Aprobar</button>
-          </div>
-        </article>
+          <article class="approval-card">
 
-        <article class="approval-card">
-          <span class="type-icon icon-pink">💼</span>
-          <div class="approval-info">
-            <span class="type-pill">Oferta</span>
-            <h2>Analista de ciberseguridad</h2>
-            <p>Banco Azul · Solicitado el 17 jun. 2025</p>
+            <!-- ICONO SEGÚN TIPO -->
+            <span
+              class="type-icon"
+              [class.icon-blue]="
+                solicitud.tipo === 'Empresa'
+              "
+              [class.icon-pink]="
+                solicitud.tipo === 'Oferta'
+              "
+            >
+              {{
+                solicitud.tipo === 'Empresa'
+                  ? '🏢'
+                  : '💼'
+              }}
+            </span>
+
+            <!-- INFORMACIÓN -->
+            <div class="approval-info">
+
+              <div class="approval-labels">
+
+                <span class="type-pill">
+                  {{ solicitud.tipo }}
+                </span>
+
+                @if (solicitud.estado === 'Aprobada') {
+
+                  <span class="status-pill status-approved">
+                    Aprobada
+                  </span>
+
+                } @else if (
+                  solicitud.estado === 'Rechazada'
+                ) {
+
+                  <span class="status-pill status-rejected">
+                    Rechazada
+                  </span>
+
+                }
+
+              </div>
+
+              <h2>
+                {{ solicitud.titulo }}
+              </h2>
+
+              <p>
+                {{ solicitud.dato }}
+                ·
+                Solicitado el
+                {{ solicitud.fecha }}
+              </p>
+
+            </div>
+
+            <!-- BOTONES -->
+            <div class="approval-actions">
+
+              <button
+                type="button"
+                class="btn-review"
+                (click)="revisarSolicitud(solicitud)"
+              >
+                👁 Revisar
+              </button>
+
+              @if (solicitud.estado === 'Pendiente') {
+
+                <button
+                  type="button"
+                  class="btn-reject"
+                  (click)="
+                    solicitarAccion(solicitud, 'Rechazar')
+                  "
+                >
+                  Rechazar
+                </button>
+
+                <button
+                  type="button"
+                  class="btn-approve"
+                  (click)="
+                    solicitarAccion(solicitud, 'Aprobar')
+                  "
+                >
+                  ✓ Aprobar
+                </button>
+
+              }
+
+            </div>
+
+          </article>
+
+        } @empty {
+
+          <!-- SIN SOLICITUDES EN LA PESTAÑA -->
+          <div class="empty-approvals">
+
+            <span aria-hidden="true">
+              📋
+            </span>
+
+            @if (pestanaActual === 'Pendiente') {
+
+              <h2>
+                No hay solicitudes pendientes
+              </h2>
+
+              <p>
+                Todas las solicitudes de ejemplo
+                han sido revisadas.
+              </p>
+
+            } @else if (
+              pestanaActual === 'Aprobada'
+            ) {
+
+              <h2>
+                Todavía no hay solicitudes aprobadas
+              </h2>
+
+              <p>
+                Las solicitudes aprobadas durante
+                esta demostración aparecerán aquí.
+              </p>
+
+            } @else {
+
+              <h2>
+                Todavía no hay solicitudes rechazadas
+              </h2>
+
+              <p>
+                Las solicitudes rechazadas durante
+                esta demostración aparecerán aquí.
+              </p>
+
+            }
+
           </div>
-          <div class="approval-actions">
-            <button type="button" class="btn-review">👁 Revisar</button>
-            <button type="button" class="btn-reject">Rechazar</button>
-            <button type="button" class="btn-approve">✓ Aprobar</button>
-          </div>
-        </article>
+
+        }
+
       </section>
+
     </main>
   </div>
+
+  <!-- ========================================
+       VENTANA PARA REVISAR SOLICITUD
+       ======================================== -->
+
+  @if (solicitudDetalle; as solicitud) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarRevision()"
+    >
+
+      <section
+        class="review-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-revision"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <div>
+
+            <span class="eyebrow">
+              REVISIÓN DE SOLICITUD
+            </span>
+
+            <h2 id="titulo-revision">
+              {{
+                solicitud.tipo === 'Empresa'
+                  ? 'Verificación de empresa'
+                  : 'Revisión de oferta'
+              }}
+            </h2>
+
+          </div>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar revisión"
+            (click)="cerrarRevision()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <div class="review-summary">
+
+          <span
+            class="type-icon"
+            [class.icon-blue]="
+              solicitud.tipo === 'Empresa'
+            "
+            [class.icon-pink]="
+              solicitud.tipo === 'Oferta'
+            "
+          >
+            {{
+              solicitud.tipo === 'Empresa'
+                ? '🏢'
+                : '💼'
+            }}
+          </span>
+
+          <div>
+            <h3>{{ solicitud.titulo }}</h3>
+            <p>{{ solicitud.tipo }}</p>
+          </div>
+
+        </div>
+
+        <div class="review-details">
+
+          <div>
+            <span>Tipo de solicitud</span>
+            <strong>
+              {{ solicitud.tipo }}
+            </strong>
+          </div>
+
+          <div>
+            <span>Estado actual</span>
+            <strong>
+              {{ solicitud.estado }}
+            </strong>
+          </div>
+
+          <div>
+            <span>
+              {{
+                solicitud.tipo === 'Empresa'
+                  ? 'NIT registrado'
+                  : 'Empresa que publicó'
+              }}
+            </span>
+
+            <strong>
+              {{ solicitud.dato }}
+            </strong>
+          </div>
+
+          <div>
+            <span>Fecha de solicitud</span>
+            <strong>
+              {{ solicitud.fecha }}
+            </strong>
+          </div>
+
+        </div>
+
+        @if (
+          solicitud.estado === 'Rechazada' &&
+          solicitud.motivoRechazo
+        ) {
+
+          <div class="rejection-detail">
+
+            <strong>
+              Motivo del rechazo
+            </strong>
+
+            <p>
+              {{ solicitud.motivoRechazo }}
+            </p>
+
+          </div>
+
+        }
+
+        <div class="modal-notice">
+
+          <strong>
+            Datos de demostración
+          </strong>
+
+          <p>
+            Esta ventana muestra únicamente
+            la información disponible en los
+            ejemplos originales. La validación
+            de documentos, datos empresariales
+            y requisitos de ofertas dependerá
+            de la API y de los permisos reales.
+          </p>
+
+        </div>
+
+        <div class="modal-actions">
+
+          @if (solicitud.estado === 'Pendiente') {
+
+            <button
+              type="button"
+              class="btn-reject"
+              (click)="
+                solicitarAccion(solicitud, 'Rechazar')
+              "
+            >
+              Rechazar
+            </button>
+
+            <button
+              type="button"
+              class="btn-approve"
+              (click)="
+                solicitarAccion(solicitud, 'Aprobar')
+              "
+            >
+              ✓ Aprobar
+            </button>
+
+          }
+
+          <button
+            type="button"
+            class="btn-review"
+            (click)="cerrarRevision()"
+          >
+            Cerrar
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  }
+
+  <!-- ========================================
+       CONFIRMACIÓN DE APROBACIÓN O RECHAZO
+       ======================================== -->
+
+  @if (solicitudAccion; as solicitud) {
+
+    <div
+      class="modal-overlay"
+      (click)="cancelarAccion()"
+    >
+
+      <section
+        class="action-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-confirmacion"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-confirmacion">
+
+            @if (accionActual === 'Aprobar') {
+              ✓ Confirmar aprobación
+            } @else {
+              ✕ Confirmar rechazo
+            }
+
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cancelar operación"
+            (click)="cancelarAccion()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="action-description">
+
+          @if (accionActual === 'Aprobar') {
+
+            ¿Quieres marcar esta solicitud
+            como aprobada en la demostración?
+
+          } @else {
+
+            ¿Quieres marcar esta solicitud
+            como rechazada en la demostración?
+
+          }
+
+        </p>
+
+        <div class="action-target">
+
+          <span>
+            {{ solicitud.tipo }}
+          </span>
+
+          <strong>
+            {{ solicitud.titulo }}
+          </strong>
+
+        </div>
+
+        <!-- MOTIVO OBLIGATORIO PARA RECHAZO -->
+        @if (accionActual === 'Rechazar') {
+
+          <div class="rejection-form">
+
+            <label for="motivoRechazo">
+              Motivo del rechazo
+              <span aria-hidden="true">*</span>
+            </label>
+
+            <textarea
+              id="motivoRechazo"
+              name="motivoRechazo"
+              [(ngModel)]="motivoRechazo"
+              maxlength="500"
+              rows="4"
+              placeholder="Escribe por qué se rechaza esta solicitud..."
+              (ngModelChange)="errorMotivo = ''"
+            ></textarea>
+
+            <div class="textarea-footer">
+
+              <small>
+                Mínimo 10 caracteres.
+              </small>
+
+              <small>
+                {{ motivoRechazo.length }}/500
+              </small>
+
+            </div>
+
+            @if (errorMotivo) {
+
+              <p
+                class="field-error"
+                role="alert"
+              >
+                {{ errorMotivo }}
+              </p>
+
+            }
+
+          </div>
+
+        }
+
+        <div class="modal-notice">
+          Esta acción no modificará
+          PostgreSQL, no publicará ofertas
+          y no enviará correos.
+        </div>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn-review"
+            (click)="cancelarAccion()"
+          >
+            Cancelar
+          </button>
+
+          @if (accionActual === 'Aprobar') {
+
+            <button
+              type="button"
+              class="btn-approve"
+              (click)="confirmarAccion()"
+            >
+              ✓ Confirmar aprobación
+            </button>
+
+          } @else {
+
+            <button
+              type="button"
+              class="btn-reject"
+              (click)="confirmarAccion()"
+            >
+              Confirmar rechazo
+            </button>
+
+          }
+
+        </div>
+
+      </section>
+
+    </div>
+
+  }
+
+  <!-- ========================================
+       ACCESO Y SEGURIDAD
+       ======================================== -->
+
+  @if (seguridadAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarSeguridad()"
+    >
+
+      <section
+        class="security-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-seguridad"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-seguridad">
+            🔒 Acceso y seguridad
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar seguridad"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="security-description">
+          Información de demostración
+          de la cuenta administradora.
+        </p>
+
+        <div class="security-row">
+
+          <span>Usuario</span>
+          <strong>Ana Rodríguez</strong>
+
+        </div>
+
+        <div class="security-row">
+
+          <span>Rol</span>
+          <strong>Administradora</strong>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🔑 Cambiar contraseña
+          </strong>
+
+          <p>
+            Disponible cuando se integre
+            la autenticación real.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            ✉️ Verificación de correo
+          </strong>
+
+          <p>
+            Pendiente de conexión
+            con el servidor.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🛡️ Permisos administrativos
+          </strong>
+
+          <p>
+            La aprobación real de empresas
+            y ofertas deberá estar protegida
+            por permisos de administrador
+            validados en la API.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-approve security-close-button"
+          (click)="cerrarSeguridad()"
+        >
+          Cerrar
+        </button>
+
+      </section>
+
+    </div>
+
+  }
+
 </div>

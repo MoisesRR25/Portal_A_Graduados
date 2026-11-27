@@ -1,75 +1,471 @@
+
 <div class="auth-layout">
+
+  <!-- PANEL IZQUIERDO INSTITUCIONAL -->
   <div class="auth-sidebar">
+
+    <!-- LOGO E INFORMACIÓN DE LA UES -->
     <div class="brand-box">
+
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img
+          src="/ues.png"
+          alt="Universidad Nacional"
+          width="50"
+          height="50"
+        >
       </span>
-      <div><strong>Portal de Graduados</strong><small>Ingeniería de Sistemas Informáticos</small></div>
+
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+
     </div>
+
+    <!-- CONTENIDO INSTITUCIONAL -->
     <div class="sidebar-content">
-      <span class="sub-title">COMUNIDAD PROFESIONAL UES</span>
-      <h1>Talento que transforma El Salvador.</h1>
-      <p>Conectamos el conocimiento y la experiencia de nuestros graduados con organizaciones que construyen el futuro.</p>
+
+      <span class="sub-title">
+        COMUNIDAD PROFESIONAL UES
+      </span>
+
+      <h1>
+        Talento que transforma El Salvador.
+      </h1>
+
+      <p>
+        Conectamos el conocimiento y la experiencia
+        de nuestros graduados con organizaciones
+        que construyen el futuro.
+      </p>
+
     </div>
+
+    <!-- TESTIMONIO -->
     <div class="testimonial-card">
-      <p>"El portal me permitió encontrar mi primera oportunidad profesional en tecnología."</p>
-      <div class="author-info"><span class="avatar">AM</span><div><strong>Andrea Menjívar</strong><small>Graduada EISI · 2023</small></div></div>
+
+      <p>
+        "El portal me permitió encontrar mi primera
+        oportunidad profesional en tecnología."
+      </p>
+
+      <div class="author-info">
+
+        <span class="avatar">
+          AM
+        </span>
+
+        <div>
+          <strong>Andrea Menjívar</strong>
+          <small>Graduada EISI · 2023</small>
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 
+  <!-- PANEL DERECHO: REGISTRO -->
   <div class="auth-main">
+
     <div class="auth-form-container">
-      <a routerLink="/" class="back-link">&larr; Volver al inicio</a>
-      
-      <div class="form-header">
-        <h2>Crea tu cuenta</h2>
-        <p>Selecciona tu tipo de cuenta para comenzar.</p>
+
+      <!-- REGRESAR AL INICIO -->
+      <a routerLink="/" class="back-link">
+        &larr; Volver al inicio
+      </a>
+
+      <!-- LOGO VISIBLE EN TABLETAS Y TELÉFONOS -->
+      <div class="mobile-brand">
+
+        <img
+          src="/ues.png"
+          alt="Logo de la Universidad de El Salvador"
+          class="mobile-brand-logo"
+          width="85"
+          height="85"
+        >
+
+        <strong>
+          Portal de Graduados
+        </strong>
+
+        <small>
+          Ingeniería de Sistemas Informáticos
+        </small>
+
       </div>
 
-      <div class="user-tabs">
-        <a routerLink="/registro-graduado" class="tab">Graduado</a>
-        <a routerLink="/registro-empresa" class="tab active">Empresa</a>
-      </div>
+      @if (!solicitudPreparada) {
 
-      <form class="form" (submit)="$event.preventDefault()">
-        <div class="input-group">
-          <label>Nombre de la empresa</label>
-          <input type="text" placeholder="Ej. Soluciones SV" class="input-control">
+        <!-- ENCABEZADO DEL FORMULARIO -->
+        <div class="form-header">
+
+          <h2>
+            Crea tu cuenta
+          </h2>
+
+          <p>
+            Selecciona tu tipo de cuenta para comenzar.
+          </p>
+
         </div>
 
-        <div class="input-group">
-          <label>NIT de la empresa</label>
-          <input type="text" placeholder="0000-000000-000-0" class="input-control">
+        <!-- PESTAÑAS DE REGISTRO -->
+        <div class="user-tabs">
+
+          <a
+            routerLink="/registro-graduado"
+            class="tab"
+          >
+            Graduado
+          </a>
+
+          <a
+            routerLink="/registro-empresa"
+            class="tab active"
+            aria-current="page"
+          >
+            Empresa
+          </a>
+
         </div>
 
-        <div class="input-group">
-          <label>Correo electrónico</label>
-          <input type="email" placeholder="correo@empresa.com" class="input-control">
-        </div>
+        <!-- FORMULARIO DE REGISTRO -->
+        <form
+          class="form"
+          #formRegistro="ngForm"
+          (ngSubmit)="prepararSolicitud(formRegistro)"
+        >
 
-        <div class="input-group">
-          <label>Contraseña</label>
-          <input type="password" placeholder="Mínimo 8 caracteres" class="input-control">
-        </div>
+          <!-- NOMBRE DE LA EMPRESA -->
+          <div class="input-group">
 
-        <!-- Aviso institucional de aprobación -->
-        <div style="background: #fffbeb; border: 1px solid #fde68a; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: flex-start;">
-          <span style="color: #d97706;">ℹ️</span>
-          <div style="font-size: 0.8rem; color: #92400e;">
-            <strong>Tu cuenta requerirá aprobación</strong><br>
-            La Escuela verificará la información antes de habilitar el acceso.
+            <label for="registro-empresa-nombre">
+              Nombre de la empresa
+            </label>
+
+            <input
+              id="registro-empresa-nombre"
+              name="nombreEmpresa"
+              type="text"
+              placeholder="Ej. Soluciones SV"
+              class="input-control"
+              autocomplete="organization"
+              [(ngModel)]="nombreEmpresa"
+              #nombreControl="ngModel"
+              minlength="2"
+              maxlength="150"
+              required
+            >
+
+            @if (
+              nombreControl.invalid &&
+              nombreControl.touched
+            ) {
+              <small class="field-error">
+                Ingresa un nombre de al menos 2 caracteres.
+              </small>
+            }
+
           </div>
-        </div>
 
-        <div class="checkbox-group" style="margin-bottom: 1rem; font-size: 0.825rem; display: flex; gap: 0.5rem; align-items: center;">
-          <input type="checkbox" id="terms-emp">
-          <label for="terms-emp" style="margin: 0; color: #64748b;">Acepto los términos de uso y la política de privacidad.</label>
-        </div>
+          <!-- NIT DE LA EMPRESA -->
+          <div class="input-group">
 
-        <button type="submit" class="btn-primary" routerLink="/dashboard">Crear cuenta</button>
+            <label for="registro-empresa-nit">
+              NIT de la empresa
+            </label>
 
-        <p class="switch-auth">¿Ya tienes una cuenta? <a routerLink="/login-empresa">Inicia sesión</a></p>
-      </form>
+            <input
+              id="registro-empresa-nit"
+              name="nit"
+              type="text"
+              placeholder="0000-000000-000-0"
+              class="input-control"
+              inputmode="numeric"
+              autocomplete="off"
+              [(ngModel)]="nit"
+              #nitControl="ngModel"
+              pattern="([0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]|[0-9]{14})"
+              maxlength="17"
+              required
+            >
+
+            <small class="field-help">
+              Escribe los 14 dígitos del NIT,
+              con o sin guiones.
+            </small>
+
+            @if (
+              nitControl.invalid &&
+              nitControl.touched
+            ) {
+              <small class="field-error">
+                Ingresa un NIT con el formato indicado.
+              </small>
+            }
+
+          </div>
+
+          <!-- CORREO ELECTRÓNICO -->
+          <div class="input-group">
+
+            <label for="registro-empresa-correo">
+              Correo electrónico
+            </label>
+
+            <input
+              id="registro-empresa-correo"
+              name="correo"
+              type="email"
+              placeholder="correo@empresa.com"
+              class="input-control"
+              autocomplete="email"
+              [(ngModel)]="correo"
+              #correoControl="ngModel"
+              maxlength="254"
+              email
+              required
+            >
+
+            @if (
+              correoControl.invalid &&
+              correoControl.touched
+            ) {
+              <small class="field-error">
+                Ingresa un correo electrónico válido.
+              </small>
+            }
+
+          </div>
+
+          <!-- CONTRASEÑA -->
+          <div class="input-group">
+
+            <label for="registro-empresa-contrasena">
+              Contraseña
+            </label>
+
+            <input
+              id="registro-empresa-contrasena"
+              name="contrasena"
+              type="password"
+              placeholder="Mínimo 8 caracteres"
+              class="input-control"
+              autocomplete="new-password"
+              [(ngModel)]="contrasena"
+              #contrasenaControl="ngModel"
+              minlength="8"
+              maxlength="128"
+              required
+            >
+
+            @if (
+              contrasenaControl.invalid &&
+              contrasenaControl.touched
+            ) {
+              <small class="field-error">
+                La contraseña debe tener al menos 8 caracteres.
+              </small>
+            }
+
+          </div>
+
+          <!-- AVISO DE APROBACIÓN INSTITUCIONAL -->
+          <div class="approval-notice">
+
+            <span class="approval-notice-icon">
+              ℹ️
+            </span>
+
+            <div class="approval-notice-text">
+
+              <strong>
+                Tu cuenta requerirá aprobación
+              </strong>
+
+              <br>
+
+              La Escuela verificará la información
+              antes de habilitar el acceso.
+
+            </div>
+
+          </div>
+
+          <!-- ACEPTACIÓN DE TÉRMINOS -->
+          <div class="checkbox-group">
+
+            <input
+              type="checkbox"
+              id="terms-emp"
+              name="terminos"
+              [(ngModel)]="terminos"
+              #terminosControl="ngModel"
+              required
+            >
+
+            <label for="terms-emp">
+              Acepto los términos de uso y la
+              política de privacidad.
+            </label>
+
+          </div>
+
+          @if (
+            terminosControl.invalid &&
+            terminosControl.touched
+          ) {
+            <small class="field-error terms-error">
+              Debes aceptar los términos para continuar.
+            </small>
+          }
+
+          <!-- MENSAJE GENERAL DE VALIDACIÓN -->
+          @if (errorGeneral) {
+            <p class="form-error" role="alert">
+              {{ errorGeneral }}
+            </p>
+          }
+
+          <!-- AVISO SOBRE EL MODO DEMOSTRACIÓN -->
+          <p class="demo-form-note">
+            Este registro está en modo demostración.
+            Todavía no envía datos al servidor.
+          </p>
+
+          <!-- BOTÓN SIN REDIRECCIÓN AL DASHBOARD -->
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Revisar solicitud
+          </button>
+
+          <!-- ENLACE PARA INICIAR SESIÓN -->
+          <p class="switch-auth">
+
+            ¿Ya tienes una cuenta?
+
+            <a routerLink="/login-empresa">
+              Inicia sesión
+            </a>
+
+          </p>
+
+        </form>
+
+      } @else {
+
+        <!-- CONFIRMACIÓN DE DEMOSTRACIÓN -->
+        <section
+          class="registration-confirmation"
+          aria-labelledby="registro-confirmacion-titulo"
+        >
+
+          <div
+            class="confirmation-icon"
+            aria-hidden="true"
+          >
+            ✓
+          </div>
+
+          <span class="confirmation-label">
+            DATOS REVISADOS
+          </span>
+
+          <h2 id="registro-confirmacion-titulo">
+            Solicitud preparada
+          </h2>
+
+          <p class="confirmation-description">
+            Los datos del formulario cumplen las
+            validaciones iniciales y están listos
+            para el proceso de registro.
+          </p>
+
+          <!-- RESUMEN DE LOS DATOS -->
+          <div class="confirmation-details">
+
+            <div class="confirmation-detail">
+
+              <span>Empresa</span>
+
+              <strong>
+                {{ nombreEmpresa }}
+              </strong>
+
+            </div>
+
+            <div class="confirmation-detail">
+
+              <span>Correo electrónico</span>
+
+              <strong>
+                {{ correo }}
+              </strong>
+
+            </div>
+
+            <div class="confirmation-detail">
+
+              <span>Aprobación</span>
+
+              <strong>
+                Requerida por la Escuela
+              </strong>
+
+            </div>
+
+          </div>
+
+          <!-- NO SIMULAR UN ENVÍO REAL -->
+          <div class="confirmation-warning">
+
+            <span aria-hidden="true">
+              ℹ️
+            </span>
+
+            <p>
+              <strong>
+                Solicitud todavía no enviada.
+              </strong>
+
+              Esta es una vista de demostración.
+              Ninguna cuenta se ha creado y los datos
+              no se han guardado en PostgreSQL.
+              El envío real se habilitará cuando
+              conectemos la API.
+            </p>
+
+          </div>
+
+          <!-- VOLVER AL FORMULARIO -->
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="volverAEditar()"
+          >
+            Volver a editar los datos
+          </button>
+
+          <!-- REGRESAR AL INICIO -->
+          <a
+            routerLink="/"
+            class="confirmation-home-link"
+          >
+            &larr; Regresar al inicio
+          </a>
+
+        </section>
+
+      }
+
     </div>
+
   </div>
+
 </div>

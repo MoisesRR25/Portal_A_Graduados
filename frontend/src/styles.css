@@ -1,8 +1,14 @@
 
 /* ==========================================
    PORTAL DE SEGUIMIENTO A GRADUADOS - UES
-   ESTILOS Y VARIABLES GLOBALES
+   ESTILOS GLOBALES
    ========================================== */
+
+@import './estilos-compartidos/autenticacion.css';
+@import './estilos-compartidos/navegacion.css';
+@import './estilos-compartidos/componentes.css';
+@import './estilos-compartidos/paneles-y-tarjetas.css';
+@import './estilos-compartidos/vistas-extensas.css';
 
 :root {
   /* Colores institucionales */

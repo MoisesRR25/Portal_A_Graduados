@@ -1,249 +1,1094 @@
+
 <div class="portal-shell">
-  <aside class="sidebar">
+
+  <!-- MENÚ LATERAL DE EMPRESA -->
+  <aside
+    id="menu-lateral-empresa"
+    class="sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
-      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+
+      <img
+        src="/ues.png"
+        alt="Logo UES"
+        class="brand-logo"
+      />
+
       <div class="brand-text">
-        <span class="brand-title">Portal de Graduados</span>
-        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+        <span class="brand-title">
+          Portal de Graduados
+        </span>
+
+        <span class="brand-sub">
+          Ingeniería de Sistemas Informáticos
+        </span>
       </div>
+
     </div>
 
+    <!-- CERRAR MENÚ EN CELULARES -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
     <div class="sidebar-section">
-      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+
+      <p class="sidebar-label">
+        MENÚ PRINCIPAL
+      </p>
+
       <nav class="sidebar-nav">
-        <a routerLink="/mis-ofertas-empresa" class="nav-item">
+
+        <a
+          routerLink="/mis-ofertas-empresa"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">💼</span>
           <span>Mis ofertas</span>
         </a>
-        <a routerLink="/publicar-oferta" class="nav-item is-active">
+
+        <a
+          routerLink="/publicar-oferta"
+          class="nav-item is-active"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">＋</span>
           <span>Publicar oferta</span>
         </a>
-        <a href="javascript:void(0)" class="nav-item">
+
+        <a
+          routerLink="/candidatos"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">👥</span>
           <span>Candidatos</span>
         </a>
-        <a href="javascript:void(0)" class="nav-item">
+
+        <a
+          routerLink="/buscar-perfiles"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">🔍</span>
           <span>Buscar perfiles</span>
         </a>
+
       </nav>
+
     </div>
 
+    <!-- OPCIONES INFERIORES -->
     <div class="sidebar-footer">
-      <a href="javascript:void(0)" class="footer-link">
+
+      <!-- ACCESO Y SEGURIDAD -->
+      <button
+        type="button"
+        class="footer-link footer-button"
+        (click)="abrirSeguridad()"
+      >
         <span>🔒</span>
         <span>Acceso y seguridad</span>
-      </a>
-      <a routerLink="/login-empresa" class="footer-link">
+      </button>
+
+      <!-- CERRAR SESIÓN -->
+      <a
+        routerLink="/"
+        class="footer-link"
+        (click)="cerrarMenu()"
+      >
         <span>↪</span>
         <span>Cerrar sesión</span>
       </a>
 
       <div class="institution-badge">
-        <img src="/ues.png" alt="UES" class="institution-logo" />
+
+        <img
+          src="/ues.png"
+          alt="UES"
+          class="institution-logo"
+        />
+
         <div class="institution-info">
           <strong>UES</strong>
           <span>Universidad de El Salvador</span>
           <span>Facultad de Ingeniería</span>
         </div>
+
       </div>
+
     </div>
+
   </aside>
 
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
   <div class="main-area">
+
+    <!-- BARRA SUPERIOR -->
     <header class="topbar">
+
+      <!-- BOTÓN PARA ABRIR EL MENÚ -->
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+        aria-controls="menu-lateral-empresa"
+      >
+        ☰
+      </button>
+
       <div class="topbar-actions">
-        <button type="button" class="icon-btn" aria-label="Notificaciones">
-          <span>🔔</span>
-          <span class="notif-dot"></span>
-        </button>
-        <div class="company-chip">
-          <span class="company-avatar">SV</span>
-          <div class="company-meta">
-            <span class="company-name">Soluciones SV</span>
-            <span class="company-role">Empresa</span>
-          </div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+
+            <div
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones de empresa"
+            >
+
+              <div class="notifications-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div class="notifications-empty">
+                <span aria-hidden="true">🔔</span>
+
+                <strong>
+                  Sin notificaciones disponibles
+                </strong>
+
+                <p>
+                  Los avisos de ofertas,
+                  postulaciones y verificaciones
+                  aparecerán aquí cuando
+                  integremos la API.
+                </p>
+              </div>
+
+            </div>
+
+          }
+
         </div>
+
+        <!-- EMPRESA -->
+        <div class="company-chip">
+
+          <span class="company-avatar">
+            SV
+          </span>
+
+          <div class="company-meta">
+
+            <span class="company-name">
+              Soluciones SV
+            </span>
+
+            <span class="company-role">
+              Empresa
+            </span>
+
+          </div>
+
+        </div>
+
       </div>
+
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
+
       <div class="page-header">
-        <span class="eyebrow">NUEVA VACANTE</span>
+
+        <span class="eyebrow">
+          NUEVA VACANTE
+        </span>
+
         <h1>Publicar oferta laboral</h1>
-        <p class="page-subtitle">Completa la información para conectar con el talento de la UES.</p>
+
+        <p class="page-subtitle">
+          Completa la información para conectar
+          con el talento de la UES.
+        </p>
+
       </div>
 
+      <!-- AVISO SOBRE EL FORMULARIO -->
+      <div class="demo-notice">
+
+        <span aria-hidden="true">ℹ️</span>
+
+        <p>
+          <strong>Modo demostración.</strong>
+          Puedes completar, validar y revisar
+          una oferta, pero todavía no se enviará
+          a la Escuela ni se guardará en PostgreSQL.
+        </p>
+
+      </div>
+
+      <!-- AVISOS DE ACCIONES -->
+      @if (mensajeInformativo) {
+
+        <div
+          class="form-info-message"
+          role="status"
+        >
+          <span aria-hidden="true">ℹ️</span>
+          <p>{{ mensajeInformativo }}</p>
+        </div>
+
+      }
+
       <div class="form-layout">
-        <form class="offer-form" (submit)="$event.preventDefault()">
+
+        <!-- FORMULARIO -->
+        <form
+          class="offer-form"
+          #formOferta="ngForm"
+          (ngSubmit)="revisarOferta(formOferta)"
+        >
+
+          <!-- SECCIÓN 1 -->
           <section class="form-card">
+
             <div class="section-heading">
+
               <span class="step-badge">1</span>
+
               <div>
                 <h2>Información general</h2>
                 <p>Datos principales de la oportunidad.</p>
               </div>
+
             </div>
 
+            <!-- TÍTULO -->
             <div class="field-group">
-              <label for="tituloOferta">Título de la oferta</label>
+
+              <label for="tituloOferta">
+                Título de la oferta
+              </label>
+
               <input
                 id="tituloOferta"
+                name="tituloOferta"
                 type="text"
                 placeholder="Ej. Desarrollador Frontend Jr."
+                [(ngModel)]="tituloOferta"
+                #tituloControl="ngModel"
+                minlength="5"
+                maxlength="150"
+                required
               />
+
+              @if (
+                tituloControl.invalid &&
+                tituloControl.touched
+              ) {
+                <small class="field-error">
+                  El título debe contener al menos
+                  5 caracteres.
+                </small>
+              }
+
             </div>
 
+            <!-- ÁREA Y CONTRATO -->
             <div class="field-grid-2">
+
               <div class="field-group">
-                <label for="areaOferta">Área</label>
-                <select id="areaOferta">
-                  <option value="">Seleccionar área</option>
-                  <option value="desarrollo">Desarrollo de software</option>
-                  <option value="datos">Datos y analítica</option>
-                  <option value="infraestructura">Infraestructura y redes</option>
-                  <option value="soporte">Soporte técnico</option>
+
+                <label for="areaOferta">
+                  Área
+                </label>
+
+                <select
+                  id="areaOferta"
+                  name="areaOferta"
+                  [(ngModel)]="areaOferta"
+                  #areaControl="ngModel"
+                  required
+                >
+                  <option value="">
+                    Seleccionar área
+                  </option>
+
+                  <option value="desarrollo">
+                    Desarrollo de software
+                  </option>
+
+                  <option value="datos">
+                    Datos y analítica
+                  </option>
+
+                  <option value="infraestructura">
+                    Infraestructura y redes
+                  </option>
+
+                  <option value="soporte">
+                    Soporte técnico
+                  </option>
                 </select>
+
+                @if (
+                  areaControl.invalid &&
+                  areaControl.touched
+                ) {
+                  <small class="field-error">
+                    Selecciona un área.
+                  </small>
+                }
+
               </div>
 
               <div class="field-group">
-                <label for="tipoContrato">Tipo de contrato</label>
-                <select id="tipoContrato">
-                  <option value="tiempo-completo">Tiempo completo</option>
-                  <option value="medio-tiempo">Medio tiempo</option>
-                  <option value="pasantia">Pasantía</option>
-                  <option value="proyecto">Por proyecto</option>
+
+                <label for="tipoContrato">
+                  Tipo de contrato
+                </label>
+
+                <select
+                  id="tipoContrato"
+                  name="tipoContrato"
+                  [(ngModel)]="tipoContrato"
+                  required
+                >
+                  <option value="tiempo-completo">
+                    Tiempo completo
+                  </option>
+
+                  <option value="medio-tiempo">
+                    Medio tiempo
+                  </option>
+
+                  <option value="pasantia">
+                    Pasantía
+                  </option>
+
+                  <option value="proyecto">
+                    Por proyecto
+                  </option>
                 </select>
+
               </div>
+
             </div>
 
+            <!-- UBICACIÓN Y MODALIDAD -->
             <div class="field-grid-2">
+
               <div class="field-group">
-                <label for="ubicacionOferta">Ubicación</label>
+
+                <label for="ubicacionOferta">
+                  Ubicación
+                </label>
+
                 <input
                   id="ubicacionOferta"
+                  name="ubicacionOferta"
                   type="text"
                   placeholder="Ej. San Salvador"
+                  [(ngModel)]="ubicacionOferta"
+                  #ubicacionControl="ngModel"
+                  minlength="2"
+                  maxlength="120"
+                  required
                 />
+
+                @if (
+                  ubicacionControl.invalid &&
+                  ubicacionControl.touched
+                ) {
+                  <small class="field-error">
+                    Ingresa una ubicación válida.
+                  </small>
+                }
+
               </div>
 
               <div class="field-group">
-                <label for="modalidadOferta">Modalidad</label>
-                <select id="modalidadOferta">
-                  <option value="hibrido">Híbrido</option>
-                  <option value="presencial">Presencial</option>
-                  <option value="remoto">Remoto</option>
+
+                <label for="modalidadOferta">
+                  Modalidad
+                </label>
+
+                <select
+                  id="modalidadOferta"
+                  name="modalidadOferta"
+                  [(ngModel)]="modalidadOferta"
+                  required
+                >
+                  <option value="hibrido">
+                    Híbrido
+                  </option>
+
+                  <option value="presencial">
+                    Presencial
+                  </option>
+
+                  <option value="remoto">
+                    Remoto
+                  </option>
                 </select>
+
               </div>
+
             </div>
+
           </section>
 
+          <!-- SECCIÓN 2 -->
           <section class="form-card">
+
             <div class="section-heading">
+
               <span class="step-badge">2</span>
+
               <div>
                 <h2>Descripción y requisitos</h2>
-                <p>Describe el rol y el perfil que buscas.</p>
+
+                <p>
+                  Describe el rol y el perfil que buscas.
+                </p>
               </div>
+
             </div>
 
+            <!-- DESCRIPCIÓN -->
             <div class="field-group">
-              <label for="descripcionOferta">Descripción de la oportunidad</label>
+
+              <label for="descripcionOferta">
+                Descripción de la oportunidad
+              </label>
+
               <textarea
                 id="descripcionOferta"
+                name="descripcionOferta"
                 rows="3"
                 placeholder="Cuéntale a los candidatos sobre el rol..."
+                [(ngModel)]="descripcionOferta"
+                #descripcionControl="ngModel"
+                minlength="20"
+                maxlength="3000"
+                required
               ></textarea>
+
+              <small class="field-help">
+                Mínimo 20 caracteres. Máximo 3000.
+              </small>
+
+              @if (
+                descripcionControl.invalid &&
+                descripcionControl.touched
+              ) {
+                <small class="field-error">
+                  Escribe una descripción de al menos
+                  20 caracteres.
+                </small>
+              }
+
             </div>
 
+            <!-- REQUISITOS -->
             <div class="field-group">
-              <label for="requisitosOferta">Requisitos</label>
+
+              <label for="requisitosOferta">
+                Requisitos
+              </label>
+
               <textarea
                 id="requisitosOferta"
+                name="requisitosOferta"
                 rows="3"
                 placeholder="Agrega un requisito por línea..."
+                [(ngModel)]="requisitosOferta"
+                #requisitosControl="ngModel"
+                minlength="10"
+                maxlength="3000"
+                required
               ></textarea>
+
+              <small class="field-help">
+                Mínimo 10 caracteres.
+                Puedes escribir un requisito por línea.
+              </small>
+
+              @if (
+                requisitosControl.invalid &&
+                requisitosControl.touched
+              ) {
+                <small class="field-error">
+                  Ingresa los requisitos de la oferta.
+                </small>
+              }
+
             </div>
 
+            <!-- HABILIDADES -->
             <div class="field-group">
-              <label for="habilidadesOferta">Habilidades requeridas</label>
-              <input
-                id="habilidadesOferta"
-                type="text"
-                placeholder="Escribe una habilidad y presiona Enter"
-              />
-              <div class="tags-list">
-                <span class="skill-tag">JavaScript <button type="button" aria-label="Quitar JavaScript">×</button></span>
-                <span class="skill-tag">React <button type="button" aria-label="Quitar React">×</button></span>
-                <span class="skill-tag">Git <button type="button" aria-label="Quitar Git">×</button></span>
+
+              <label for="habilidadesOferta">
+                Habilidades requeridas
+              </label>
+
+              <div class="skill-input-row">
+
+                <input
+                  id="habilidadesOferta"
+                  name="habilidadNueva"
+                  type="text"
+                  placeholder="Ej. JavaScript"
+                  [(ngModel)]="habilidadNueva"
+                  (keydown.enter)="agregarHabilidadConEnter($event)"
+                  maxlength="40"
+                />
+
+                <button
+                  type="button"
+                  class="btn-add-skill"
+                  (click)="agregarHabilidad()"
+                >
+                  Agregar
+                </button>
+
               </div>
+
+              <small class="field-help">
+                Escribe una habilidad y presiona
+                Enter o Agregar.
+                Ejemplos: JavaScript, React, Git.
+              </small>
+
+              <!-- HABILIDADES AGREGADAS -->
+              <div class="tags-list">
+
+                @for (
+                  habilidad of habilidades;
+                  track habilidad
+                ) {
+
+                  <span class="skill-tag">
+
+                    {{ habilidad }}
+
+                    <button
+                      type="button"
+                      [attr.aria-label]="
+                        'Quitar ' + habilidad
+                      "
+                      (click)="quitarHabilidad(habilidad)"
+                    >
+                      ×
+                    </button>
+
+                  </span>
+
+                }
+
+              </div>
+
             </div>
+
           </section>
 
+          <!-- SECCIÓN 3 -->
           <section class="form-card">
+
             <div class="section-heading">
+
               <span class="step-badge">3</span>
+
               <div>
                 <h2>Clasificación y vigencia</h2>
-                <p>Ayuda a los candidatos a encontrar tu oferta.</p>
+
+                <p>
+                  Ayuda a los candidatos a encontrar
+                  tu oferta.
+                </p>
               </div>
+
             </div>
 
+            <!-- FECHA Y PLAZAS -->
             <div class="field-grid-2">
+
               <div class="field-group">
-                <label for="fechaLimite">Fecha límite</label>
-                <input id="fechaLimite" type="date" />
+
+                <label for="fechaLimite">
+                  Fecha límite
+                </label>
+
+                <input
+                  id="fechaLimite"
+                  name="fechaLimite"
+                  type="date"
+                  [(ngModel)]="fechaLimite"
+                  #fechaControl="ngModel"
+                  [min]="fechaMinima"
+                  required
+                />
+
+                @if (
+                  fechaControl.touched &&
+                  (
+                    fechaControl.invalid ||
+                    fechaLimite < fechaMinima
+                  )
+                ) {
+                  <small class="field-error">
+                    Selecciona una fecha válida
+                    que no haya pasado.
+                  </small>
+                }
+
               </div>
 
               <div class="field-group">
-                <label for="plazasDisponibles">Plazas disponibles</label>
-                <input id="plazasDisponibles" type="number" min="1" value="1" />
+
+                <label for="plazasDisponibles">
+                  Plazas disponibles
+                </label>
+
+                <input
+                  id="plazasDisponibles"
+                  name="plazasDisponibles"
+                  type="number"
+                  [(ngModel)]="plazasDisponibles"
+                  #plazasControl="ngModel"
+                  min="1"
+                  max="999"
+                  step="1"
+                  required
+                />
+
+                @if (
+                  plazasControl.invalid &&
+                  plazasControl.touched
+                ) {
+                  <small class="field-error">
+                    Introduce entre 1 y 999 plazas.
+                  </small>
+                }
+
               </div>
+
             </div>
 
+            <!-- CLASIFICACIÓN -->
             <div class="field-group">
-              <span class="field-label">Clasificación</span>
+
+              <span class="field-label">
+                Clasificación
+              </span>
+
               <div class="checkbox-row">
+
                 <label class="checkbox-pill">
-                  <input type="checkbox" />
+
+                  <input
+                    type="checkbox"
+                    name="recienGraduados"
+                    [(ngModel)]="recienGraduados"
+                  />
+
                   <span>Recién graduados</span>
+
                 </label>
+
                 <label class="checkbox-pill">
-                  <input type="checkbox" />
+
+                  <input
+                    type="checkbox"
+                    name="sinExperiencia"
+                    [(ngModel)]="sinExperiencia"
+                  />
+
                   <span>Sin experiencia</span>
+
                 </label>
+
                 <label class="checkbox-pill">
-                  <input type="checkbox" />
+
+                  <input
+                    type="checkbox"
+                    name="pasantia"
+                    [(ngModel)]="pasantia"
+                  />
+
                   <span>Pasantía</span>
+
                 </label>
+
               </div>
+
             </div>
+
           </section>
 
+          <!-- MENSAJE GENERAL -->
+          @if (errorGeneral) {
+
+            <div
+              class="form-error-general"
+              role="alert"
+            >
+              {{ errorGeneral }}
+            </div>
+
+          }
+
+          <!-- BORRADOR DISPONIBLE -->
+          @if (borradorLocal) {
+
+            <div class="draft-available">
+
+              <span aria-hidden="true">📄</span>
+
+              <div>
+                <strong>
+                  Borrador temporal disponible
+                </strong>
+
+                <p>
+                  Puedes recuperar los datos
+                  guardados durante esta visita.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                (click)="restaurarBorrador()"
+              >
+                Restaurar
+              </button>
+
+            </div>
+
+          }
+
+          <!-- ACCIONES -->
           <div class="form-actions">
-            <button type="button" class="btn-secondary">Guardar borrador</button>
-            <button type="submit" class="btn-primary">Enviar a revisión</button>
+
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="guardarBorrador()"
+            >
+              Guardar borrador
+            </button>
+
+            <button
+              type="submit"
+              class="btn-primary"
+            >
+              Revisar antes de enviar
+            </button>
+
           </div>
+
         </form>
 
+        <!-- PANEL DE CONSEJOS -->
         <aside class="side-panel">
+
           <div class="tips-card">
+
             <h3>Antes de publicar</h3>
+
             <ul class="tips-list">
-              <li>Usa un título claro y específico.</li>
-              <li>Detalla responsabilidades reales.</li>
-              <li>No incluyas criterios discriminatorios.</li>
-              <li>Indica la modalidad correctamente.</li>
+
+              <li>
+                Usa un título claro y específico.
+              </li>
+
+              <li>
+                Detalla responsabilidades reales.
+              </li>
+
+              <li>
+                No incluyas criterios discriminatorios.
+              </li>
+
+              <li>
+                Indica la modalidad correctamente.
+              </li>
+
             </ul>
+
           </div>
 
           <div class="notice-card">
-            <span class="notice-icon">🕒</span>
-            <p>Las ofertas son revisadas en un plazo máximo de 2 días hábiles.</p>
+
+            <span class="notice-icon">
+              🕒
+            </span>
+
+            <p>
+              Las ofertas deberán pasar por
+              la revisión institucional cuando
+              se conecte el sistema con la API.
+            </p>
+
           </div>
+
         </aside>
+
       </div>
+
     </main>
+
   </div>
+
+  <!-- VISTA PREVIA DE LA OFERTA -->
+  @if (vistaPreviaAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarVistaPrevia()"
+    >
+
+      <section
+        class="preview-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-vista-previa"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <div>
+            <span class="eyebrow">
+              VISTA PREVIA
+            </span>
+
+            <h2 id="titulo-vista-previa">
+              Revisar oferta laboral
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar vista previa"
+            (click)="cerrarVistaPrevia()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <div class="preview-intro">
+
+          <h3>{{ tituloOferta }}</h3>
+
+          <p>
+            Soluciones SV
+            ·
+            {{ ubicacionOferta }}
+            ·
+            {{ nombreModalidad }}
+          </p>
+        </div>
+        <div class="preview-details">
+          <div>
+            <span>Área</span>
+            <strong>{{ nombreArea }}</strong>
+          </div>
+          <div>
+            <span>Tipo de contrato</span>
+            <strong>{{ nombreContrato }}</strong>
+          </div>
+          <div>
+            <span>Modalidad</span>
+            <strong>{{ nombreModalidad }}</strong>
+          </div>
+          <div>
+            <span>Fecha límite</span>
+            <strong>{{ fechaLimite }}</strong>
+          </div>
+          <div>
+            <span>Plazas disponibles</span>
+            <strong>{{ plazasDisponibles }}</strong>
+          </div>
+        </div>
+        <div class="preview-text-section">
+          <h3>Descripción</h3>
+          <p>{{ descripcionOferta }}</p>
+        </div>
+        <div class="preview-text-section">
+          <h3>Requisitos</h3>
+          <p>{{ requisitosOferta }}</p>
+        </div>
+        <div class="preview-text-section">
+          <h3>Habilidades requeridas</h3>
+          <div class="tags-list">
+            @for (
+              habilidad of habilidades;
+              track habilidad
+            ) {
+              <span class="skill-tag">
+                {{ habilidad }}
+              </span>
+            }
+          </div>
+        </div>
+        <div class="preview-text-section">
+          <h3>Clasificación</h3>
+          @if (clasificaciones.length > 0) {
+            <div class="tags-list">
+              @for (
+                clasificacion of clasificaciones;
+                track clasificacion
+              ) {
+                <span class="classification-tag">
+                  {{ clasificacion }}
+                </span>
+              }
+            </div>
+          } @else {
+            <p>
+              Sin clasificación adicional.
+            </p>
+          }
+        </div>
+        <div class="preview-warning">
+          <span aria-hidden="true">ℹ️</span>
+          <p>
+            Esta vista es una demostración.
+            Confirmar los datos no enviará
+            ni publicará la oferta.
+          </p>
+        </div>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="cerrarVistaPrevia()"
+          >
+            Volver a editar
+          </button>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="confirmarDatosDePrueba()"
+          >
+            Confirmar datos de prueba
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+  <!-- ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+    <div
+      class="modal-overlay"
+      (click)="cerrarSeguridad()"
+    >
+      <section
+        class="security-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-seguridad"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="modal-heading">
+          <h2 id="titulo-seguridad">
+            🔒 Acceso y seguridad
+          </h2>
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar acceso y seguridad"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+        </div>
+        <p class="security-description">
+          Configuración de la cuenta empresarial.
+          La información actual es de demostración.
+        </p>
+        <div class="security-row">
+          <span>Empresa</span>
+          <strong>Soluciones SV</strong>
+        </div>
+        <div class="security-row">
+          <span>Tipo de cuenta</span>
+          <strong>Empresa</strong>
+        </div>
+        <div class="security-option">
+          <strong>🔑 Cambiar contraseña</strong>
+          <p>
+            Pendiente de integrar con la
+            autenticación de la API.
+          </p>
+        </div>
+        <div class="security-option">
+          <strong>✉️ Verificación de correo</strong>
+          <p>
+            Pendiente de conexión con el servidor.
+          </p>
+        </div>
+        <div class="security-option">
+          <strong>🛡️ Protección de sesión</strong>
+          <p>
+            Se habilitará cuando exista
+            autenticación real.
+          </p>
+        </div>
+        <button
+          type="button"
+          class="btn-primary security-close-button"
+          (click)="cerrarSeguridad()"
+        >
+          Cerrar
+        </button>
+      </section>
+    </div>
+  }
 </div>

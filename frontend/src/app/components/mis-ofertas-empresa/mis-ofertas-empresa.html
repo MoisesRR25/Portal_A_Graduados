@@ -1,206 +1,883 @@
+
 <div class="dashboard-layout">
-  <!-- Menú Lateral Empresa -->
-  <aside class="dashboard-sidebar">
+
+  <!-- MENÚ LATERAL DE EMPRESA -->
+  <aside
+    id="menu-lateral-empresa"
+    class="dashboard-sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img
+          src="/ues.png"
+          alt="Universidad Nacional"
+          width="50"
+          height="50"
+        >
       </span>
+
       <div>
         <strong>Portal de Graduados</strong>
-        <small>Ingeniería de Sistemas Informáticos</small>
+        <small>
+          Ingeniería de Sistemas Informáticos
+        </small>
       </div>
     </div>
 
-    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <!-- CERRAR MENÚ EN TELÉFONOS -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
+    <div class="nav-section-title">
+      MENÚ PRINCIPAL
+    </div>
+
     <nav class="sidebar-nav">
-      <a routerLink="/mis-ofertas-empresa" class="nav-item active">💼 Mis ofertas</a>
-      <a routerLink="/publicar-oferta" class="nav-item">➕ Publicar oferta</a>
-      <a routerLink="/candidatos" class="nav-item">👥 Candidatos</a>
-      <a routerLink="/buscar-perfiles" class="nav-item">🔍 Buscar perfiles</a>
+
+      <a
+        routerLink="/mis-ofertas-empresa"
+        class="nav-item"
+        [class.active]="!vistaSeguridad"
+        (click)="mostrarOfertas()"
+      >
+        💼 Mis ofertas
+      </a>
+
+      <a
+        routerLink="/publicar-oferta"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        ➕ Publicar oferta
+      </a>
+
+      <a
+        routerLink="/candidatos"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        👥 Candidatos
+      </a>
+
+      <a
+        routerLink="/buscar-perfiles"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        🔍 Buscar perfiles
+      </a>
+
     </nav>
 
     <div class="sidebar-bottom">
+
       <nav class="sidebar-nav">
-        <a routerLink="/mis-ofertas-empresa" class="nav-item">🔒 Acceso y seguridad</a>
-        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+
+        <!-- ACCESO Y SEGURIDAD -->
+        <button
+          type="button"
+          class="nav-item nav-button"
+          [class.active]="vistaSeguridad"
+          (click)="mostrarSeguridad()"
+        >
+          🔒 Acceso y seguridad
+        </button>
+
+        <!-- CERRAR SESIÓN: REGRESAR AL INICIO -->
+        <a
+          routerLink="/"
+          class="nav-item text-red"
+          (click)="cerrarMenu()"
+        >
+          🚪 Cerrar sesión
+        </a>
+
       </nav>
+
       <div class="sidebar-footer-card">
         <span class="mini-ues">UES</span>
+
         <div>
           <small>Universidad de El Salvador</small>
           <span>Facultad de Ingeniería</span>
         </div>
       </div>
+
     </div>
+
   </aside>
 
-  <!-- Contenido Principal -->
+  <!-- FONDO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="dashboard-main">
+
+    <!-- BARRA SUPERIOR -->
     <header class="dashboard-topbar">
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+        aria-controls="menu-lateral-empresa"
+      >
+        ☰
+      </button>
+
       <span></span>
+
       <div class="user-profile-badge">
-        <span class="notification-icon">🔔</span>
-        <div class="company-avatar-pill">SV</div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="notification-icon"
+            (click)="alternarNotificaciones()"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            aria-label="Notificaciones"
+            aria-controls="panel-notificaciones-empresa"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+            <div
+              id="panel-notificaciones-empresa"
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones de empresa"
+            >
+
+              <div class="notifications-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  (click)="cerrarNotificaciones()"
+                  aria-label="Cerrar notificaciones"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div class="notifications-empty">
+                <span class="notifications-empty-icon">
+                  🔔
+                </span>
+
+                <strong>
+                  Sin notificaciones disponibles
+                </strong>
+
+                <p>
+                  Cuando integremos la API,
+                  aquí aparecerán avisos de
+                  postulaciones, revisión de ofertas
+                  y aprobación de la empresa.
+                </p>
+              </div>
+
+            </div>
+          }
+
+        </div>
+
+        <div class="company-avatar-pill">
+          SV
+        </div>
+
         <div class="user-avatar-name">
           <strong>Soluciones SV</strong>
           <small>Empresa</small>
         </div>
+
       </div>
+
     </header>
 
+    <!-- CONTENIDO -->
     <div class="dashboard-content">
-      <!-- Encabezado -->
-      <div class="welcome-header-flex">
-        <div>
-          <span class="mi-portal">GESTIÓN DE VACANTES</span>
-          <h1>Mis ofertas</h1>
-          <p>Administra las oportunidades laborales de tu empresa.</p>
-        </div>
-        <button class="btn-primary-ues">+ Publicar oferta</button>
-      </div>
 
-      <!-- Banner de Verificación -->
-      <div class="verification-banner">
-        <div class="banner-left">
-          <span class="banner-icon">🕒</span>
-          <div>
-            <strong>Cuenta en proceso de verificación</strong>
-            <p>Puedes crear ofertas, pero serán visibles cuando la Escuela apruebe tu cuenta.</p>
+      @if (vistaSeguridad) {
+
+        <!-- ACCESO Y SEGURIDAD DE EMPRESA -->
+        <section class="security-section">
+
+          <div class="security-heading">
+            <span class="mi-portal">
+              CONFIGURACIÓN DE CUENTA
+            </span>
+
+            <h1>Acceso y seguridad</h1>
+
+            <p>
+              Consulta las opciones de seguridad
+              de tu cuenta empresarial.
+            </p>
           </div>
-        </div>
-        <a href="javascript:void(0)" class="banner-link">Ver estado</a>
-      </div>
 
-      <!-- Tarjetas de Métricas -->
-      <div class="stats-cards-grid">
-        <div class="stat-card-row">
-          <div class="stat-icon-box blue">💼</div>
-          <div>
-            <span class="stat-num">6</span>
-            <small>Ofertas publicadas</small>
+          <div class="security-demo-notice">
+            <span aria-hidden="true">ℹ️</span>
+
+            <p>
+              <strong>Interfaz en preparación.</strong>
+              La autenticación, verificación y gestión
+              de contraseñas dependerán de la API.
+            </p>
           </div>
-        </div>
-        <div class="stat-card-row">
-          <div class="stat-icon-box pink">👁️</div>
-          <div>
-            <span class="stat-num">842</span>
-            <small>Visualizaciones</small>
+
+          <div class="security-card">
+
+            <h2>Información de la cuenta</h2>
+            <p class="security-description">
+              Datos de demostración del portal.
+            </p>
+
+            <div class="security-detail">
+              <span>Empresa</span>
+              <strong>Soluciones SV</strong>
+            </div>
+
+            <div class="security-detail">
+              <span>Tipo de cuenta</span>
+              <strong>Empresa</strong>
+            </div>
+
+            <div class="security-detail">
+              <span>Estado de verificación</span>
+              <strong class="security-muted">
+                Sin consultar al servidor
+              </strong>
+            </div>
+
           </div>
-        </div>
-        <div class="stat-card-row">
-          <div class="stat-icon-box green">👥</div>
-          <div>
-            <span class="stat-num">48</span>
-            <small>Postulaciones</small>
+
+          <div class="security-card">
+
+            <h2>Opciones de seguridad</h2>
+
+            <p class="security-description">
+              Estas acciones se habilitarán cuando
+              integremos la autenticación real.
+            </p>
+
+            <div class="security-option">
+              <div>
+                <h3>🔑 Cambiar contraseña</h3>
+                <p>
+                  Cambiar de forma segura la
+                  contraseña de acceso.
+                </p>
+              </div>
+              <span class="security-pending">Pendiente</span>
+            </div>
+
+            <div class="security-option">
+              <div>
+                <h3>✉️ Verificación de correo</h3>
+                <p>
+                  Confirmar el correo de contacto
+                  de la empresa.
+                </p>
+              </div>
+              <span class="security-pending">Pendiente</span>
+            </div>
+
+            <div class="security-option">
+              <div>
+                <h3>🛡️ Protección de sesión</h3>
+                <p>
+                  Administrar la autenticación y el
+                  cierre de sesión.
+                </p>
+              </div>
+              <span class="security-pending">Pendiente</span>
+            </div>
+
           </div>
-        </div>
-        <div class="stat-card-row">
-          <div class="stat-icon-box yellow">🕒</div>
+
+          <button
+            type="button"
+            class="btn-security-back"
+            (click)="mostrarOfertas()"
+          >
+            &larr; Volver a mis ofertas
+          </button>
+
+        </section>
+
+      } @else {
+
+        <!-- ENCABEZADO -->
+        <div class="welcome-header-flex">
+
           <div>
-            <span class="stat-num">2</span>
-            <small>Pendientes de aprobación</small>
+            <span class="mi-portal">
+              GESTIÓN DE VACANTES
+            </span>
+
+            <h1>Mis ofertas</h1>
+
+            <p>
+              Administra las oportunidades laborales
+              de tu empresa.
+            </p>
           </div>
+
+          <!-- CORRECCIÓN: AHORA SÍ NAVEGA -->
+          <a
+            routerLink="/publicar-oferta"
+            class="btn-primary-ues"
+          >
+            + Publicar oferta
+          </a>
+
         </div>
-      </div>
 
-      <!-- Contenedor de Pestañas y Tabla -->
-      <div class="card table-card">
-        <div class="table-tabs-header">
-          <button class="tab-pill active">Todas (6)</button>
-          <button class="tab-pill">Activas (3)</button>
-          <button class="tab-pill">Borradores (1)</button>
-          <button class="tab-pill">Cerradas (2)</button>
+        <!-- AVISO DE VERIFICACIÓN -->
+        <div class="verification-banner">
+
+          <div class="banner-left">
+            <span class="banner-icon">🕒</span>
+
+            <div>
+              <strong>
+                Verificación institucional
+                (demostración)
+              </strong>
+
+              <p>
+                La Escuela deberá aprobar la cuenta
+                antes de habilitar sus operaciones reales.
+              </p>
+            </div>
+          </div>
+
+          <!-- CORRECCIÓN: YA NO ES UN ENLACE VACÍO -->
+          <button
+            type="button"
+            class="banner-link"
+            (click)="alternarEstadoVerificacion()"
+            [attr.aria-expanded]="estadoVerificacionAbierto"
+          >
+            {{ estadoVerificacionAbierto ? 'Ocultar estado' : 'Ver estado' }}
+          </button>
+
         </div>
 
-        <table class="postulations-table">
-          <thead>
-            <tr>
-              <th>OFERTA</th>
-              <th>PUBLICACIÓN</th>
-              <th>POSTULANTES</th>
-              <th>ESTADO</th>
-              <th>ACCIONES</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="offer-title-cell">
-                  <strong>Desarrollador Frontend Jr.</strong>
-                  <small>San Salvador · Híbrido</small>
-                </div>
-              </td>
-              <td>16 jun. 2025</td>
-              <td>👥 18</td>
-              <td><span class="status-badge active">Activa</span></td>
-              <td>
-                <div class="action-icons-row">
-                  <button class="icon-action-btn" title="Ver">👁️</button>
-                  <button class="icon-action-btn" title="Editar">✏️</button>
-                  <button class="icon-action-btn" title="Cerrar">✕</button>
-                </div>
-              </td>
-            </tr>
+        @if (estadoVerificacionAbierto) {
 
-            <tr>
-              <td>
-                <div class="offer-title-cell">
-                  <strong>Analista de soporte técnico</strong>
-                  <small>San Salvador · Híbrido</small>
-                </div>
-              </td>
-              <td>10 jun. 2025</td>
-              <td>👥 12</td>
-              <td><span class="status-badge pending">Pendiente</span></td>
-              <td>
-                <div class="action-icons-row">
-                  <button class="icon-action-btn" title="Ver">👁️</button>
-                  <button class="icon-action-btn" title="Editar">✏️</button>
-                  <button class="icon-action-btn" title="Cerrar">✕</button>
-                </div>
-              </td>
-            </tr>
+          <div
+            class="verification-details"
+            role="status"
+          >
+            <strong>
+              Estado real no disponible
+            </strong>
 
-            <tr>
-              <td>
-                <div class="offer-title-cell">
-                  <strong>Pasantía de desarrollo web</strong>
-                  <small>San Salvador · Híbrido</small>
-                </div>
-              </td>
-              <td>2 jun. 2025</td>
-              <td>👥 9</td>
-              <td><span class="status-badge active">Activa</span></td>
-              <td>
-                <div class="action-icons-row">
-                  <button class="icon-action-btn" title="Ver">👁️</button>
-                  <button class="icon-action-btn" title="Editar">✏️</button>
-                  <button class="icon-action-btn" title="Cerrar">✕</button>
-                </div>
-              </td>
-            </tr>
+            <p>
+              Esta empresa y sus indicadores son datos
+              de demostración. Cuando conectemos
+              el portal con PostgreSQL mediante la API,
+              aquí podremos mostrar si la solicitud
+              está pendiente, aprobada o rechazada.
+            </p>
+          </div>
 
-            <tr>
-              <td>
-                <div class="offer-title-cell">
-                  <strong>Diseñador UX/UI</strong>
-                  <small>San Salvador · Híbrido</small>
-                </div>
-              </td>
-              <td>20 may. 2025</td>
-              <td>👥 9</td>
-              <td><span class="status-badge closed">Cerrada</span></td>
-              <td>
-                <div class="action-icons-row">
-                  <button class="icon-action-btn" title="Ver">👁️</button>
-                  <button class="icon-action-btn" title="Editar">✏️</button>
-                  <button class="icon-action-btn" title="Cerrar">✕</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        }
+
+        <!-- AVISO SOBRE LOS DATOS -->
+        <p class="demo-data-note">
+          Los valores y las ofertas de esta pantalla
+          son datos de demostración.
+        </p>
+
+        <!-- TARJETAS DE MÉTRICAS -->
+        <div class="stats-cards-grid">
+
+          <div class="stat-card-row">
+            <div class="stat-icon-box blue">💼</div>
+
+            <div>
+              <span class="stat-num">
+                {{ totalOfertas }}
+              </span>
+              <small>Ofertas mostradas</small>
+            </div>
+          </div>
+
+          <div class="stat-card-row">
+            <div class="stat-icon-box pink">👁️</div>
+
+            <div>
+              <span class="stat-num">842</span>
+              <small>Visualizaciones</small>
+            </div>
+          </div>
+
+          <div class="stat-card-row">
+            <div class="stat-icon-box green">👥</div>
+
+            <div>
+              <span class="stat-num">48</span>
+              <small>Postulaciones</small>
+            </div>
+          </div>
+
+          <div class="stat-card-row">
+            <div class="stat-icon-box yellow">🕒</div>
+
+            <div>
+              <span class="stat-num">
+                {{ ofertasPendientes }}
+              </span>
+              <small>Pendientes de aprobación</small>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- CONFIRMACIÓN DE CAMBIOS LOCALES -->
+        @if (mensajeAccion) {
+          <div
+            class="local-action-notice"
+            role="status"
+          >
+            <span aria-hidden="true">ℹ️</span>
+            <p>{{ mensajeAccion }}</p>
+          </div>
+        }
+
+        <!-- TABLA DE OFERTAS -->
+        <div class="card table-card">
+
+          <!-- PESTAÑAS CON FILTROS REALES EN ANGULAR -->
+          <div
+            class="table-tabs-header"
+            role="group"
+            aria-label="Filtrar ofertas"
+          >
+
+            <button
+              type="button"
+              class="tab-pill"
+              [class.active]="filtroActual === 'Todas'"
+              [attr.aria-pressed]="filtroActual === 'Todas'"
+              (click)="cambiarFiltro('Todas')"
+            >
+              Todas ({{ totalOfertas }})
+            </button>
+
+            <button
+              type="button"
+              class="tab-pill"
+              [class.active]="filtroActual === 'Activas'"
+              [attr.aria-pressed]="filtroActual === 'Activas'"
+              (click)="cambiarFiltro('Activas')"
+            >
+              Activas ({{ ofertasActivas }})
+            </button>
+
+            <button
+              type="button"
+              class="tab-pill"
+              [class.active]="filtroActual === 'Borradores'"
+              [attr.aria-pressed]="filtroActual === 'Borradores'"
+              (click)="cambiarFiltro('Borradores')"
+            >
+              Borradores ({{ ofertasBorrador }})
+            </button>
+
+            <button
+              type="button"
+              class="tab-pill"
+              [class.active]="filtroActual === 'Pendientes'"
+              [attr.aria-pressed]="filtroActual === 'Pendientes'"
+              (click)="cambiarFiltro('Pendientes')"
+            >
+              Pendientes ({{ ofertasPendientes }})
+            </button>
+
+            <button
+              type="button"
+              class="tab-pill"
+              [class.active]="filtroActual === 'Cerradas'"
+              [attr.aria-pressed]="filtroActual === 'Cerradas'"
+              (click)="cambiarFiltro('Cerradas')"
+            >
+              Cerradas ({{ ofertasCerradas }})
+            </button>
+
+          </div>
+
+          <table class="postulations-table">
+
+            <thead>
+              <tr>
+                <th>OFERTA</th>
+                <th>PUBLICACIÓN</th>
+                <th>POSTULANTES</th>
+                <th>ESTADO</th>
+                <th>ACCIONES</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              @for (oferta of ofertasVisibles; track oferta.id) {
+
+                <tr>
+                  <td>
+                    <div class="offer-title-cell">
+
+                      <strong>
+                        {{ oferta.titulo }}
+                      </strong>
+
+                      <small>
+                        {{ oferta.ubicacion }}
+                        ·
+                        {{ oferta.modalidad }}
+                      </small>
+
+                    </div>
+                  </td>
+
+                  <td>
+                    {{ oferta.fecha }}
+                  </td>
+
+                  <td>
+                    👥 {{ oferta.postulantes }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status-badge"
+                      [class.active]="oferta.estado === 'Activa'"
+                      [class.pending]="oferta.estado === 'Pendiente'"
+                      [class.draft]="oferta.estado === 'Borrador'"
+                      [class.closed]="oferta.estado === 'Cerrada'"
+                    >
+                      {{ oferta.estado }}
+                    </span>
+
+                  </td>
+
+                  <td>
+                    <div class="action-icons-row">
+
+                      <button
+                        type="button"
+                        class="icon-action-btn"
+                        [attr.aria-label]="'Ver ' + oferta.titulo"
+                        title="Ver detalles"
+                        (click)="verOferta(oferta)"
+                      >
+                        👁️
+                      </button>
+
+                      <button
+                        type="button"
+                        class="icon-action-btn"
+                        [attr.aria-label]="'Editar ' + oferta.titulo"
+                        title="Editar oferta"
+                        (click)="editarOferta(oferta)"
+                      >
+                        ✏️
+                      </button>
+
+                      <button
+                        type="button"
+                        class="icon-action-btn"
+                        [disabled]="oferta.estado === 'Cerrada'"
+                        [attr.aria-label]="'Cerrar ' + oferta.titulo"
+                        [title]="
+                          oferta.estado === 'Cerrada'
+                            ? 'Oferta ya cerrada'
+                            : 'Cerrar oferta'
+                        "
+                        (click)="solicitarCierre(oferta)"
+                      >
+                        ✕
+                      </button>
+
+                    </div>
+                  </td>
+                </tr>
+
+              } @empty {
+
+                <tr>
+                  <td
+                    colspan="5"
+                    class="empty-offers-cell"
+                  >
+                    No hay ofertas en esta categoría.
+                  </td>
+                </tr>
+
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      }
+
     </div>
+
   </main>
+
+  <!-- VENTANAS DE GESTIÓN LOCAL DE OFERTAS -->
+  @if (ofertaSeleccionada; as oferta) {
+
+    <div
+      class="offer-modal-overlay"
+      (click)="cerrarVentana()"
+    >
+
+      <section
+        class="offer-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="offer-modal-title"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="offer-modal-header">
+
+          <h2 id="offer-modal-title">
+
+            @if (accionActual === 'ver') {
+              Detalles de la oferta
+            } @else if (accionActual === 'editar') {
+              Editar oferta
+            } @else {
+              Cerrar oferta
+            }
+
+          </h2>
+
+          <button
+            type="button"
+            class="offer-modal-close"
+            (click)="cerrarVentana()"
+            aria-label="Cerrar ventana"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <!-- VER DETALLES -->
+        @if (accionActual === 'ver') {
+
+          <div class="offer-detail-list">
+
+            <div>
+              <span>Oferta</span>
+              <strong>{{ oferta.titulo }}</strong>
+            </div>
+
+            <div>
+              <span>Ubicación</span>
+              <strong>{{ oferta.ubicacion }}</strong>
+            </div>
+
+            <div>
+              <span>Modalidad</span>
+              <strong>{{ oferta.modalidad }}</strong>
+            </div>
+
+            <div>
+              <span>Publicación</span>
+              <strong>{{ oferta.fecha }}</strong>
+            </div>
+
+            <div>
+              <span>Postulantes</span>
+              <strong>{{ oferta.postulantes }}</strong>
+            </div>
+
+            <div>
+              <span>Estado</span>
+              <strong>{{ oferta.estado }}</strong>
+            </div>
+
+          </div>
+
+          <p class="modal-demo-note">
+            Información ficticia utilizada para probar
+            el diseño. El detalle real vendrá de la API.
+          </p>
+
+          <button
+            type="button"
+            class="modal-secondary-button"
+            (click)="cerrarVentana()"
+          >
+            Cerrar
+          </button>
+
+        }
+
+        <!-- EDITAR OFERTA EN MEMORIA -->
+        @if (accionActual === 'editar') {
+
+          <form
+            class="offer-edit-form"
+            (ngSubmit)="guardarEdicion()"
+          >
+
+            <label for="editar-oferta-titulo">
+              Título de la oferta
+            </label>
+
+            <input
+              id="editar-oferta-titulo"
+              name="titulo"
+              type="text"
+              [(ngModel)]="tituloEdicion"
+              maxlength="150"
+              minlength="3"
+              required
+            >
+
+            <label for="editar-oferta-ubicacion">
+              Ubicación
+            </label>
+
+            <input
+              id="editar-oferta-ubicacion"
+              name="ubicacion"
+              type="text"
+              [(ngModel)]="ubicacionEdicion"
+              maxlength="120"
+              minlength="2"
+              required
+            >
+
+            <label for="editar-oferta-modalidad">
+              Modalidad
+            </label>
+
+            <select
+              id="editar-oferta-modalidad"
+              name="modalidad"
+              [(ngModel)]="modalidadEdicion"
+              required
+            >
+              <option value="Presencial">
+                Presencial
+              </option>
+              <option value="Híbrido">
+                Híbrido
+              </option>
+              <option value="Remoto">
+                Remoto
+              </option>
+            </select>
+
+            @if (errorEdicion) {
+              <p class="modal-error" role="alert">
+                {{ errorEdicion }}
+              </p>
+            }
+
+            <p class="modal-demo-note">
+              Los cambios se conservarán solamente
+              mientras esta pantalla permanezca abierta.
+              No se enviarán a PostgreSQL.
+            </p>
+
+            <div class="modal-actions">
+
+              <button
+                type="button"
+                class="modal-secondary-button"
+                (click)="cerrarVentana()"
+              >
+                Cancelar
+              </button>
+
+              <button
+                type="submit"
+                class="modal-primary-button"
+              >
+                Guardar cambios de prueba
+              </button>
+
+            </div>
+
+          </form>
+
+        }
+
+        <!-- CONFIRMACIÓN PARA CERRAR OFERTA -->
+        @if (accionActual === 'cerrar') {
+
+          <p class="modal-confirm-message">
+            ¿Deseas marcar como cerrada la oferta
+            <strong>{{ oferta.titulo }}</strong>?
+          </p>
+
+          <p class="modal-demo-note">
+            Esta acción solo cambiará el estado en
+            esta demostración. No afectará las
+            ofertas guardadas en la base de datos.
+          </p>
+
+          <div class="modal-actions">
+
+            <button
+              type="button"
+              class="modal-secondary-button"
+              (click)="cerrarVentana()"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="button"
+              class="modal-primary-button"
+              (click)="confirmarCierre()"
+            >
+              Confirmar cierre de prueba
+            </button>
+
+          </div>
+
+        }
+
+      </section>
+
+    </div>
+
+  }
+
 </div>

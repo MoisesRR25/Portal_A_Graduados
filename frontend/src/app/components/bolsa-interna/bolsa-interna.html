@@ -1,9 +1,11 @@
+
 <div class="dashboard-layout">
-  <!-- Menú Lateral Graduado -->
-  <aside class="dashboard-sidebar">
+
+  <!-- MENÚ LATERAL DEL GRADUADO -->
+  <aside id="menu-lateral-graduado" class="dashboard-sidebar" [class.mobile-open]="menuAbierto">
     <div class="sidebar-brand">
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img src="/ues.png" alt="Universidad de El Salvador" width="50" height="50">
       </span>
       <div>
         <strong>Portal de Graduados</strong>
@@ -11,18 +13,22 @@
       </div>
     </div>
 
+    <button type="button" class="sidebar-close-button" aria-label="Cerrar menú" (click)="cerrarMenu()">✕</button>
     <div class="nav-section-title">MENÚ PRINCIPAL</div>
+
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" class="nav-item">🏠 Resumen</a>
-      <a routerLink="/perfil-graduado" class="nav-item">👤 Mi perfil</a>
-      <a routerLink="/bolsa-interna" class="nav-item active">💼 Bolsa de trabajo</a>
-      <a routerLink="/mis-postulaciones" class="nav-item">📄 Mis postulaciones</a>
+      <a routerLink="/dashboard" class="nav-item" (click)="cerrarMenu()">🏠 Resumen</a>
+      <a routerLink="/perfil-graduado" class="nav-item" (click)="cerrarMenu()">👤 Mi perfil</a>
+      <a routerLink="/bolsa-interna" class="nav-item active" (click)="cerrarMenu()">💼 Bolsa de trabajo</a>
+      <a routerLink="/mis-postulaciones" class="nav-item" (click)="cerrarMenu()">📄 Mis postulaciones</a>
     </nav>
 
     <div class="sidebar-bottom">
       <nav class="sidebar-nav">
-        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
-        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+        <button type="button" class="nav-item bolsa-nav-boton" (click)="abrirSeguridad()">
+          🔒 Acceso y seguridad
+        </button>
+        <a routerLink="/" class="nav-item text-red" (click)="cerrarMenu()">🚪 Cerrar sesión</a>
       </nav>
       <div class="sidebar-footer-card">
         <small>Universidad de El Salvador</small>
@@ -31,12 +37,34 @@
     </div>
   </aside>
 
-  <!-- Contenido Principal -->
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button type="button" class="mobile-backdrop" [class.visible]="menuAbierto"
+          (click)="cerrarMenu()" tabindex="-1" aria-label="Cerrar menú de navegación"></button>
+
   <main class="dashboard-main">
     <header class="dashboard-topbar">
+      <button type="button" class="mobile-menu-button" (click)="alternarMenu()"
+              [attr.aria-expanded]="menuAbierto"
+              [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+              aria-controls="menu-lateral-graduado">☰</button>
+
       <span></span>
       <div class="user-profile-badge">
-        <span class="notification-icon">🔔</span>
+        <div class="bolsa-notificaciones-contenedor">
+          <button type="button" class="notification-icon bolsa-notificaciones-boton"
+                  aria-label="Notificaciones" [attr.aria-expanded]="notificacionesAbiertas"
+                  (click)="alternarNotificaciones()">🔔</button>
+          @if (notificacionesAbiertas) {
+            <div class="bolsa-notificaciones" role="region" aria-label="Notificaciones">
+              <div class="bolsa-notificaciones-titulo">
+                <strong>Notificaciones</strong>
+                <button type="button" aria-label="Cerrar notificaciones"
+                        (click)="cerrarNotificaciones()">✕</button>
+              </div>
+              <p>No hay notificaciones reales. Estarán disponibles cuando se conecte la API.</p>
+            </div>
+          }
+        </div>
         <div class="user-avatar-name">
           <strong>Carlos Martínez</strong>
           <small>Graduado</small>
@@ -45,218 +73,233 @@
     </header>
 
     <div class="dashboard-content">
-      <!-- Encabezado de la Sección -->
       <div class="welcome-header">
         <span class="mi-portal">OPORTUNIDADES</span>
         <h1>Bolsa de trabajo</h1>
         <p>Encuentra oportunidades que se adapten a tu perfil profesional.</p>
       </div>
 
-      <!-- Barra de Búsqueda Superior -->
+      <!-- AVISO: TODAS LAS ACCIONES SON LOCALES -->
+      <p class="bolsa-aviso-demo">
+        <strong>Modo demostración.</strong> Las seis ofertas son ejemplos. Los favoritos,
+        las búsquedas y las postulaciones simuladas no se guardan en la base de datos.
+      </p>
+
+      @if (mensajeAccion) {
+        <div class="bolsa-mensaje" role="status">
+          <span>{{ mensajeAccion }}</span>
+          <button type="button" aria-label="Cerrar mensaje" (click)="limpiarMensaje()">✕</button>
+        </div>
+      }
+
+      <!-- BUSCADOR -->
       <div class="search-bar-container">
         <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" placeholder="Buscar por puesto, empresa o habilidad..." class="search-input-control">
+          <span class="search-icon" aria-hidden="true">🔍</span>
+          <input type="search" class="search-input-control"
+                 placeholder="Buscar por puesto, empresa o habilidad..."
+                 aria-label="Buscar oportunidades" [(ngModel)]="textoBusqueda"
+                 (keydown.enter)="buscar()">
         </div>
-        <button class="btn-search-primary">Buscar</button>
+        <button type="button" class="btn-search-primary" (click)="buscar()">Buscar</button>
       </div>
 
-      <!-- Layout de Dos Columnas: Filtros a la izquierda, Vacantes a la derecha -->
       <div class="job-board-grid">
-        
-        <!-- Columna de Filtros -->
-        <aside class="filters-card">
+        <!-- FILTROS -->
+        <aside class="filters-card" aria-label="Filtros de oportunidades">
           <div class="filters-header">
-            <div class="filters-title">
-              <span>⚡</span>
-              <h3>Filtros</h3>
-            </div>
-            <a href="#" class="clear-filters">Limpiar</a>
+            <div class="filters-title"><span>⚡</span><h3>Filtros</h3></div>
+            <button type="button" class="clear-filters bolsa-enlace-boton"
+                    (click)="limpiarFiltros()">Limpiar</button>
           </div>
 
-          <!-- Filtro Área -->
           <div class="filter-group">
-            <label class="filter-label">Área</label>
-            <select class="filter-select">
-              <option>Todas las áreas</option>
-              <option>Desarrollo de Software</option>
-              <option>Bases de Datos</option>
-              <option>QA y Testing</option>
+            <label class="filter-label" for="bolsa-area">Área</label>
+            <select id="bolsa-area" class="filter-select" [(ngModel)]="areaSeleccionada">
+              <option value="">Todas las áreas</option>
+              @for (area of areas; track area) { <option [value]="area">{{ area }}</option> }
             </select>
           </div>
 
-          <!-- Filtro Ubicación -->
           <div class="filter-group">
-            <label class="filter-label">Ubicación</label>
-            <select class="filter-select">
-              <option>Todo El Salvador</option>
-              <option>San Salvador</option>
-              <option>Santa Ana</option>
-              <option>San Miguel</option>
+            <label class="filter-label" for="bolsa-ubicacion">Ubicación</label>
+            <select id="bolsa-ubicacion" class="filter-select" [(ngModel)]="ubicacionSeleccionada">
+              <option value="">Todo El Salvador</option>
+              @for (ubicacion of ubicaciones; track ubicacion) {
+                <option [value]="ubicacion">{{ ubicacion }}</option>
+              }
             </select>
           </div>
 
-          <!-- Filtro Modalidad -->
           <div class="filter-group">
-            <label class="filter-label">Modalidad</label>
+            <span class="filter-label">Modalidad</span>
             <div class="checkbox-list">
-              <label><input type="checkbox"> Presencial <span class="count">14</span></label>
-              <label><input type="checkbox"> Híbrido <span class="count">9</span></label>
-              <label><input type="checkbox"> Remoto <span class="count">7</span></label>
+              @for (modalidad of modalidades; track modalidad) {
+                <label>
+                  <span>
+                    <input type="checkbox" [checked]="modalidadesSeleccionadas.includes(modalidad)"
+                           (change)="alternarModalidad(modalidad)">
+                    {{ modalidad }}
+                  </span>
+                  <span class="count">{{ contarModalidad(modalidad) }}</span>
+                </label>
+              }
             </div>
           </div>
 
-          <!-- Filtro Clasificación -->
           <div class="filter-group">
-            <label class="filter-label">Clasificación</label>
+            <span class="filter-label">Clasificación</span>
             <div class="checkbox-list">
-              <label><input type="checkbox"> Recién graduados <span class="count">18</span></label>
-              <label><input type="checkbox"> Sin experiencia <span class="count">8</span></label>
-              <label><input type="checkbox"> Pasantía <span class="count">5</span></label>
+              @for (clasificacion of clasificaciones; track clasificacion) {
+                <label>
+                  <span>
+                    <input type="checkbox" [checked]="clasificacionesSeleccionadas.includes(clasificacion)"
+                           (change)="alternarClasificacion(clasificacion)">
+                    {{ clasificacion }}
+                  </span>
+                  <span class="count">{{ contarClasificacion(clasificacion) }}</span>
+                </label>
+              }
             </div>
           </div>
 
-          <!-- Filtro Habilidades -->
           <div class="filter-group">
-            <label class="filter-label">Habilidades</label>
+            <span class="filter-label">Habilidades</span>
             <div class="filter-tags-grid">
-              <span>React</span>
-              <span>Java</span>
-              <span>SQL</span>
-              <span>Python</span>
-              <span>Soporte</span>
+              @for (habilidad of habilidades; track habilidad) {
+                <button type="button" class="bolsa-habilidad"
+                        [class.seleccionada]="habilidadesSeleccionadas.includes(habilidad)"
+                        [attr.aria-pressed]="habilidadesSeleccionadas.includes(habilidad)"
+                        (click)="alternarHabilidad(habilidad)">{{ habilidad }}</button>
+              }
             </div>
           </div>
         </aside>
 
-        <!-- Columna de Listado de Vacantes -->
+        <!-- LISTADO DE OFERTAS -->
         <div class="job-results-container">
           <div class="results-meta-row">
-            <small><strong>30</strong> oportunidades encontradas</small>
-            <select class="sort-select">
-              <option>Más recientes</option>
-              <option>Mayor compatibilidad</option>
+            <small><strong>{{ ofertasFiltradas.length }}</strong> de {{ ofertas.length }} oportunidades de ejemplo</small>
+            <select class="sort-select" aria-label="Ordenar ofertas"
+                    [(ngModel)]="ordenSeleccionado">
+              <option value="recientes">Más recientes</option>
+              <option value="compatibilidad">Mayor compatibilidad</option>
             </select>
           </div>
 
-          <!-- Cuadrícula de Ofertas (2 columnas) -->
           <div class="jobs-grid-2">
-            
-            <!-- Oferta 1 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp as">AS</span>
-                <div>
-                  <small>Applaudo Studios</small>
-                  <h4>Desarrollador Frontend Jr.</h4>
+            @for (oferta of ofertasFiltradas; track oferta.id) {
+              <article class="job-card-mini">
+                <div class="job-header">
+                  <span [class]="'badge-comp ' + oferta.color">{{ oferta.iniciales }}</span>
+                  <div class="bolsa-titulo-oferta">
+                    <small>{{ oferta.empresa }}</small>
+                    <h4>{{ oferta.puesto }}</h4>
+                  </div>
+                  @if (oferta.compatibilidad !== undefined) {
+                    <span class="match-badge">{{ oferta.compatibilidad }}% compatible*</span>
+                  }
+                  <button type="button" class="favorite-icon"
+                          [class.es-favorita]="esFavorita(oferta.id)"
+                          [attr.aria-label]="esFavorita(oferta.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+                          [attr.aria-pressed]="esFavorita(oferta.id)"
+                          (click)="alternarFavorita(oferta)">
+                    {{ esFavorita(oferta.id) ? '♥' : '♡' }}
+                  </button>
                 </div>
-                <span class="match-badge">87% compatible</span>
-                <span class="favorite-icon">♡</span>
-              </div>
-              <div class="job-loc">📍 San Salvador · 💼 Híbrido</div>
-              <div class="tags"><span>React</span><span>TypeScript</span><span>Sin experiencia</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 2 días</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
-            <!-- Oferta 2 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp ba">BA</span>
-                <div>
-                  <small>Banco Agrícola</small>
-                  <h4>Analista de Datos</h4>
+                <div class="job-loc">📍 {{ oferta.ubicacion }} · 💼 {{ oferta.modalidad }}</div>
+                <div class="tags">
+                  @for (etiqueta of oferta.etiquetas; track etiqueta) {
+                    <span>{{ etiqueta }}</span>
+                  }
                 </div>
-                <span class="match-badge">87% compatible</span>
-                <span class="favorite-icon">♡</span>
-              </div>
-              <div class="job-loc">📍 Antiguo Cuscatlán · 💼 Presencial</div>
-              <div class="tags"><span>SQL</span><span>Power BI</span><span>Python</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 4 días</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
-            <!-- Oferta 3 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp el">EL</span>
-                <div>
-                  <small>Elaniin</small>
-                  <h4>QA Tester Trainee</h4>
+                <div class="job-footer">
+                  <small>🕒 {{ oferta.publicada }}</small>
+                  <button type="button" class="view-offer bolsa-enlace-boton"
+                          (click)="abrirOferta(oferta)">Ver oferta ›</button>
                 </div>
-                <span class="match-badge">87% compatible</span>
-                <span class="favorite-icon">♡</span>
+              </article>
+            } @empty {
+              <div class="bolsa-sin-resultados">
+                <span aria-hidden="true">🔎</span>
+                <h3>No encontramos oportunidades con esos filtros</h3>
+                <p>Prueba otra búsqueda o limpia los filtros para ver las seis ofertas de ejemplo.</p>
+                <button type="button" class="btn-search-primary" (click)="limpiarFiltros()">
+                  Limpiar filtros
+                </button>
               </div>
-              <div class="job-loc">📍 San Salvador · 💼 Remoto</div>
-              <div class="tags"><span>Testing</span><span>Pasantía</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 1 semana</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
-            <!-- Oferta 4 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp tt">TT</span>
-                <div>
-                  <small>Telefónica Tech</small>
-                  <h4>Soporte Técnico N1</h4>
-                </div>
-                <span class="favorite-icon">♡</span>
-              </div>
-              <div class="job-loc">📍 San Salvador · 💼 Presencial</div>
-              <div class="tags"><span>Redes</span><span>Servicio al cliente</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 3 días</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
-            <!-- Oferta 5 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp ha">HA</span>
-                <div>
-                  <small>Hugo App</small>
-                  <h4>Backend Developer</h4>
-                </div>
-                <span class="favorite-icon">♡</span>
-              </div>
-              <div class="job-loc">📍 La Libertad · 💼 Híbrido</div>
-              <div class="tags"><span>Node.js</span><span>PostgreSQL</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 5 días</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
-            <!-- Oferta 6 -->
-            <div class="job-card-mini">
-              <div class="job-header">
-                <span class="badge-comp se">SE</span>
-                <div>
-                  <small>Sertracen</small>
-                  <h4>Pasantía de Desarrollo</h4>
-                </div>
-                <span class="favorite-icon">♡</span>
-              </div>
-              <div class="job-loc">📍 Soyapango · 💼 Presencial</div>
-              <div class="tags"><span>Pasantía</span><span>Sin experiencia</span></div>
-              <div class="job-footer">
-                <small>🕒 Hace 1 semana</small>
-                <a href="#" class="view-offer">Ver oferta &gt;</a>
-              </div>
-            </div>
-
+            }
           </div>
-        </div>
 
+          <p class="bolsa-aclaracion">*La compatibilidad mostrada es ilustrativa; no se calcula con un perfil real.</p>
+        </div>
       </div>
     </div>
   </main>
+
+  <!-- DETALLE DE OFERTA -->
+  @if (ofertaSeleccionada; as oferta) {
+    <div class="bolsa-dialog-overlay" (click)="cerrarOferta()">
+      <section class="bolsa-dialog" role="dialog" aria-modal="true"
+               aria-labelledby="bolsa-titulo-detalle" (click)="$event.stopPropagation()">
+        <div class="bolsa-dialog-cabecera">
+          <div>
+            <span class="mi-portal">DETALLE DE OFERTA</span>
+            <h2 id="bolsa-titulo-detalle">{{ oferta.puesto }}</h2>
+          </div>
+          <button type="button" class="bolsa-cerrar" aria-label="Cerrar detalle" (click)="cerrarOferta()">✕</button>
+        </div>
+        <p class="bolsa-dialog-empresa"><strong>{{ oferta.empresa }}</strong></p>
+        <dl class="bolsa-datos-oferta">
+          <div><dt>Área</dt><dd>{{ oferta.area }}</dd></div>
+          <div><dt>Ubicación</dt><dd>{{ oferta.ubicacion }}</dd></div>
+          <div><dt>Modalidad</dt><dd>{{ oferta.modalidad }}</dd></div>
+          <div><dt>Publicado</dt><dd>{{ oferta.publicada }}</dd></div>
+        </dl>
+        <h3>Etiquetas de la oferta</h3>
+        <div class="tags bolsa-dialog-etiquetas">
+          @for (etiqueta of oferta.etiquetas; track etiqueta) { <span>{{ etiqueta }}</span> }
+        </div>
+        <div class="bolsa-dialog-aviso">
+          Los datos son demostrativos. La descripción completa, los requisitos reales
+          y el envío de solicitudes estarán disponibles cuando se conecte la API.
+        </div>
+        @if (estaPostulada(oferta.id)) {
+          <p class="bolsa-confirmacion" role="status">
+            ✓ Postulación simulada. No se guardó ni aparecerá en «Mis postulaciones».
+          </p>
+        }
+        <div class="bolsa-dialog-acciones">
+          <button type="button" class="bolsa-boton-secundario" (click)="alternarFavorita(oferta)">
+            {{ esFavorita(oferta.id) ? '♥ Quitar favorito' : '♡ Guardar favorito' }}
+          </button>
+          <button type="button" class="bolsa-boton-secundario" (click)="cerrarOferta()">Cerrar</button>
+          <button type="button" class="btn-search-primary" [disabled]="estaPostulada(oferta.id)"
+                  (click)="simularPostulacion()">
+            {{ estaPostulada(oferta.id) ? 'Postulación simulada' : 'Simular postulación' }}
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+
+  <!-- ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+    <div class="bolsa-dialog-overlay" (click)="cerrarSeguridad()">
+      <section class="bolsa-dialog bolsa-dialog-seguridad" role="dialog" aria-modal="true"
+               aria-labelledby="bolsa-titulo-seguridad" (click)="$event.stopPropagation()">
+        <div class="bolsa-dialog-cabecera">
+          <h2 id="bolsa-titulo-seguridad">🔒 Acceso y seguridad</h2>
+          <button type="button" class="bolsa-cerrar" aria-label="Cerrar seguridad"
+                  (click)="cerrarSeguridad()">✕</button>
+        </div>
+        <p>Cuenta de demostración: <strong>Carlos Martínez · Graduado</strong>.</p>
+        <p>El cambio de contraseña, la verificación de correo y las sesiones
+           seguras estarán disponibles cuando se conecte la autenticación real.</p>
+        <div class="bolsa-dialog-acciones">
+          <button type="button" class="bolsa-boton-secundario" (click)="cerrarSeguridad()">Cerrar</button>
+        </div>
+      </section>
+    </div>
+  }
 </div>

@@ -1,137 +1,1072 @@
+
 <div class="portal-shell">
-  <aside class="sidebar">
+
+  <!-- MENÚ LATERAL DEL ADMINISTRADOR -->
+  <aside
+    id="menu-lateral-admin"
+    class="sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
-      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+
+      <img
+        src="/ues.png"
+        alt="Logo UES"
+        class="brand-logo"
+      />
+
       <div class="brand-text">
-        <span class="brand-title">Portal de Graduados</span>
-        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+        <span class="brand-title">
+          Portal de Graduados
+        </span>
+
+        <span class="brand-sub">
+          Ingeniería de Sistemas Informáticos
+        </span>
       </div>
+
     </div>
 
+    <!-- BOTÓN CERRAR MENÚ MÓVIL -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
+    <!-- NAVEGACIÓN PRINCIPAL -->
     <div class="sidebar-section">
-      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+
+      <p class="sidebar-label">
+        MENÚ PRINCIPAL
+      </p>
+
       <nav class="sidebar-nav">
-        <a routerLink="/panel-general" class="nav-item">
+
+        <a
+          routerLink="/panel-general"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">📊</span>
           <span>Panel general</span>
         </a>
-        <a routerLink="/aprobaciones" class="nav-item">
+
+        <a
+          routerLink="/aprobaciones"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">✓</span>
           <span>Aprobaciones</span>
-          <span class="nav-badge">5</span>
+          <span class="nav-badge">4</span>
         </a>
-        <a routerLink="/carga-masiva" class="nav-item is-active">
+
+        <a
+          routerLink="/carga-masiva"
+          class="nav-item is-active"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">⬆</span>
           <span>Carga masiva</span>
         </a>
+
       </nav>
+
     </div>
 
+    <!-- PARTE INFERIOR DEL MENÚ -->
     <div class="sidebar-footer">
-      <a href="javascript:void(0)" class="footer-link">
+
+      <button
+        type="button"
+        class="footer-link footer-button"
+        (click)="abrirSeguridad()"
+      >
         <span>🔒</span>
         <span>Acceso y seguridad</span>
-      </a>
-      <a routerLink="/login" class="footer-link">
+      </button>
+
+      <a
+        routerLink="/"
+        class="footer-link"
+        (click)="cerrarMenu()"
+      >
         <span>↪</span>
         <span>Cerrar sesión</span>
       </a>
 
       <div class="institution-badge">
-        <img src="/ues.png" alt="UES" class="institution-logo" />
+
+        <img
+          src="/ues.png"
+          alt="UES"
+          class="institution-logo"
+        />
+
         <div class="institution-info">
           <strong>UES</strong>
           <span>Universidad de El Salvador</span>
           <span>Facultad de Ingeniería</span>
         </div>
+
       </div>
+
     </div>
+
   </aside>
 
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
+  <!-- ÁREA PRINCIPAL -->
   <div class="main-area">
+
+    <!-- BARRA SUPERIOR -->
     <header class="topbar">
+
+      <!-- BOTÓN ABRIR MENÚ MÓVIL -->
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="
+          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
+        "
+        aria-controls="menu-lateral-admin"
+      >
+        ☰
+      </button>
+
       <div class="topbar-actions">
-        <button type="button" class="icon-btn" aria-label="Notificaciones">
-          <span>🔔</span>
-          <span class="notif-dot"></span>
-        </button>
-        <div class="admin-chip">
-          <span class="admin-avatar">AR</span>
-          <div class="admin-meta">
-            <span class="admin-name">Ana Rodríguez</span>
-            <span class="admin-role">Administradora</span>
-          </div>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+
+            <div
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones administrativas"
+            >
+
+              <div class="notifications-header">
+
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+              <div class="notifications-empty">
+
+                <span aria-hidden="true">🔔</span>
+
+                <strong>
+                  Sin notificaciones reales
+                </strong>
+
+                <p>
+                  Las notificaciones de cargas,
+                  verificaciones y aprobaciones
+                  estarán disponibles cuando
+                  conectemos la API.
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
         </div>
+
+        <!-- ADMINISTRADORA -->
+        <div class="admin-chip">
+
+          <span class="admin-avatar">
+            AR
+          </span>
+
+          <div class="admin-meta">
+            <span class="admin-name">
+              Ana Rodríguez
+            </span>
+            <span class="admin-role">
+              Administradora
+            </span>
+          </div>
+
+        </div>
+
       </div>
+
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
+
+      <!-- ENCABEZADO -->
       <div class="page-header-row">
+
         <div>
-          <span class="eyebrow">GESTIÓN DE DATOS</span>
-          <h1>Carga masiva de graduados</h1>
-          <p class="page-subtitle">Importa registros de graduados mediante archivos Excel (.xlsx).</p>
+
+          <span class="eyebrow">
+            GESTIÓN DE DATOS
+          </span>
+
+          <h1>
+            Carga masiva de graduados
+          </h1>
+
+          <p class="page-subtitle">
+            Importa registros de graduados
+            mediante archivos Excel (.xlsx).
+          </p>
+
         </div>
 
-        <button type="button" class="btn-outline-sm">⬇ Descargar plantilla</button>
+        <!-- DESCARGAR PLANTILLA -->
+        <button
+          type="button"
+          class="btn-outline-sm"
+          [disabled]="procesandoArchivo"
+          (click)="descargarPlantilla()"
+        >
+          ⬇ Descargar plantilla
+        </button>
+
       </div>
 
+      <!-- AVISO DE DEMOSTRACIÓN -->
+      <div class="demo-notice">
+
+        <span aria-hidden="true">
+          ℹ️
+        </span>
+
+        <p>
+          <strong>Validación local de demostración.</strong>
+          Puedes seleccionar un Excel real para
+          comprobar sus registros. Ningún archivo
+          se envía al servidor ni se guarda
+          en PostgreSQL.
+        </p>
+
+      </div>
+
+      <!-- MENSAJE DE ERROR -->
+      @if (errorArchivo) {
+
+        <div
+          class="file-error-notice"
+          role="alert"
+        >
+
+          <span aria-hidden="true">
+            ⚠
+          </span>
+
+          <p>
+            {{ errorArchivo }}
+          </p>
+
+          <button
+            type="button"
+            aria-label="Cerrar error"
+            (click)="cerrarMensajes()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+      }
+
+      <!-- MENSAJE INFORMATIVO -->
+      @if (mensajeInformativo) {
+
+        <div
+          class="file-info-notice"
+          role="status"
+        >
+
+          <span aria-hidden="true">
+            ✓
+          </span>
+
+          <p>
+            {{ mensajeInformativo }}
+          </p>
+
+          <button
+            type="button"
+            aria-label="Cerrar mensaje"
+            (click)="cerrarMensajes()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+      }
+
+      <!-- TARJETA PARA CARGAR ARCHIVO -->
       <section class="upload-card">
-        <div class="dropzone">
-          <div class="upload-circle">⬆</div>
-          <h2>Arrastra tu archivo Excel aquí</h2>
-          <p>o selecciona un archivo desde tu equipo (.xlsx, máximo 10 MB)</p>
-          <label class="btn-primary-sm file-label">
-            Seleccionar archivo
-            <input type="file" accept=".xlsx,.xls" hidden />
+
+        <!-- ZONA DE ARRASTRAR Y SOLTAR -->
+        <div
+          class="dropzone"
+          [class.is-dragging]="arrastrandoArchivo"
+          (dragover)="permitirSoltar($event)"
+          (dragleave)="salirArrastre($event)"
+          (drop)="alSoltarArchivo($event)"
+        >
+
+          <div class="upload-circle">
+            ⬆
+          </div>
+
+          <h2>
+            Arrastra tu archivo Excel aquí
+          </h2>
+
+          <p>
+            O selecciona un archivo desde tu equipo
+            (.xlsx, máximo 10 MB).
+          </p>
+
+          <!-- SELECTOR DE ARCHIVOS -->
+          <label
+            for="archivo-excel-graduados"
+            class="btn-primary-sm file-label"
+            [class.is-disabled]="procesandoArchivo"
+          >
+            {{
+              procesandoArchivo
+                ? 'Leyendo archivo...'
+                : 'Seleccionar archivo'
+            }}
           </label>
-        </div>
 
-        <div class="requirements-box">
-          <h3>Requisitos del archivo</h3>
-          <ul>
-            <li>Utiliza la plantilla oficial con columnas: Nombre completo, Correo, Carnet, Año de graduación y Estado laboral.</li>
-            <li>Los correos electrónicos deben tener formato válido y no estar duplicados.</li>
-            <li>El año de graduación debe estar entre 1990 y el año actual.</li>
-          </ul>
-        </div>
-      </section>
+          <input
+            id="archivo-excel-graduados"
+            type="file"
+            class="file-input"
+            accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            [disabled]="procesandoArchivo"
+            (change)="alSeleccionarArchivo($event)"
+          />
 
-      <section class="summary-card">
-        <div class="summary-header">
-          <div>
-            <h2>Resumen de última carga</h2>
-            <p class="card-sub">graduados_2025_semestre1.xlsx · 15 jun. 2025</p>
-          </div>
-          <span class="status-pill">Procesado con observaciones</span>
-        </div>
+          @if (procesandoArchivo) {
 
-        <div class="summary-stats">
-          <div class="stat-box">
-            <strong>120</strong>
-            <span>Total procesados</span>
-          </div>
-          <div class="stat-box">
-            <strong class="text-green">116</strong>
-            <span>Importados</span>
-          </div>
-          <div class="stat-box">
-            <strong class="text-red">4</strong>
-            <span>Rechazados</span>
-          </div>
-        </div>
+            <p
+              class="processing-message"
+              role="status"
+            >
+              Validando los registros del Excel...
+            </p>
 
-        <div class="rejected-alert">
-          <div class="alert-left">
-            <span class="alert-icon">⚠</span>
-            <div>
-              <strong>4 registros rechazados</strong>
-              <p>Filas 14, 38, 72 y 105: correo inválido o carnet duplicado.</p>
+          }
+
+          @if (archivoValidado) {
+
+            <div class="selected-file">
+
+              <span aria-hidden="true">
+                📄
+              </span>
+
+              <div>
+
+                <strong>
+                  {{ nombreArchivo }}
+                </strong>
+
+                <small>
+                  Archivo validado localmente
+                </small>
+
+              </div>
+
+              <button
+                type="button"
+                aria-label="Quitar archivo seleccionado"
+                (click)="limpiarAnalisis()"
+              >
+                ✕
+              </button>
+
             </div>
-          </div>
-          <button type="button" class="btn-download-error">⬇ Reporte de errores</button>
+
+          }
+
         </div>
+
+        <!-- REQUISITOS DEL ARCHIVO -->
+        <div class="requirements-box">
+
+          <h3>
+            Requisitos del archivo
+          </h3>
+
+          <ul>
+
+            <li>
+              Utiliza un archivo <strong>.xlsx</strong>
+              con las columnas: Nombre completo,
+              Correo, Carnet, Año de graduación
+              y Estado laboral.
+            </li>
+
+            <li>
+              Los correos electrónicos deben
+              tener formato válido y no estar
+              duplicados dentro del archivo.
+            </li>
+
+            <li>
+              Los carnets no deben estar vacíos
+              ni repetidos dentro del archivo.
+            </li>
+
+            <li>
+              El año de graduación debe estar
+              entre 1990 y
+              {{ anioActual }}.
+            </li>
+
+            <li>
+              Los registros deben estar en la
+              primera hoja del Excel.
+              Se admiten archivos de hasta 10 MB.
+            </li>
+
+          </ul>
+
+          <p class="requirements-note">
+            Los duplicados que ya existan en la
+            base de datos solo podrán verificarse
+            cuando se conecte la API.
+          </p>
+
+        </div>
+
       </section>
+
+      <!-- RESUMEN DE ÚLTIMA CARGA -->
+      <section class="summary-card">
+
+        <div class="summary-header">
+
+          <div>
+
+            <h2>
+              {{
+                archivoValidado
+                  ? 'Resumen del archivo analizado'
+                  : 'Resumen de última carga (ejemplo)'
+              }}
+            </h2>
+
+            <p class="card-sub">
+              {{ nombreResumen }}
+              ·
+              {{ fechaResumen }}
+            </p>
+
+          </div>
+
+          <span
+            class="status-pill"
+            [class.status-success]="
+              archivoValidado && totalErroresActual === 0
+            "
+          >
+            {{ estadoResumen }}
+          </span>
+
+        </div>
+
+        <!-- ESTADÍSTICAS -->
+        <div class="summary-stats">
+
+          <div class="stat-box">
+
+            <strong>
+              {{ totalResumen }}
+            </strong>
+
+            <span>
+              Total analizados
+            </span>
+
+          </div>
+
+          <div class="stat-box">
+
+            <strong class="text-green">
+              {{ validosResumen }}
+            </strong>
+
+            <span>
+              Registros sin errores
+            </span>
+
+          </div>
+
+          <div class="stat-box">
+
+            <strong class="text-red">
+              {{ rechazadosResumen }}
+            </strong>
+
+            <span>
+              Registros observados
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- ALERTA DE REGISTROS CON ERRORES -->
+        @if (rechazadosResumen > 0) {
+
+          <div class="rejected-alert">
+
+            <div class="alert-left">
+
+              <span class="alert-icon">
+                ⚠
+              </span>
+
+              <div>
+
+                <strong>
+                  {{ rechazadosResumen }}
+                  registros con observaciones
+                </strong>
+
+                @if (archivoValidado) {
+
+                  <p>
+                    Algunos registros contienen
+                    campos inválidos o duplicados.
+                    Puedes consultar la vista previa
+                    y descargar el reporte.
+                  </p>
+
+                } @else {
+
+                  <p>
+                    Ejemplo original: filas
+                    14, 38, 72 y 105, con correo
+                    inválido o carnet duplicado.
+                  </p>
+
+                }
+
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              class="btn-download-error"
+              [disabled]="!archivoValidado"
+              [attr.title]="
+                archivoValidado
+                  ? 'Descargar reporte de errores'
+                  : 'Primero selecciona un archivo Excel'
+              "
+              (click)="descargarReporteErrores()"
+            >
+              ⬇ Reporte de errores
+            </button>
+
+          </div>
+
+        } @else {
+
+          <div class="success-alert">
+
+            <span aria-hidden="true">
+              ✓
+            </span>
+
+            <div>
+
+              <strong>
+                No se encontraron errores
+              </strong>
+
+              <p>
+                Todos los registros del archivo
+                pasaron las validaciones locales.
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+        @if (!archivoValidado) {
+
+          <p class="summary-footnote">
+            Los valores del resumen anterior
+            son exclusivamente demostrativos.
+            Selecciona un archivo para obtener
+            un análisis de tus propios registros.
+          </p>
+
+        }
+
+      </section>
+
+      <!-- VISTA PREVIA DE ARCHIVO -->
+      @if (archivoValidado) {
+
+        <section class="preview-card">
+
+          <div class="preview-header">
+
+            <div>
+
+              <h2>
+                Vista previa de registros
+              </h2>
+
+              <p class="card-sub">
+                Revisa las filas antes de
+                realizar una carga real.
+              </p>
+
+            </div>
+
+            <button
+              type="button"
+              class="btn-outline-sm"
+              (click)="alternarFiltroErrores()"
+            >
+              {{
+                soloErrores
+                  ? 'Mostrar todos'
+                  : 'Solo errores'
+              }}
+            </button>
+
+          </div>
+
+          <!-- CONTADOR -->
+          <div class="preview-counter">
+
+            <span>
+              Mostrando
+              {{ registrosVistaPrevia.length }}
+              de
+              {{ registrosFiltrados.length }}
+              registros
+            </span>
+
+            <span>
+              {{
+                soloErrores
+                  ? 'Registros con observaciones'
+                  : 'Todos los registros'
+              }}
+            </span>
+
+          </div>
+
+          <!-- TABLA CON DESPLAZAMIENTO -->
+          <div class="preview-table-wrapper">
+
+            <table class="preview-table">
+
+              <thead>
+                <tr>
+                  <th>Fila</th>
+                  <th>Nombre completo</th>
+                  <th>Correo</th>
+                  <th>Carnet</th>
+                  <th>Año</th>
+                  <th>Estado laboral</th>
+                  <th>Validación</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                @for (
+                  registro of registrosVistaPrevia;
+                  track registro.fila
+                ) {
+
+                  <tr
+                    [class.row-error]="
+                      registro.errores.length > 0
+                    "
+                  >
+
+                    <td>
+                      {{ registro.fila }}
+                    </td>
+
+                    <td>
+                      {{ registro.nombre || '—' }}
+                    </td>
+
+                    <td>
+                      {{ registro.correo || '—' }}
+                    </td>
+
+                    <td>
+                      {{ registro.carnet || '—' }}
+                    </td>
+
+                    <td>
+                      {{ registro.anio || '—' }}
+                    </td>
+
+                    <td>
+                      {{ registro.estadoLaboral || '—' }}
+                    </td>
+
+                    <td>
+
+                      @if (
+                        registro.errores.length === 0
+                      ) {
+
+                        <span class="row-status row-valid">
+                          ✓ Sin errores
+                        </span>
+
+                      } @else {
+
+                        <span class="row-status row-invalid">
+                          ⚠ Con errores
+                        </span>
+
+                        <ul class="row-errors">
+
+                          @for (
+                            error of registro.errores;
+                            track error
+                          ) {
+
+                            <li>
+                              {{ error }}
+                            </li>
+
+                          }
+
+                        </ul>
+
+                      }
+
+                    </td>
+
+                  </tr>
+
+                } @empty {
+
+                  <tr>
+
+                    <td
+                      colspan="7"
+                      class="empty-table"
+                    >
+                      No hay registros que
+                      coincidan con este filtro.
+                    </td>
+
+                  </tr>
+
+                }
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          @if (hayMasRegistros) {
+
+            <button
+              type="button"
+              class="show-more-button"
+              (click)="mostrarMasRegistros()"
+            >
+              Mostrar más registros
+            </button>
+
+          }
+
+          <!-- ACCIONES -->
+          <div class="preview-actions">
+
+            <p>
+              Los registros se validaron en memoria.
+              Todavía no están almacenados
+              en el portal.
+            </p>
+
+            <div class="preview-buttons">
+
+              <button
+                type="button"
+                class="btn-outline-sm"
+                (click)="limpiarAnalisis()"
+              >
+                Limpiar
+              </button>
+
+              <button
+                type="button"
+                class="btn-primary-sm"
+                [disabled]="totalValidosActual === 0"
+                (click)="abrirConfirmacion()"
+              >
+                Simular carga
+              </button>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      }
+
     </main>
+
   </div>
+
+  <!-- VENTANA DE SIMULACIÓN -->
+  @if (confirmacionAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarConfirmacion()"
+    >
+
+      <section
+        class="confirmation-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-confirmacion-carga"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-confirmacion-carga">
+            Confirmar simulación
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cancelar simulación"
+            (click)="cerrarConfirmacion()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="modal-description">
+          El archivo contiene
+          <strong>
+            {{ totalValidosActual }}
+          </strong>
+          registros que pasaron las validaciones
+          locales.
+        </p>
+
+        @if (totalErroresActual > 0) {
+
+          <p class="modal-description">
+            Los
+            <strong>
+              {{ totalErroresActual }}
+            </strong>
+            registros con errores quedarían
+            pendientes de corrección.
+          </p>
+
+        }
+
+        <div class="modal-notice">
+          Esta es una simulación.
+          Al confirmar no se enviará el archivo
+          a la API, no se crearán graduados
+          y no cambiará PostgreSQL.
+        </div>
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="btn-outline-sm"
+            (click)="cerrarConfirmacion()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="btn-primary-sm"
+            (click)="confirmarSimulacion()"
+          >
+            Confirmar simulación
+          </button>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  }
+
+  <!-- VENTANA DE ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarSeguridad()"
+    >
+
+      <section
+        class="security-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-seguridad"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-seguridad">
+            🔒 Acceso y seguridad
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar seguridad"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="security-description">
+          Información de demostración
+          de la cuenta administradora.
+        </p>
+
+        <div class="security-row">
+
+          <span>Usuario</span>
+          <strong>Ana Rodríguez</strong>
+
+        </div>
+
+        <div class="security-row">
+
+          <span>Rol</span>
+          <strong>Administradora</strong>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🔑 Cambiar contraseña
+          </strong>
+
+          <p>
+            Se habilitará cuando se conecte
+            la autenticación real de la API.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            ✉️ Verificación de correo
+          </strong>
+
+          <p>
+            Pendiente de integración
+            con el servidor.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🛡️ Control de importaciones
+          </strong>
+
+          <p>
+            Las cargas reales necesitarán
+            autorización administrativa,
+            validaciones del servidor y
+            control de duplicados en PostgreSQL.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-primary-sm security-close-button"
+          (click)="cerrarSeguridad()"
+        >
+          Cerrar
+        </button>
+
+      </section>
+
+    </div>
+
+  }
+
 </div>

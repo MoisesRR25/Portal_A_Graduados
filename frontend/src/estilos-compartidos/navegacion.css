@@ -1,0 +1,728 @@
+
+:where(app-aprobaciones, app-carga-masiva) .sidebar {
+  width: 248px;
+  flex-shrink: 0;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 16px;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+@media (max-width: 960px) {
+  :where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .sidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(290px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1001;
+    overflow-y: auto;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.25s ease,
+      visibility 0.25s ease;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.08);
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .dashboard-sidebar {
+  width: 260px;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .dashboard-sidebar {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(290px, 85vw);
+    height: 100vh;
+    height: 100dvh;
+    z-index: 1001;
+    overflow-y: auto;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.25s ease,
+      visibility 0.25s ease;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.08);
+  }
+
+}
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-brand {
+    padding-right: 28px;
+  }
+
+}
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-bottom {
+  margin-top: auto;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .brand-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .brand-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-brand {
+    padding-right: 28px;
+  }
+
+}
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general) .brand-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-section {
+  margin-top: 20px;
+  flex: 1;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  margin: 0 0 10px 8px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-brand strong {
+  font-size: 0.9rem;
+  color: #0f172a;
+  display: block;
+}
+
+:where(app-aprobaciones, app-carga-masiva, app-panel-general) .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5563;
+  transition: background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .sidebar-brand small {
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.65rem 0.875rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  transition: background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .nav-item:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .nav-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+
+:where(app-aprobaciones, app-carga-masiva, app-panel-general) .nav-badge {
+  margin-left: auto;
+  background-color: #b91c1c;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .nav-item.is-active {
+  background-color: #fdf2f3;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f3f5;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .nav-item {
+  padding: 0.65rem 0.875rem;
+  border-radius: 8px;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .footer-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 12.5px;
+  color: #4b5563;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .footer-link:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .nav-item:hover,
+  :where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .nav-item.active {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .footer-button {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .institution-badge {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  border: 1px solid #eceff3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .institution-logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .sidebar-footer-card {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .institution-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 10.5px;
+  line-height: 1.25;
+  color: #6b7280;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-footer-card span {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+:where(app-aprobaciones, app-carga-masiva, app-panel-general) .topbar {
+  height: 58px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 28px;
+}
+
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-carga-masiva, app-panel-general) .topbar {
+    justify-content: space-between;
+    padding: 0 16px;
+    gap: 12px;
+  }
+
+}
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .institution-info strong {
+  color: #111827;
+  font-size: 11px;
+}
+
+:where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-topbar {
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-topbar {
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    gap: 1rem;
+  }
+
+}
+:where(app-aprobaciones, app-carga-masiva, app-panel-general) .topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+:where(app-dashboard, app-mis-ofertas-empresa) .notification-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .topbar {
+  height: 58px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 28px;
+}
+
+@media (max-width: 960px) {
+  :where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .topbar {
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+}
+:where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+@media (max-width: 960px) {
+  :where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .topbar-actions {
+    gap: 10px;
+  }
+
+}
+:where(app-aprobaciones, app-panel-general) .admin-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  border-left: 1px solid #e5e7eb;
+}
+
+@media (max-width: 600px) {
+  :where(app-aprobaciones, app-panel-general) .admin-chip {
+    padding-left: 8px;
+    gap: 7px;
+  }
+
+}
+:where(app-bolsa-interna, app-mis-postulaciones, app-perfil-graduado) .notification-icon {
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+:where(app-buscar-perfiles, app-candidatos) .company-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 14px;
+  border-left: 1px solid #e5e7eb;
+}
+
+@media (max-width: 600px) {
+  :where(app-buscar-perfiles, app-candidatos) .company-chip {
+    gap: 7px;
+    padding-left: 9px;
+  }
+
+}
+:where(app-dashboard, app-mis-ofertas-empresa) .notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 0.5rem 0.75rem;
+  text-align: center;
+}
+
+:where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .notifications-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -100px;
+  z-index: 50;
+  width: 320px;
+  max-width: calc(100vw - 2rem);
+  box-sizing: border-box;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.13);
+}
+
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .notifications-panel {
+    position: fixed;
+    top: 65px;
+    right: 1rem;
+    width: min(340px, calc(100vw - 2rem));
+    max-width: none;
+  }
+
+}
+@media (max-width: 360px) {
+  :where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .notifications-panel {
+    right: 0.75rem;
+    width: calc(100vw - 1.5rem);
+  }
+
+}
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .notification-wrapper {
+  position: relative;
+}
+
+:where(app-dashboard, app-mis-ofertas-empresa) .notifications-empty-icon {
+  font-size: 1.8rem;
+}
+
+:where(app-aprobaciones, app-carga-masiva) .notifications-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .notifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+:where(app-candidatos, app-panel-general) .notifications-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #f9fafb;
+  color: #6b7280;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .notifications-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #111827;
+}
+
+:where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 6px 12px;
+  text-align: center;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .notifications-empty > span {
+  font-size: 28px;
+}
+
+:where(app-buscar-perfiles, app-publicar-oferta) .notifications-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #f9fafb;
+  color: #6b7280;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-carga-masiva, app-panel-general, app-publicar-oferta) .notifications-empty strong {
+  font-size: 13px;
+  color: #111827;
+}
+
+:where(app-buscar-perfiles, app-publicar-oferta) .notifications-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 22px 6px 12px;
+}
+
+:where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .notifications-empty p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .dashboard-sidebar.mobile-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+}
+:where(app-aprobaciones, app-bolsa-interna, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-panel-general, app-perfil-graduado, app-publicar-oferta) .mobile-menu-button,
+  :where(app-aprobaciones, app-bolsa-interna, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-panel-general, app-perfil-graduado, app-publicar-oferta) .sidebar-close-button,
+  :where(app-aprobaciones, app-bolsa-interna, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-panel-general, app-perfil-graduado, app-publicar-oferta) .mobile-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .sidebar-close-button {
+    display: flex;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.45);
+    border: none;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+  :where(app-bolsa-interna, app-mis-postulaciones, app-perfil-graduado) .dashboard-topbar > span:empty {
+    display: none;
+  }
+
+  :where(app-bolsa-interna, app-dashboard, app-mis-ofertas-empresa, app-mis-postulaciones, app-perfil-graduado) .mobile-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+}
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-carga-masiva, app-panel-general) .mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(15, 23, 42, 0.45);
+    border: none;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+}
+@media (max-width: 900px) {
+  :where(app-bolsa-interna, app-dashboard, app-mis-postulaciones, app-perfil-graduado) .mobile-menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #b91c1c;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+}
+@media (max-width: 960px) {
+  :where(app-aprobaciones, app-candidatos, app-carga-masiva, app-panel-general) .sidebar-close-button {
+    display: flex;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  :where(app-aprobaciones, app-carga-masiva, app-panel-general) .mobile-menu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #b91c1c;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  :where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .sidebar.mobile-open {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  :where(app-aprobaciones, app-buscar-perfiles, app-candidatos, app-carga-masiva, app-panel-general, app-publicar-oferta) .mobile-backdrop.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  :where(app-buscar-perfiles, app-publicar-oferta) .sidebar-close-button {
+    display: flex;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  :where(app-buscar-perfiles, app-candidatos, app-publicar-oferta) .mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.45);
+    border: none;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+}

@@ -1,67 +1,465 @@
+
 <div class="auth-layout">
+
+  <!-- PANEL IZQUIERDO INSTITUCIONAL -->
   <div class="auth-sidebar">
-    <!-- Mismo panel institucional izquierdo -->
+
+    <!-- LOGO E INFORMACIÓN DE LA UES -->
     <div class="brand-box">
+
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img
+          src="/ues.png"
+          alt="Universidad Nacional"
+          width="50"
+          height="50"
+        >
       </span>
-      <div><strong>Portal de Graduados</strong><small>Ingeniería de Sistemas Informáticos</small></div>
+
+      <div>
+        <strong>Portal de Graduados</strong>
+        <small>Ingeniería de Sistemas Informáticos</small>
+      </div>
+
     </div>
+
+    <!-- CONTENIDO INSTITUCIONAL -->
     <div class="sidebar-content">
-      <span class="sub-title">COMUNIDAD PROFESIONAL UES</span>
-      <h1>Talento que transforma El Salvador.</h1>
-      <p>Conectamos el conocimiento y la experiencia de nuestros graduados con organizaciones que construyen el futuro.</p>
+
+      <span class="sub-title">
+        COMUNIDAD PROFESIONAL UES
+      </span>
+
+      <h1>
+        Talento que transforma El Salvador.
+      </h1>
+
+      <p>
+        Conectamos el conocimiento y la experiencia
+        de nuestros graduados con organizaciones
+        que construyen el futuro.
+      </p>
+
     </div>
+
+    <!-- TESTIMONIO -->
     <div class="testimonial-card">
-      <p>"El portal me permitió encontrar mi primera oportunidad profesional en tecnología."</p>
-      <div class="author-info"><span class="avatar">AM</span><div><strong>Andrea Menjívar</strong><small>Graduada EISI · 2023</small></div></div>
+
+      <p>
+        "El portal me permitió encontrar mi primera
+        oportunidad profesional en tecnología."
+      </p>
+
+      <div class="author-info">
+
+        <span class="avatar">
+          AM
+        </span>
+
+        <div>
+          <strong>Andrea Menjívar</strong>
+          <small>Graduada EISI · 2023</small>
+        </div>
+
+      </div>
+
     </div>
+
   </div>
 
+  <!-- PANEL DERECHO: REGISTRO -->
   <div class="auth-main">
+
     <div class="auth-form-container">
-      <a routerLink="/" class="back-link">&larr; Volver al inicio</a>
-      
-      <div class="form-header">
-        <h2>Crea tu cuenta</h2>
-        <p>Selecciona tu tipo de cuenta para comenzar.</p>
+
+      <!-- VOLVER AL INICIO -->
+      <a
+        routerLink="/"
+        class="back-link"
+      >
+        &larr; Volver al inicio
+      </a>
+
+      <!-- LOGO VISIBLE EN TELÉFONOS Y TABLETAS -->
+      <div class="mobile-brand">
+
+        <img
+          src="/ues.png"
+          alt="Logo de la Universidad de El Salvador"
+          class="mobile-brand-logo"
+          width="85"
+          height="85"
+        >
+
+        <strong>
+          Portal de Graduados
+        </strong>
+
+        <small>
+          Ingeniería de Sistemas Informáticos
+        </small>
+
       </div>
 
-      <div class="user-tabs">
-        <a routerLink="/registro-graduado" class="tab active">Graduado</a>
-        <a routerLink="/registro-empresa" class="tab">Empresa</a>
-      </div>
+      @if (!datosRevisados) {
 
-      <form class="form" (submit)="$event.preventDefault()">
-        <div class="input-group">
-          <label>Nombre completo</label>
-          <input type="text" placeholder="Ej. María López" class="input-control">
+        <!-- ENCABEZADO -->
+        <div class="form-header">
+
+          <h2>
+            Crea tu cuenta
+          </h2>
+
+          <p>
+            Selecciona tu tipo de cuenta para comenzar.
+          </p>
+
         </div>
 
-        <div class="input-group">
-          <label>Carnet universitario</label>
-          <input type="text" placeholder="Ej. LM18001" class="input-control">
+        <!-- PESTAÑAS DE REGISTRO -->
+        <div class="user-tabs">
+
+          <a
+            routerLink="/registro-graduado"
+            class="tab active"
+            aria-current="page"
+          >
+            Graduado
+          </a>
+
+          <a
+            routerLink="/registro-empresa"
+            class="tab"
+          >
+            Empresa
+          </a>
+
         </div>
 
-        <div class="input-group">
-          <label>Correo electrónico</label>
-          <input type="email" placeholder="correo@ejemplo.com" class="input-control">
-        </div>
+        <!-- FORMULARIO DE REGISTRO -->
+        <form
+          class="form"
+          #formRegistro="ngForm"
+          (ngSubmit)="prepararRegistro(formRegistro)"
+        >
 
-        <div class="input-group">
-          <label>Contraseña</label>
-          <input type="password" placeholder="Mínimo 8 caracteres" class="input-control">
-        </div>
+          <!-- NOMBRE COMPLETO -->
+          <div class="input-group">
 
-        <div class="checkbox-group" style="margin-bottom: 1rem; font-size: 0.825rem; display: flex; gap: 0.5rem; align-items: center;">
-          <input type="checkbox" id="terms">
-          <label for="terms" style="margin: 0; color: #64748b;">Acepto los términos de uso y la política de privacidad.</label>
-        </div>
+            <label for="registro-graduado-nombre">
+              Nombre completo
+            </label>
 
-        <button type="submit" class="btn-primary" routerLink="/dashboard">Crear cuenta</button>
+            <input
+              id="registro-graduado-nombre"
+              name="nombreCompleto"
+              type="text"
+              placeholder="Ej. María López"
+              class="input-control"
+              autocomplete="name"
+              [(ngModel)]="nombreCompleto"
+              #nombreControl="ngModel"
+              minlength="3"
+              maxlength="150"
+              required
+            >
 
-        <p class="switch-auth">¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión</a></p>
-      </form>
+            @if (
+              nombreControl.invalid &&
+              nombreControl.touched
+            ) {
+              <small class="field-error">
+                Ingresa tu nombre completo
+                (mínimo 3 caracteres).
+              </small>
+            }
+
+          </div>
+
+          <!-- CARNET UNIVERSITARIO -->
+          <div class="input-group">
+
+            <label for="registro-graduado-carnet">
+              Carnet universitario
+            </label>
+
+            <input
+              id="registro-graduado-carnet"
+              name="carnet"
+              type="text"
+              placeholder="Ej. LM18001"
+              class="input-control"
+              autocomplete="off"
+              autocapitalize="characters"
+              [(ngModel)]="carnet"
+              #carnetControl="ngModel"
+              pattern="[A-Za-z]{2}[0-9]{5}"
+              maxlength="7"
+              required
+            >
+
+            <small class="field-help">
+              Formato provisional: 2 letras y 5 números.
+              Ejemplo: LM18001.
+            </small>
+
+            @if (
+              carnetControl.invalid &&
+              carnetControl.touched
+            ) {
+              <small class="field-error">
+                Escribe un carnet con el formato indicado.
+              </small>
+            }
+
+          </div>
+
+          <!-- CORREO ELECTRÓNICO -->
+          <div class="input-group">
+
+            <label for="registro-graduado-correo">
+              Correo electrónico
+            </label>
+
+            <input
+              id="registro-graduado-correo"
+              name="correo"
+              type="email"
+              placeholder="correo@ejemplo.com"
+              class="input-control"
+              autocomplete="email"
+              [(ngModel)]="correo"
+              #correoControl="ngModel"
+              maxlength="254"
+              email
+              required
+            >
+
+            @if (
+              correoControl.invalid &&
+              correoControl.touched
+            ) {
+              <small class="field-error">
+                Ingresa un correo electrónico válido.
+              </small>
+            }
+
+          </div>
+
+          <!-- CONTRASEÑA -->
+          <div class="input-group">
+
+            <label for="registro-graduado-contrasena">
+              Contraseña
+            </label>
+
+            <input
+              id="registro-graduado-contrasena"
+              name="contrasena"
+              type="password"
+              placeholder="Mínimo 8 caracteres"
+              class="input-control"
+              autocomplete="new-password"
+              [(ngModel)]="contrasena"
+              #contrasenaControl="ngModel"
+              minlength="8"
+              maxlength="128"
+              required
+            >
+
+            @if (
+              contrasenaControl.invalid &&
+              contrasenaControl.touched
+            ) {
+              <small class="field-error">
+                La contraseña debe tener
+                al menos 8 caracteres.
+              </small>
+            }
+
+          </div>
+
+          <!-- ACEPTACIÓN DE TÉRMINOS -->
+          <div class="checkbox-group">
+
+            <input
+              type="checkbox"
+              id="terms"
+              name="terminos"
+              [(ngModel)]="terminos"
+              #terminosControl="ngModel"
+              required
+            >
+
+            <label for="terms">
+              Acepto los términos de uso y la
+              política de privacidad.
+            </label>
+
+          </div>
+
+          @if (
+            terminosControl.invalid &&
+            terminosControl.touched
+          ) {
+            <small class="field-error terms-error">
+              Debes aceptar los términos para continuar.
+            </small>
+          }
+
+          <!-- MENSAJE GENERAL -->
+          @if (errorGeneral) {
+            <p class="form-error" role="alert">
+              {{ errorGeneral }}
+            </p>
+          }
+
+          <!-- AVISO DE DEMOSTRACIÓN -->
+          <p class="demo-form-note">
+            Este registro está en modo demostración.
+            Todavía no crea cuentas ni envía datos al servidor.
+          </p>
+
+          <!-- BOTÓN DE REVISIÓN -->
+          <button
+            type="submit"
+            class="btn-primary"
+          >
+            Revisar registro
+          </button>
+
+          <!-- ENLACE DE INICIO DE SESIÓN -->
+          <p class="switch-auth">
+
+            ¿Ya tienes una cuenta?
+
+            <a routerLink="/login">
+              Inicia sesión
+            </a>
+
+          </p>
+
+        </form>
+
+      } @else {
+
+        <!-- PANTALLA DE CONFIRMACIÓN -->
+        <section
+          class="registration-confirmation"
+          aria-labelledby="confirmacion-registro-graduado"
+        >
+
+          <div
+            class="confirmation-icon"
+            aria-hidden="true"
+          >
+            ✓
+          </div>
+
+          <span class="confirmation-label">
+            DATOS REVISADOS
+          </span>
+
+          <h2 id="confirmacion-registro-graduado">
+            Registro preparado
+          </h2>
+
+          <p class="confirmation-description">
+            Tu información cumple las validaciones
+            iniciales del formulario.
+          </p>
+
+          <!-- RESUMEN DEL REGISTRO -->
+          <div class="confirmation-details">
+
+            <div class="confirmation-detail">
+
+              <span>Nombre completo</span>
+
+              <strong>
+                {{ nombreCompleto }}
+              </strong>
+
+            </div>
+
+            <div class="confirmation-detail">
+
+              <span>Carnet universitario</span>
+
+              <strong>
+                {{ carnet }}
+              </strong>
+
+            </div>
+
+            <div class="confirmation-detail">
+
+              <span>Correo electrónico</span>
+
+              <strong>
+                {{ correo }}
+              </strong>
+
+            </div>
+
+            <div class="confirmation-detail">
+
+              <span>Tipo de cuenta</span>
+
+              <strong>
+                Graduado
+              </strong>
+
+            </div>
+
+          </div>
+
+          <!-- AVISO SOBRE LA VERIFICACIÓN REAL -->
+          <div class="confirmation-warning">
+
+            <span aria-hidden="true">
+              ℹ️
+            </span>
+
+            <p>
+              <strong>
+                La cuenta todavía no se ha creado.
+              </strong>
+
+              Esta es una vista de demostración.
+              Los datos no se enviaron a la API
+              ni se guardaron en PostgreSQL.
+              La verificación del carnet contra
+              el listado oficial de graduados
+              se realizará cuando integremos
+              el backend.
+            </p>
+
+          </div>
+
+          <!-- REGRESAR AL FORMULARIO -->
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="volverAEditar()"
+          >
+            Volver a editar los datos
+          </button>
+
+          <!-- VOLVER AL INICIO -->
+          <a
+            routerLink="/"
+            class="confirmation-home-link"
+          >
+            &larr; Regresar al inicio
+          </a>
+
+        </section>
+
+      }
+
     </div>
+
   </div>
+
 </div>

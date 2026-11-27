@@ -1,295 +1,724 @@
+
 <div class="portal-shell">
-  <aside class="sidebar">
+
+  <!-- MENÚ LATERAL DEL ADMINISTRADOR -->
+  <aside
+    id="menu-lateral-admin"
+    class="sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
-      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <img
+        src="/ues.png"
+        alt="Logo UES"
+        class="brand-logo"
+      />
+
       <div class="brand-text">
-        <span class="brand-title">Portal de Graduados</span>
-        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+        <span class="brand-title">
+          Portal de Graduados
+        </span>
+        <span class="brand-sub">
+          Ingeniería de Sistemas Informáticos
+        </span>
       </div>
     </div>
 
+    <!-- CERRAR MENÚ EN TELÉFONOS -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
     <div class="sidebar-section">
-      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <p class="sidebar-label">
+        MENÚ PRINCIPAL
+      </p>
+
       <nav class="sidebar-nav">
-        <a routerLink="/panel-general" class="nav-item is-active">
+
+        <a
+          routerLink="/panel-general"
+          class="nav-item is-active"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">📊</span>
           <span>Panel general</span>
         </a>
-        <a routerLink="/aprobaciones" class="nav-item">
+
+        <a
+          routerLink="/aprobaciones"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">✓</span>
           <span>Aprobaciones</span>
-          <span class="nav-badge">5</span>
+          <span class="nav-badge">
+            {{ totalPendientes }}
+          </span>
         </a>
-        <a routerLink="/carga-masiva" class="nav-item">
+
+        <a
+          routerLink="/carga-masiva"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">⬆</span>
           <span>Carga masiva</span>
         </a>
+
       </nav>
     </div>
 
+    <!-- PIE DEL MENÚ -->
     <div class="sidebar-footer">
-      <a href="javascript:void(0)" class="footer-link">
+
+      <button
+        type="button"
+        class="footer-link footer-button"
+        (click)="abrirSeguridad()"
+      >
         <span>🔒</span>
         <span>Acceso y seguridad</span>
-      </a>
-      <a routerLink="/login" class="footer-link">
+      </button>
+
+      <a
+        routerLink="/"
+        class="footer-link"
+        (click)="cerrarMenu()"
+      >
         <span>↪</span>
         <span>Cerrar sesión</span>
       </a>
 
       <div class="institution-badge">
-        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <img
+          src="/ues.png"
+          alt="UES"
+          class="institution-logo"
+        />
+
         <div class="institution-info">
           <strong>UES</strong>
           <span>Universidad de El Salvador</span>
           <span>Facultad de Ingeniería</span>
         </div>
       </div>
+
     </div>
   </aside>
 
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    aria-label="Cerrar menú de navegación"
+    tabindex="-1"
+  ></button>
+
   <div class="main-area">
+
+    <!-- BARRA SUPERIOR -->
     <header class="topbar">
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="
+          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
+        "
+        aria-controls="menu-lateral-admin"
+      >
+        ☰
+      </button>
+
       <div class="topbar-actions">
-        <button type="button" class="icon-btn" aria-label="Notificaciones">
-          <span>🔔</span>
-          <span class="notif-dot"></span>
-        </button>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+
+            <div
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones de administración"
+            >
+
+              <div class="notifications-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div class="notifications-empty">
+                <span aria-hidden="true">🔔</span>
+
+                <strong>
+                  Sin notificaciones reales
+                </strong>
+
+                <p>
+                  Los avisos de nuevas empresas,
+                  ofertas y revisiones aparecerán
+                  aquí cuando se integre la API.
+                </p>
+
+                <a
+                  routerLink="/aprobaciones"
+                  class="notification-link"
+                  (click)="cerrarNotificaciones()"
+                >
+                  Ir a aprobaciones
+                </a>
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+        <!-- ADMINISTRADORA DE EJEMPLO -->
         <div class="admin-chip">
-          <span class="admin-avatar">AR</span>
+          <span class="admin-avatar">
+            AR
+          </span>
+
           <div class="admin-meta">
-            <span class="admin-name">Ana Rodríguez</span>
-            <span class="admin-role">Administradora</span>
+            <span class="admin-name">
+              Ana Rodríguez
+            </span>
+            <span class="admin-role">
+              Administradora
+            </span>
           </div>
         </div>
+
       </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
+
+      <!-- ENCABEZADO -->
       <div class="page-header-row">
+
         <div>
-          <span class="eyebrow">ADMINISTRACIÓN</span>
+          <span class="eyebrow">
+            ADMINISTRACIÓN
+          </span>
+
           <h1>Panel general</h1>
-          <p class="page-subtitle">Indicadores de empleabilidad y actividad del portal.</p>
+
+          <p class="page-subtitle">
+            Indicadores de empleabilidad
+            y actividad del portal.
+          </p>
         </div>
 
         <div class="header-buttons">
-          <button type="button" class="btn-outline-sm">⬇ Excel</button>
-          <button type="button" class="btn-primary-sm">⬇ Exportar PDF</button>
+
+          <button
+            type="button"
+            class="btn-outline-sm"
+            (click)="exportarExcel()"
+          >
+            ⬇ Excel (CSV)
+          </button>
+
+          <button
+            type="button"
+            class="btn-primary-sm"
+            (click)="exportarPDF()"
+          >
+            🖨 Guardar PDF
+          </button>
+
         </div>
       </div>
 
+      <!-- AVISO DATOS DE DEMOSTRACIÓN -->
+      <div class="demo-notice">
+        <span aria-hidden="true">ℹ️</span>
+
+        <p>
+          <strong>Modo demostración.</strong>
+          Los indicadores, gráficos y cantidades
+          de aprobaciones son valores de ejemplo.
+          Todavía no se consultan estadísticas
+          reales desde PostgreSQL.
+        </p>
+      </div>
+
+      <!-- MENSAJE DE EXPORTACIÓN -->
+      @if (mensajeExportacion) {
+
+        <div
+          class="export-notice"
+          role="status"
+        >
+          <span aria-hidden="true">📄</span>
+
+          <p>
+            {{ mensajeExportacion }}
+          </p>
+
+          <button
+            type="button"
+            aria-label="Cerrar mensaje"
+            (click)="cerrarMensajeExportacion()"
+          >
+            ✕
+          </button>
+        </div>
+
+      }
+
+      <!-- INDICADORES -->
       <section class="kpi-grid">
-        <article class="kpi-card">
-          <span class="kpi-icon icon-pink">👥</span>
-          <div>
-            <div class="kpi-value">1,248</div>
-            <div class="kpi-label">Graduados registrados</div>
-          </div>
-        </article>
 
-        <article class="kpi-card">
-          <span class="kpi-icon icon-green">💼</span>
-          <div>
-            <div class="kpi-value">78%</div>
-            <div class="kpi-label">Tasa de empleabilidad</div>
-          </div>
-        </article>
+        @for (
+          indicador of indicadores;
+          track indicador.etiqueta
+        ) {
 
-        <article class="kpi-card">
-          <span class="kpi-icon icon-blue">🏢</span>
-          <div>
-            <div class="kpi-value">86</div>
-            <div class="kpi-label">Empresas aliadas</div>
-          </div>
-        </article>
+          <article class="kpi-card">
 
-        <article class="kpi-card">
-          <span class="kpi-icon icon-amber">📄</span>
-          <div>
-            <div class="kpi-value">142</div>
-            <div class="kpi-label">Ofertas activas</div>
-          </div>
-        </article>
+            <span
+              class="kpi-icon"
+              [class.icon-pink]="
+                indicador.color === 'icon-pink'
+              "
+              [class.icon-green]="
+                indicador.color === 'icon-green'
+              "
+              [class.icon-blue]="
+                indicador.color === 'icon-blue'
+              "
+              [class.icon-amber]="
+                indicador.color === 'icon-amber'
+              "
+            >
+              {{ indicador.icono }}
+            </span>
+
+            <div>
+              <div class="kpi-value">
+                {{ indicador.valor }}
+              </div>
+
+              <div class="kpi-label">
+                {{ indicador.etiqueta }}
+              </div>
+            </div>
+
+          </article>
+
+        }
+
       </section>
 
+      <!-- GRÁFICOS -->
       <section class="charts-row">
+
+        <!-- GRADUADOS POR AÑO -->
         <article class="panel-card chart-main">
+
           <div class="card-header-flex">
+
             <div>
               <h2>Graduados por año</h2>
-              <p class="card-sub">Registro histórico de graduados</p>
+
+              <p class="card-sub">
+                Registro histórico de graduados
+              </p>
             </div>
-            <select aria-label="Rango de años" class="period-select">
-              <option value="6">Últimos 6 años</option>
-              <option value="3">Últimos 3 años</option>
-              <option value="all">Todos los registros</option>
+
+            <select
+              aria-label="Rango de años"
+              class="period-select"
+              name="periodoSeleccionado"
+              [(ngModel)]="periodoSeleccionado"
+            >
+              <option value="6">
+                Últimos 6 años
+              </option>
+
+              <option value="3">
+                Últimos 3 años
+              </option>
+
+              <option value="all">
+                Todos los registros
+              </option>
             </select>
+
           </div>
 
           <div class="bar-chart">
-            <div class="bar-col">
-              <span class="bar-val">52</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 55%;"></div></div>
-              <span class="bar-year">2020</span>
-            </div>
-            <div class="bar-col">
-              <span class="bar-val">68</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 72%;"></div></div>
-              <span class="bar-year">2021</span>
-            </div>
-            <div class="bar-col">
-              <span class="bar-val">59</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 62%;"></div></div>
-              <span class="bar-year">2022</span>
-            </div>
-            <div class="bar-col">
-              <span class="bar-val">82</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 86%;"></div></div>
-              <span class="bar-year">2023</span>
-            </div>
-            <div class="bar-col">
-              <span class="bar-val">74</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 78%;"></div></div>
-              <span class="bar-year">2024</span>
-            </div>
-            <div class="bar-col">
-              <span class="bar-val">91</span>
-              <div class="bar-track"><div class="bar-fill" style="height: 96%;"></div></div>
-              <span class="bar-year">2025</span>
-            </div>
+
+            @for (
+              registro of graduadosVisibles;
+              track registro.anio
+            ) {
+
+              <div class="bar-col">
+
+                <span class="bar-val">
+                  {{ registro.cantidad }}
+                </span>
+
+                <div class="bar-track">
+
+                  <div
+                    class="bar-fill"
+                    [style.height.%]="
+                      alturaBarra(registro.cantidad)
+                    "
+                  ></div>
+
+                </div>
+
+                <span class="bar-year">
+                  {{ registro.anio }}
+                </span>
+
+              </div>
+
+            }
+
           </div>
+
         </article>
 
+        <!-- ESTADO LABORAL -->
         <article class="panel-card status-card">
+
           <h2>Estado laboral</h2>
-          <p class="card-sub">Distribución actual</p>
+
+          <p class="card-sub">
+            Distribución actual
+          </p>
 
           <div class="status-body">
+
             <div class="status-total">
-              <strong>1,248</strong>
-              <span>total</span>
+              <strong>
+                {{ totalGraduados }}
+              </strong>
+
+              <span>
+                total
+              </span>
             </div>
 
             <ul class="status-list">
-              <li>
-                <span class="dot dot-red"></span>
-                <span class="status-name">Empleado en TI</span>
-                <strong>58%</strong>
-              </li>
-              <li>
-                <span class="dot dot-blue"></span>
-                <span class="status-name">Buscando empleo</span>
-                <strong>18%</strong>
-              </li>
-              <li>
-                <span class="dot dot-amber"></span>
-                <span class="status-name">Fuera de TI</span>
-                <strong>12%</strong>
-              </li>
-              <li>
-                <span class="dot dot-purple"></span>
-                <span class="status-name">Emprendedor</span>
-                <strong>7%</strong>
-              </li>
-              <li>
-                <span class="dot dot-green"></span>
-                <span class="status-name">Estudiando</span>
-                <strong>5%</strong>
-              </li>
+
+              @for (
+                estado of estadosLaborales;
+                track estado.nombre
+              ) {
+
+                <li>
+
+                  <span
+                    class="dot"
+                    [class.dot-red]="
+                      estado.color === 'dot-red'
+                    "
+                    [class.dot-blue]="
+                      estado.color === 'dot-blue'
+                    "
+                    [class.dot-amber]="
+                      estado.color === 'dot-amber'
+                    "
+                    [class.dot-purple]="
+                      estado.color === 'dot-purple'
+                    "
+                    [class.dot-green]="
+                      estado.color === 'dot-green'
+                    "
+                  ></span>
+
+                  <span class="status-name">
+                    {{ estado.nombre }}
+                  </span>
+
+                  <strong>
+                    {{ estado.porcentaje }}%
+                  </strong>
+
+                </li>
+
+              }
+
             </ul>
+
           </div>
+
         </article>
+
       </section>
 
+      <!-- FILA INFERIOR -->
       <section class="bottom-row">
+
+        <!-- EMPLEABILIDAD POR ÁREA -->
         <article class="panel-card area-card">
+
           <h2>Empleabilidad por área</h2>
-          <p class="card-sub">Principales áreas de desempeño</p>
+
+          <p class="card-sub">
+            Principales áreas de desempeño
+          </p>
 
           <div class="progress-list">
-            <div class="progress-item">
-              <div class="progress-meta">
-                <span>Desarrollo de software</span>
-                <strong>86%</strong>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 86%;"></div>
-              </div>
-            </div>
 
-            <div class="progress-item">
-              <div class="progress-meta">
-                <span>Datos y analítica</span>
-                <strong>68%</strong>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 68%;"></div>
-              </div>
-            </div>
+            @for (
+              area of areasEmpleabilidad;
+              track area.nombre
+            ) {
 
-            <div class="progress-item">
-              <div class="progress-meta">
-                <span>Infraestructura y redes</span>
-                <strong>54%</strong>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 54%;"></div>
-              </div>
-            </div>
+              <div class="progress-item">
 
-            <div class="progress-item">
-              <div class="progress-meta">
-                <span>Soporte técnico</span>
-                <strong>42%</strong>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 42%;"></div>
-              </div>
-            </div>
+                <div class="progress-meta">
 
-            <div class="progress-item">
-              <div class="progress-meta">
-                <span>Gestión de proyectos</span>
-                <strong>31%</strong>
+                  <span>
+                    {{ area.nombre }}
+                  </span>
+
+                  <strong>
+                    {{ area.porcentaje }}%
+                  </strong>
+
+                </div>
+
+                <div class="progress-track">
+
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="area.porcentaje"
+                  ></div>
+
+                </div>
+
               </div>
-              <div class="progress-track">
-                <div class="progress-fill" style="width: 31%;"></div>
-              </div>
-            </div>
+
+            }
+
           </div>
+
         </article>
 
+        <!-- PENDIENTES DE APROBACIÓN -->
         <article class="panel-card pending-card">
+
           <div class="card-header-flex">
+
             <div>
-              <h2>Pendientes de aprobación</h2>
-              <p class="card-sub">Requieren tu atención</p>
+              <h2>
+                Pendientes de aprobación
+              </h2>
+
+              <p class="card-sub">
+                Requieren tu atención
+              </p>
             </div>
-            <a routerLink="/aprobaciones" class="ver-todos-link">Ver todos</a>
+
+            <a
+              routerLink="/aprobaciones"
+              class="ver-todos-link"
+            >
+              Ver todos
+            </a>
+
           </div>
 
           <div class="pending-stack">
-            <a routerLink="/aprobaciones" class="pending-box">
-              <span class="pending-icon icon-amber">🏢</span>
-              <div class="pending-text">
-                <strong>3 empresas</strong>
-                <span>Esperando verificación</span>
-              </div>
-              <span class="chevron">›</span>
-            </a>
 
-            <a routerLink="/aprobaciones" class="pending-box">
-              <span class="pending-icon icon-blue">💼</span>
-              <div class="pending-text">
-                <strong>2 ofertas laborales</strong>
-                <span>Pendientes de revisión</span>
-              </div>
-              <span class="chevron">›</span>
-            </a>
+            @for (
+              pendiente of pendientes;
+              track pendiente.titulo
+            ) {
+
+              <a
+                routerLink="/aprobaciones"
+                class="pending-box"
+              >
+
+                <span
+                  class="pending-icon"
+                  [class.icon-amber]="
+                    pendiente.color === 'icon-amber'
+                  "
+                  [class.icon-blue]="
+                    pendiente.color === 'icon-blue'
+                  "
+                >
+                  {{ pendiente.icono }}
+                </span>
+
+                <div class="pending-text">
+
+                  <strong>
+                    {{ pendiente.titulo }}
+                  </strong>
+
+                  <span>
+                    {{ pendiente.descripcion }}
+                  </span>
+
+                </div>
+
+                <span class="chevron">
+                  ›
+                </span>
+
+              </a>
+
+            }
+
           </div>
+
         </article>
+
       </section>
+
     </main>
+
   </div>
+
+  <!-- VENTANA DE ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarSeguridad()"
+    >
+
+      <section
+        class="security-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-seguridad"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-seguridad">
+            🔒 Acceso y seguridad
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar seguridad"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="security-description">
+          Información de demostración de la
+          cuenta administradora.
+        </p>
+
+        <div class="security-row">
+
+          <span>Usuario</span>
+          <strong>Ana Rodríguez</strong>
+
+        </div>
+
+        <div class="security-row">
+
+          <span>Rol</span>
+          <strong>Administradora</strong>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🔑 Cambiar contraseña
+          </strong>
+
+          <p>
+            Pendiente de integración con
+            la autenticación de la API.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            ✉️ Verificación de correo
+          </strong>
+
+          <p>
+            Se habilitará cuando conectemos
+            el servidor.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🛡️ Seguridad administrativa
+          </strong>
+
+          <p>
+            Los permisos de administrador y
+            la protección de rutas deberán
+            implementarse con autenticación real.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-primary-sm security-close-button"
+          (click)="cerrarSeguridad()"
+        >
+          Cerrar
+        </button>
+
+      </section>
+
+    </div>
+
+  }
+
 </div>

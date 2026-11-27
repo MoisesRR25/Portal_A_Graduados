@@ -1,9 +1,14 @@
+
 <div class="dashboard-layout">
-  <!-- Menú Lateral Graduado -->
-  <aside class="dashboard-sidebar">
+
+  <!-- MENÚ DEL GRADUADO -->
+  <aside id="menu-lateral-graduado" class="dashboard-sidebar"
+         [class.mobile-open]="menuAbierto">
+
     <div class="sidebar-brand">
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img src="/ues.png" alt="Universidad de El Salvador"
+             width="50" height="50">
       </span>
       <div>
         <strong>Portal de Graduados</strong>
@@ -11,19 +16,36 @@
       </div>
     </div>
 
+    <button type="button" class="sidebar-close-button"
+            aria-label="Cerrar menú" (click)="cerrarMenu()">✕</button>
+
     <div class="nav-section-title">MENÚ PRINCIPAL</div>
+
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" class="nav-item">🏠 Resumen</a>
-      <a routerLink="/perfil-graduado" class="nav-item active">👤 Mi perfil</a>
-      <a routerLink="/bolsa-interna" class="nav-item">💼 Bolsa de trabajo</a>
-      <a routerLink="/mis-postulaciones" class="nav-item">📄 Mis postulaciones</a>
+      <a routerLink="/dashboard" class="nav-item"
+         (click)="cerrarMenu()">🏠 Resumen</a>
+
+      <a routerLink="/perfil-graduado" class="nav-item active"
+         (click)="cerrarMenu()">👤 Mi perfil</a>
+
+      <a routerLink="/bolsa-interna" class="nav-item"
+         (click)="cerrarMenu()">💼 Bolsa de trabajo</a>
+
+      <a routerLink="/mis-postulaciones" class="nav-item"
+         (click)="cerrarMenu()">📄 Mis postulaciones</a>
     </nav>
 
     <div class="sidebar-bottom">
       <nav class="sidebar-nav">
-        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
-        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+        <button type="button" class="nav-item perfil-nav-button"
+                (click)="abrirSeguridad()">
+          🔒 Acceso y seguridad
+        </button>
+
+        <a routerLink="/" class="nav-item text-red"
+           (click)="cerrarMenu()">🚪 Cerrar sesión</a>
       </nav>
+
       <div class="sidebar-footer-card">
         <small>Universidad de El Salvador</small>
         <span>Facultad de Ingeniería</span>
@@ -31,194 +53,538 @@
     </div>
   </aside>
 
-  <!-- Contenido Principal -->
+  <button type="button" class="mobile-backdrop"
+          [class.visible]="menuAbierto"
+          (click)="cerrarMenu()" tabindex="-1"
+          aria-label="Cerrar menú de navegación"></button>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="dashboard-main">
+
     <header class="dashboard-topbar">
+      <button type="button" class="mobile-menu-button"
+              (click)="alternarMenu()"
+              [attr.aria-expanded]="menuAbierto"
+              [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+              aria-controls="menu-lateral-graduado">☰</button>
+
       <span></span>
+
       <div class="user-profile-badge">
-        <span class="notification-icon">🔔</span>
+        <div class="perfil-notif-contenedor">
+          <button type="button" class="notification-icon perfil-notif-boton"
+                  aria-label="Notificaciones"
+                  [attr.aria-expanded]="notificacionesAbiertas"
+                  (click)="alternarNotificaciones()">🔔</button>
+
+          @if (notificacionesAbiertas) {
+            <div class="perfil-notif-panel">
+              <strong>Notificaciones</strong>
+              <p>No hay notificaciones reales en esta demostración.</p>
+            </div>
+          }
+        </div>
+
         <div class="user-avatar-name">
-          <strong>Carlos Martínez</strong>
+          <strong>{{ nombreVisible }}</strong>
           <small>Graduado</small>
         </div>
       </div>
     </header>
 
     <div class="dashboard-content profile-content">
+
+      <!-- ENCABEZADO -->
       <div class="profile-header-row">
         <div>
           <span class="mi-portal">MI INFORMACIÓN</span>
           <h1>Mi perfil profesional</h1>
           <p>Mantén tu información actualizada para recibir mejores oportunidades.</p>
         </div>
-        <button class="btn-save-changes">✓ Guardar cambios</button>
+
+        <button type="button" class="btn-save-changes"
+                (click)="guardarCambios()">
+          ✓ Guardar cambios
+        </button>
       </div>
 
+      <p class="perfil-aviso-demo">
+        <strong>Modo demostración:</strong>
+        guardar conserva los datos de texto en esta pestaña mediante el navegador.
+        No se envían a la API; la foto y el CV solo se previsualizan
+        o seleccionan localmente.
+      </p>
+
+      @if (errorFormulario) {
+        <p class="perfil-mensaje error" role="alert">
+          {{ errorFormulario }}
+        </p>
+      }
+
+      @if (mensaje) {
+        <p class="perfil-mensaje exito" role="status">
+          {{ mensaje }}
+        </p>
+      }
+
+      @if (cambiosPendientes) {
+        <p class="perfil-pendiente">
+          ● Tienes cambios pendientes de guardar.
+        </p>
+      }
+
+      @if (errorArchivo) {
+        <p class="perfil-mensaje error" role="alert">
+          {{ errorArchivo }}
+        </p>
+      }
+
       <div class="profile-grid">
-        <!-- Columna Izquierda: Formularios -->
+
+        <!-- COLUMNA IZQUIERDA -->
         <div class="profile-forms-col">
-          <div class="card form-section-card">
+
+          <!-- DATOS PERSONALES -->
+          <section class="card form-section-card">
             <div class="section-card-title">
               <h3>Datos personales</h3>
               <small>Información básica de contacto.</small>
             </div>
+
             <div class="form-row-2">
               <div class="input-group">
-                <label>Nombre completo</label>
-                <input type="text" class="input-control" value="Carlos Eduardo Martínez López">
+                <label for="perfil-nombre">Nombre completo *</label>
+                <input id="perfil-nombre" type="text"
+                       class="input-control" maxlength="100" required
+                       [(ngModel)]="perfil.nombre"
+                       (ngModelChange)="marcarPendiente()">
               </div>
+
               <div class="input-group">
-                <label>Correo electrónico</label>
-                <input type="email" class="input-control" value="carlos.martinez@gmail.com">
+                <label for="perfil-correo">Correo electrónico *</label>
+                <input id="perfil-correo" type="email"
+                       class="input-control" maxlength="120" required
+                       [(ngModel)]="perfil.correo"
+                       (ngModelChange)="marcarPendiente()">
               </div>
             </div>
+
             <div class="form-row-2">
               <div class="input-group">
-                <label>Teléfono</label>
-                <input type="text" class="input-control" value="+503 7777-1234">
+                <label for="perfil-telefono">Teléfono *</label>
+                <input id="perfil-telefono" type="tel"
+                       class="input-control" maxlength="22" required
+                       [(ngModel)]="perfil.telefono"
+                       (ngModelChange)="marcarPendiente()">
               </div>
+
               <div class="input-group">
-                <label>Ubicación</label>
-                <select class="input-control">
-                  <option>San Salvador</option>
-                  <option>San Miguel</option>
-                  <option>Santa Ana</option>
+                <label for="perfil-ubicacion">Ubicación</label>
+                <select id="perfil-ubicacion" class="input-control"
+                        [(ngModel)]="perfil.ubicacion"
+                        (ngModelChange)="marcarPendiente()">
+                  @for (ubicacion of ubicaciones; track ubicacion) {
+                    <option [value]="ubicacion">
+                      {{ ubicacion }}
+                    </option>
+                  }
                 </select>
               </div>
             </div>
-            <div class="input-group">
-              <label>Biografía profesional</label>
-              <textarea class="input-control textarea-control">Desarrollador frontend con interés en crear productos digitales accesibles y de alto impacto.</textarea>
-            </div>
-          </div>
 
-          <div class="card form-section-card">
+            <div class="input-group">
+              <label for="perfil-bio">Biografía profesional</label>
+              <textarea id="perfil-bio"
+                        class="input-control textarea-control"
+                        maxlength="600" rows="3"
+                        [(ngModel)]="perfil.biografia"
+                        (ngModelChange)="marcarPendiente()"></textarea>
+            </div>
+          </section>
+
+          <!-- INFORMACIÓN ACADÉMICA -->
+          <section class="card form-section-card">
             <div class="section-card-title">
               <h3>Información académica y laboral</h3>
               <small>Cuéntanos sobre tu situación actual.</small>
             </div>
+
             <div class="form-row-2">
               <div class="input-group">
-                <label>Estado académico</label>
-                <select class="input-control">
-                  <option>Graduado</option>
-                  <option>Egresado</option>
+                <label for="perfil-academico">Estado académico</label>
+                <select id="perfil-academico" class="input-control"
+                        [(ngModel)]="perfil.estadoAcademico"
+                        (ngModelChange)="marcarPendiente()">
+                  <option value="Graduado">Graduado</option>
+                  <option value="Egresado">Egresado</option>
                 </select>
               </div>
-              <div class="input-group">
-                <label>Año de graduación</label>
-                <select class="input-control">
-                  <option>2023</option>
-                  <option>2022</option>
-                  <option>2021</option>
-                </select>
-              </div>
-            </div>
-            <div class="input-group">
-              <label>Estado laboral</label>
-              <div class="radio-group-flex">
-                <label><input type="radio" name="laboral" checked> Empleado en TI</label>
-                <label><input type="radio" name="laboral"> Fuera de TI</label>
-                <label><input type="radio" name="laboral"> Emprendedor</label>
-                <label><input type="radio" name="laboral"> Buscando empleo</label>
-                <label><input type="radio" name="laboral"> Estudiando</label>
-              </div>
-            </div>
-          </div>
 
-          <div class="card form-section-card">
+              <div class="input-group">
+                <label for="perfil-anio">Año de graduación</label>
+                <select id="perfil-anio" class="input-control"
+                        [(ngModel)]="perfil.anioGraduacion"
+                        (ngModelChange)="marcarPendiente()">
+                  @for (anio of anios; track anio) {
+                    <option [value]="anio">{{ anio }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <span class="perfil-label">Estado laboral</span>
+
+              <div class="radio-group-flex">
+                @for (estado of estadosLaborales; track estado) {
+                  <label>
+                    <input type="radio" name="perfil-laboral"
+                           [value]="estado"
+                           [(ngModel)]="perfil.estadoLaboral"
+                           (ngModelChange)="marcarPendiente()">
+                    {{ estado }}
+                  </label>
+                }
+              </div>
+            </div>
+          </section>
+
+          <!-- EXPERIENCIAS -->
+          <section class="card form-section-card">
             <div class="section-card-title-action">
               <div>
                 <h3>Experiencia y proyectos</h3>
                 <small>Muestra lo que has construido.</small>
               </div>
-              <button class="btn-add-item">+ Agregar</button>
+
+              <button type="button" class="btn-add-item"
+                      (click)="agregarExperiencia()">
+                + Agregar
+              </button>
             </div>
 
-            <div class="experience-item">
-              <div class="exp-icon sv">SV</div>
-              <div class="exp-details">
-                <h4>Desarrollador Frontend Junior</h4>
-                <p class="company-sub">Soluciones Digitales SV · Tiempo completo</p>
-                <small class="date-sub">Enero 2024 - Actualidad</small>
-                <p class="exp-desc">Desarrollo de interfaces web responsivas y mantenimiento de plataformas internas.</p>
-              </div>
-              <button class="btn-edit-icon">✏️</button>
-            </div>
+            @for (experiencia of experiencias; track experiencia.id) {
+              <div class="experience-item">
+                <div class="exp-icon"
+                     [class.sv]="experiencia.tipo === 'Experiencia'"
+                     [class.pf]="experiencia.tipo === 'Proyecto'">
+                  {{ experiencia.tipo === 'Experiencia' ? 'SV' : 'PF' }}
+                </div>
 
-            <div class="experience-item">
-              <div class="exp-icon pf">PF</div>
-              <div class="exp-details">
-                <h4>Plataforma de gestión académica</h4>
-                <p class="company-sub">Proyecto personal</p>
-                <small class="date-sub">2023</small>
-                <p class="exp-desc">Aplicación web para seguimiento de actividades y calificaciones.</p>
+                <div class="exp-details">
+                  <h4>{{ experiencia.titulo }}</h4>
+                  <p class="company-sub">{{ experiencia.entidad }}</p>
+                  <small class="date-sub">{{ experiencia.periodo }}</small>
+                  <p class="exp-desc">{{ experiencia.descripcion }}</p>
+                </div>
+
+                <button type="button" class="btn-edit-icon"
+                        [attr.aria-label]="'Editar ' + experiencia.titulo"
+                        (click)="editarExperiencia(experiencia)">
+                  ✏️
+                </button>
               </div>
-              <button class="btn-edit-icon">✏️</button>
-            </div>
-          </div>
+            } @empty {
+              <p class="perfil-texto-secundario">
+                No hay experiencias registradas. Usa «+ Agregar».
+              </p>
+            }
+          </section>
         </div>
 
-        <!-- Columna Derecha -->
+        <!-- COLUMNA DERECHA -->
         <div class="profile-sidebar-col">
-          <div class="card profile-user-card text-center">
+
+          <!-- TARJETA DEL GRADUADO -->
+          <section class="card profile-user-card">
             <div class="avatar-large-container">
-              <span class="avatar-large">CM</span>
-              <span class="edit-avatar-badge">✏️</span>
+
+              @if (fotoVistaPrevia) {
+                <img class="avatar-large perfil-foto"
+                     [src]="fotoVistaPrevia"
+                     alt="Foto de perfil seleccionada">
+              } @else {
+                <span class="avatar-large">{{ iniciales }}</span>
+              }
+
+              <button type="button" class="edit-avatar-badge"
+                      (click)="fotoInput.click()"
+                      aria-label="Seleccionar foto de perfil">
+                ✏️
+              </button>
+
+              <input #fotoInput type="file" class="perfil-input-oculto"
+                     accept="image/png,image/jpeg,image/webp"
+                     (change)="seleccionarFoto($event)"
+                     aria-label="Seleccionar foto JPG, PNG o WebP">
             </div>
-            <h3>Carlos Martínez</h3>
+
+            <h3>{{ nombreVisible }}</h3>
             <p class="user-role-title">Desarrollador Frontend</p>
-            <div class="verified-badge-pill">✓ Graduado verificado</div>
+
+            <div class="verified-badge-pill">
+              ✓ {{ perfil.estadoAcademico }} (demo)
+            </div>
+
             <div class="profile-completion-box">
               <div class="comp-flex">
-                <span class="comp-num">72%</span>
-                <small>Perfil completo</small>
+                <span class="comp-num">{{ porcentajePerfil }}%</span>
+                <small>Perfil completo (estimación)</small>
               </div>
-              <div class="progress-bar-bg">
-                <div class="progress-bar-fill" style="width: 72%;"></div>
-              </div>
-            </div>
-          </div>
 
-          <div class="card">
+              <div class="progress-bar-bg">
+                <div class="progress-bar-fill"
+                     [style.width.%]="porcentajePerfil"></div>
+              </div>
+
+              <small>La foto y el CV no se guardan en el servidor.</small>
+            </div>
+          </section>
+
+          <!-- HABILIDADES -->
+          <section class="card">
             <div class="section-title-row">
               <h3>Habilidades</h3>
-              <span class="edit-icon-sm">✏️</span>
-            </div>
-            <div class="tags-container">
-              <span>React</span>
-              <span>TypeScript</span>
-              <span>JavaScript</span>
-              <span>HTML & CSS</span>
-              <span>Git</span>
-              <span>Figma</span>
-              <span class="tag-add">+ Agregar</span>
-            </div>
-          </div>
 
-          <div class="card">
+              <button type="button"
+                      class="edit-icon-sm perfil-icon-button"
+                      [attr.aria-label]="editandoHabilidades ? 'Terminar edición' : 'Editar habilidades'"
+                      (click)="editandoHabilidades = !editandoHabilidades">
+                ✏️
+              </button>
+            </div>
+
+            <div class="tags-container">
+              @for (habilidad of habilidades; track habilidad) {
+                <span class="perfil-tag">
+                  {{ habilidad }}
+
+                  @if (editandoHabilidades) {
+                    <button type="button" class="perfil-quitar-tag"
+                            [attr.aria-label]="'Eliminar ' + habilidad"
+                            (click)="quitarHabilidad(habilidad)">
+                      ×
+                    </button>
+                  }
+                </span>
+              }
+
+              @if (!editandoHabilidades) {
+                <button type="button" class="tag-add"
+                        (click)="editandoHabilidades = true">
+                  + Agregar
+                </button>
+              }
+            </div>
+
+            @if (editandoHabilidades) {
+              <div class="perfil-agregar-habilidad">
+                <input type="text" class="input-control"
+                       placeholder="Nueva habilidad" maxlength="30"
+                       aria-label="Nueva habilidad"
+                       [(ngModel)]="nuevaHabilidad"
+                       (keydown.enter)="agregarHabilidad()">
+
+                <button type="button" class="btn-add-item"
+                        (click)="agregarHabilidad()">Agregar</button>
+              </div>
+
+              @if (errorHabilidad) {
+                <p class="perfil-error-corto" role="alert">
+                  {{ errorHabilidad }}
+                </p>
+              }
+            }
+          </section>
+
+          <!-- ENLACES Y DOCUMENTOS -->
+          <section class="card perfil-documentos">
             <h3>Enlaces y documentos</h3>
+
             <div class="link-item-group">
-              <label>Portafolio</label>
-              <input type="text" class="input-control" value="carlosmartinez.dev" readonly>
+              <label for="perfil-portafolio">Portafolio</label>
+              <input id="perfil-portafolio" type="text"
+                     class="input-control" maxlength="200"
+                     [(ngModel)]="perfil.portafolio"
+                     (ngModelChange)="marcarPendiente()">
             </div>
+
             <div class="link-item-group">
-              <label>LinkedIn</label>
-              <input type="text" class="input-control" value="linkedin.com/in/cmartinez" readonly>
+              <label for="perfil-linkedin">LinkedIn</label>
+              <input id="perfil-linkedin" type="text"
+                     class="input-control" maxlength="200"
+                     [(ngModel)]="perfil.linkedin"
+                     (ngModelChange)="marcarPendiente()">
             </div>
+
             <div class="cv-upload-box">
               <div class="cv-info">
                 <span class="cv-file-icon">📄</span>
+
                 <div>
-                  <strong>CV_Carlos_Martinez.pdf</strong>
-                  <small>Actualizado hace 2 meses</small>
+                  <strong>
+                    {{ cvArchivo ? cvArchivo.name : 'CV_Carlos_Martinez.pdf' }}
+                  </strong>
+
+                  <small>
+                    {{ cvArchivo
+                      ? 'Seleccionado localmente (sin subir)'
+                      : 'Nombre de ejemplo; ningún archivo adjunto' }}
+                  </small>
                 </div>
               </div>
-              <button class="btn-upload-icon">📤</button>
+
+              <button type="button" class="btn-upload-icon"
+                      (click)="cvInput.click()"
+                      aria-label="Seleccionar currículum en PDF">
+                📤
+              </button>
+
+              <input #cvInput type="file"
+                     class="perfil-input-oculto"
+                     accept=".pdf,application/pdf"
+                     (change)="seleccionarCv($event)"
+                     aria-label="Seleccionar archivo PDF">
             </div>
-          </div>
+          </section>
+
         </div>
       </div>
     </div>
   </main>
+
+  <!-- VENTANA PARA AGREGAR O EDITAR EXPERIENCIAS -->
+  @if (modalExperienciaAbierto) {
+    <div class="perfil-modal-fondo"
+         (click)="cerrarExperiencia()">
+
+      <section class="perfil-modal"
+               role="dialog" aria-modal="true"
+               aria-labelledby="perfil-modal-titulo"
+               (click)="$event.stopPropagation()">
+
+        <div class="perfil-modal-cabecera">
+          <h2 id="perfil-modal-titulo">
+            {{ experienciaFormulario.id ? 'Editar' : 'Agregar' }}
+            experiencia o proyecto
+          </h2>
+
+          <button type="button" class="perfil-cerrar"
+                  aria-label="Cerrar"
+                  (click)="cerrarExperiencia()">✕</button>
+        </div>
+
+        <div class="input-group">
+          <label for="exp-tipo">Tipo</label>
+          <select id="exp-tipo" class="input-control"
+                  [(ngModel)]="experienciaFormulario.tipo">
+            <option value="Experiencia">Experiencia laboral</option>
+            <option value="Proyecto">Proyecto</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="exp-titulo">Puesto o título *</label>
+          <input id="exp-titulo" type="text"
+                 class="input-control" maxlength="100"
+                 [(ngModel)]="experienciaFormulario.titulo">
+        </div>
+
+        <div class="input-group">
+          <label for="exp-entidad">
+            Empresa o nombre del proyecto *
+          </label>
+          <input id="exp-entidad" type="text"
+                 class="input-control" maxlength="120"
+                 [(ngModel)]="experienciaFormulario.entidad">
+        </div>
+
+        <div class="input-group">
+          <label for="exp-periodo">Período *</label>
+          <input id="exp-periodo" type="text"
+                 class="input-control" maxlength="80"
+                 placeholder="Ej.: Enero 2024 - Actualidad"
+                 [(ngModel)]="experienciaFormulario.periodo">
+        </div>
+
+        <div class="input-group">
+          <label for="exp-descripcion">Descripción</label>
+          <textarea id="exp-descripcion"
+                    class="input-control textarea-control"
+                    rows="3" maxlength="600"
+                    [(ngModel)]="experienciaFormulario.descripcion"></textarea>
+        </div>
+
+        @if (errorExperiencia) {
+          <p class="perfil-error-corto" role="alert">
+            {{ errorExperiencia }}
+          </p>
+        }
+
+        @if (confirmarEliminacion) {
+          <p class="perfil-error-corto">
+            Confirma para eliminar esta experiencia de la lista.
+          </p>
+        }
+
+        <div class="perfil-modal-acciones">
+          @if (experienciaFormulario.id) {
+            <button type="button" class="perfil-boton-peligro"
+                    (click)="eliminarExperiencia()">
+              {{ confirmarEliminacion
+                ? 'Confirmar eliminación'
+                : 'Eliminar' }}
+            </button>
+          }
+
+          <button type="button" class="btn-add-item"
+                  (click)="cerrarExperiencia()">
+            Cancelar
+          </button>
+
+          <button type="button" class="btn-save-changes"
+                  (click)="guardarExperiencia()">
+            Guardar en lista
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+
+  <!-- ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+    <div class="perfil-modal-fondo"
+         (click)="cerrarSeguridad()">
+
+      <section class="perfil-modal perfil-modal-seguridad"
+               role="dialog" aria-modal="true"
+               aria-labelledby="perfil-seguridad-titulo"
+               (click)="$event.stopPropagation()">
+
+        <div class="perfil-modal-cabecera">
+          <h2 id="perfil-seguridad-titulo">
+            🔒 Acceso y seguridad
+          </h2>
+
+          <button type="button" class="perfil-cerrar"
+                  aria-label="Cerrar"
+                  (click)="cerrarSeguridad()">✕</button>
+        </div>
+
+        <p>
+          La gestión de contraseñas, la verificación de correo
+          y las sesiones estarán disponibles cuando se
+          conecte la autenticación real.
+        </p>
+
+        <div class="perfil-modal-acciones">
+          <button type="button" class="btn-add-item"
+                  (click)="cerrarSeguridad()">
+            Cerrar
+          </button>
+        </div>
+      </section>
+    </div>
+  }
+
 </div>

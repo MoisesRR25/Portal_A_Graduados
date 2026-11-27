@@ -1,71 +1,341 @@
+
 <div class="auth-layout">
-  <!-- Panel Izquierdo Institucional -->
+
+  <!-- PANEL IZQUIERDO INSTITUCIONAL -->
   <div class="auth-sidebar">
+
     <div class="sidebar-top">
+
       <div class="brand-box">
+
         <span class="ues-badge">
-        <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+          <img
+            src="/ues.png"
+            alt="Universidad Nacional"
+            width="50"
+            height="50"
+          >
         </span>
+
         <div>
           <strong>Portal de Graduados</strong>
           <small>Ingeniería de Sistemas Informáticos</small>
         </div>
+
       </div>
+
     </div>
 
+    <!-- CONTENIDO INSTITUCIONAL -->
     <div class="sidebar-content">
-      <span class="sub-title">COMUNIDAD PROFESIONAL UES</span>
-      <h1>Talento que transforma El Salvador.</h1>
-      <p>Conectamos el conocimiento y la experiencia de nuestros graduados con organizaciones que construyen el futuro.</p>
+
+      <span class="sub-title">
+        COMUNIDAD PROFESIONAL UES
+      </span>
+
+      <h1>
+        Talento que transforma El Salvador.
+      </h1>
+
+      <p>
+        Conectamos el conocimiento y la experiencia
+        de nuestros graduados con organizaciones
+        que construyen el futuro.
+      </p>
+
     </div>
 
+    <!-- TESTIMONIO -->
     <div class="sidebar-footer">
+
       <div class="testimonial-card">
-        <p>"El portal me permitió encontrar mi primera oportunidad profesional en tecnología."</p>
+
+        <p>
+          "El portal me permitió encontrar mi primera
+          oportunidad profesional en tecnología."
+        </p>
+
         <div class="author-info">
-          <span class="avatar">AM</span>
+
+          <span class="avatar">
+            AM
+          </span>
+
           <div>
             <strong>Andrea Menjívar</strong>
             <small>Graduada EISI · 2023</small>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
 
-  <!-- Panel Derecho  -->
+  <!-- PANEL DERECHO: LOGIN -->
   <div class="auth-main">
+
     <div class="auth-form-container">
-      <a routerLink="/" class="back-link">&larr; Volver al inicio</a>
-      
+
+      <!-- VOLVER AL INICIO -->
+      <a
+        routerLink="/"
+        class="back-link"
+      >
+        &larr; Volver al inicio
+      </a>
+
+      <!-- LOGO EN TABLETAS Y TELÉFONOS -->
+      <div class="mobile-brand">
+
+        <img
+          src="/ues.png"
+          alt="Logo de la Universidad de El Salvador"
+          class="mobile-brand-logo"
+          width="85"
+          height="85"
+        >
+
+        <strong>
+          Portal de Graduados
+        </strong>
+
+        <small>
+          Ingeniería de Sistemas Informáticos
+        </small>
+
+      </div>
+
+      <!-- ENCABEZADO -->
       <div class="form-header">
-        <h2>Bienvenido de nuevo</h2>
-        <p>Ingresa tus datos para acceder al portal.</p>
+
+        <h2>
+          Bienvenido de nuevo
+        </h2>
+
+        <p>
+          Ingresa tus datos para acceder al portal.
+        </p>
+
       </div>
 
+      <!-- PESTAÑAS GRADUADO / EMPRESA -->
       <div class="user-tabs">
-        <a routerLink="/login" class="tab active">Graduado</a>
-        <a routerLink="/login-empresa" class="tab">Empresa</a>
+
+        <a
+          routerLink="/login"
+          class="tab active"
+          aria-current="page"
+        >
+          Graduado
+        </a>
+
+        <a
+          routerLink="/login-empresa"
+          class="tab"
+        >
+          Empresa
+        </a>
+
       </div>
 
-      <form class="form" (submit)="$event.preventDefault()">
+      <!-- FORMULARIO -->
+      <form
+        class="form"
+        #formLogin="ngForm"
+        (ngSubmit)="intentarIngresar(formLogin)"
+      >
+
+        <!-- CORREO ELECTRÓNICO -->
         <div class="input-group">
-          <label>Correo electrónico</label>
-          <input type="email" placeholder="graduado@ues.edu.sv" class="input-control">
+
+          <label for="login-correo">
+            Correo electrónico
+          </label>
+
+          <input
+            id="login-correo"
+            name="correo"
+            type="email"
+            placeholder="graduado@ues.edu.sv"
+            autocomplete="username"
+            class="input-control"
+            [(ngModel)]="correo"
+            #correoControl="ngModel"
+            (ngModelChange)="limpiarMensajeAcceso()"
+            maxlength="254"
+            email
+            required
+          >
+
+          @if (
+            correoControl.invalid &&
+            correoControl.touched
+          ) {
+            <small
+              class="field-error"
+              role="alert"
+            >
+              Ingresa un correo electrónico válido.
+            </small>
+          }
+
         </div>
 
+        <!-- CONTRASEÑA -->
         <div class="input-group">
+
           <div class="label-row">
-            <label>Contraseña</label>
-            <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
+
+            <label for="login-contrasena">
+              Contraseña
+            </label>
+
+            <!-- SIN ENLACE VACÍO -->
+            <button
+              type="button"
+              class="forgot"
+              (click)="alternarRecuperacion()"
+              [attr.aria-expanded]="mostrarRecuperacion"
+              aria-controls="recuperacion-aviso"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+
           </div>
-          <input type="password" placeholder="Mínimo 8 caracteres" class="input-control">
+
+          <div class="password-input-wrapper">
+
+            <input
+              id="login-contrasena"
+              name="contrasena"
+              [type]="mostrarContrasena ? 'text' : 'password'"
+              placeholder="Mínimo 8 caracteres"
+              autocomplete="current-password"
+              class="input-control password-control"
+              [(ngModel)]="contrasena"
+              #contrasenaControl="ngModel"
+              (ngModelChange)="limpiarMensajeAcceso()"
+              minlength="8"
+              required
+            >
+
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="alternarContrasena()"
+              [attr.aria-label]="
+                mostrarContrasena
+                  ? 'Ocultar contraseña'
+                  : 'Mostrar contraseña'
+              "
+              [attr.aria-pressed]="mostrarContrasena"
+            >
+              {{ mostrarContrasena ? 'Ocultar' : 'Mostrar' }}
+            </button>
+
+          </div>
+
+          @if (
+            contrasenaControl.invalid &&
+            contrasenaControl.touched
+          ) {
+            <small
+              class="field-error"
+              role="alert"
+            >
+              Ingresa una contraseña de al menos
+              8 caracteres.
+            </small>
+          }
+
         </div>
 
-        <button type="submit" class="btn-primary" routerLink="/dashboard">Iniciar sesión</button>
+        <!-- RECUPERACIÓN DE CONTRASEÑA -->
+        @if (mostrarRecuperacion) {
 
-        <p class="switch-auth">¿Aún no tienes una cuenta? <a routerLink="/registro-graduado">Regístrate</a></p>
+          <div
+            id="recuperacion-aviso"
+            class="recovery-notice"
+            role="status"
+          >
+
+            <span aria-hidden="true">
+              🔑
+            </span>
+
+            <div>
+
+              <strong>
+                Recuperación de contraseña
+              </strong>
+
+              <p>
+                Esta función todavía no está
+                disponible. Cuando integremos
+                la autenticación con la API,
+                podrás solicitar la recuperación
+                de tu cuenta mediante tu correo
+                electrónico.
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+        <!-- MENSAJE DE AUTENTICACIÓN -->
+        @if (mensajeAcceso) {
+
+          <div
+            class="login-info-message"
+            role="status"
+          >
+
+            <span aria-hidden="true">
+              ℹ️
+            </span>
+
+            <p>
+              {{ mensajeAcceso }}
+            </p>
+
+          </div>
+
+        }
+
+        <!-- AVISO DE DEMOSTRACIÓN -->
+        <p class="demo-login-note">
+          Inicio de sesión en modo demostración.
+          No se verifican credenciales todavía.
+        </p>
+
+        <!-- BOTÓN SIN ACCESO AUTOMÁTICO -->
+        <button
+          type="submit"
+          class="btn-primary"
+        >
+          Iniciar sesión
+        </button>
+
+        <!-- ENLACE DE REGISTRO -->
+        <p class="switch-auth">
+
+          ¿Aún no tienes una cuenta?
+
+          <a routerLink="/registro-graduado">
+            Regístrate
+          </a>
+
+        </p>
+
       </form>
+
     </div>
+
   </div>
+
 </div>

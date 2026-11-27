@@ -1,172 +1,715 @@
+
 <div class="dashboard-layout">
-  <!-- Menú lateral izquierdo -->
-  <aside class="dashboard-sidebar">
+
+  <!-- MENÚ LATERAL DEL GRADUADO -->
+  <aside
+    id="menu-lateral-graduado"
+    class="dashboard-sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
+    <!-- MARCA INSTITUCIONAL -->
     <div class="sidebar-brand">
+
       <span class="ues-badge">
-      <img src="/ues.png" alt="Universidad Nacional" width="50" height="50">
+        <img
+          src="/ues.png"
+          alt="Universidad Nacional"
+          width="50"
+          height="50"
+        >
       </span>
+
       <div>
         <strong>Portal de Graduados</strong>
         <small>Ingeniería de Sistemas Informáticos</small>
       </div>
+
     </div>
 
-    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <!-- CERRAR MENÚ EN TELÉFONOS -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
+    <div class="nav-section-title">
+      MENÚ PRINCIPAL
+    </div>
+
+    <!-- ENLACES DE NAVEGACIÓN -->
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" class="nav-item active">🏠 Resumen</a>
-      <a routerLink="/perfil-graduado" class="nav-item">👤 Mi perfil</a>
-      <a routerLink="/bolsa-interna" class="nav-item">💼 Bolsa de trabajo</a>
-      <a routerLink="/mis-postulaciones" class="nav-item">📄 Mis postulaciones</a>
+
+      <a
+        routerLink="/dashboard"
+        class="nav-item"
+        [class.active]="!vistaSeguridad"
+        (click)="mostrarResumen()"
+      >
+        🏠 Resumen
+      </a>
+
+      <a
+        routerLink="/perfil-graduado"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        👤 Mi perfil
+      </a>
+
+      <a
+        routerLink="/bolsa-interna"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        💼 Bolsa de trabajo
+      </a>
+
+      <a
+        routerLink="/mis-postulaciones"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        📄 Mis postulaciones
+      </a>
+
     </nav>
 
+    <!-- OPCIONES INFERIORES -->
     <div class="sidebar-bottom">
+
       <nav class="sidebar-nav">
-        <a routerLink="/dashboard" class="nav-item">🔒 Acceso y seguridad</a>
-        <a routerLink="/" class="nav-item text-red">🚪 Cerrar sesión</a>
+
+        <!-- AHORA ABRE UNA VISTA REAL DE INTERFAZ -->
+        <button
+          type="button"
+          class="nav-item nav-button"
+          [class.active]="vistaSeguridad"
+          (click)="mostrarSeguridad()"
+        >
+          🔒 Acceso y seguridad
+        </button>
+
+        <!-- REGRESAR A LA PÁGINA PRINCIPAL -->
+        <a
+          routerLink="/"
+          class="nav-item text-red"
+          (click)="cerrarMenu()"
+        >
+          🚪 Cerrar sesión
+        </a>
+
       </nav>
+
       <div class="sidebar-footer-card">
         <small>Universidad de El Salvador</small>
         <span>Facultad de Ingeniería</span>
       </div>
+
     </div>
+
   </aside>
 
-  <!-- Contenido Principal -->
+  <!-- FONDO OSCURO DEL MENÚ MÓVIL -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
+  <!-- CONTENIDO PRINCIPAL -->
   <main class="dashboard-main">
-    <!-- Barra superior interna -->
+
+    <!-- BARRA SUPERIOR -->
     <header class="dashboard-topbar">
+
+      <!-- BOTÓN DEL MENÚ MÓVIL -->
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
+        aria-controls="menu-lateral-graduado"
+      >
+        ☰
+      </button>
+
       <span></span>
+
+      <!-- USUARIO Y NOTIFICACIONES -->
       <div class="user-profile-badge">
-        <span class="notification-icon">🔔</span>
+
+        <!-- CAMPANITA -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="notification-icon"
+            (click)="alternarNotificaciones()"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            aria-label="Notificaciones"
+            aria-controls="panel-notificaciones"
+          >
+            🔔
+          </button>
+
+          <!-- PANEL DE NOTIFICACIONES -->
+          @if (notificacionesAbiertas) {
+
+            <div
+              id="panel-notificaciones"
+              class="notifications-panel"
+              role="region"
+              aria-label="Panel de notificaciones"
+            >
+
+              <div class="notifications-header">
+
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  (click)="cerrarNotificaciones()"
+                  aria-label="Cerrar notificaciones"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+              <div class="notifications-empty">
+
+                <span class="notifications-empty-icon">
+                  🔔
+                </span>
+
+                <strong>
+                  Sin notificaciones disponibles
+                </strong>
+
+                <p>
+                  Aquí aparecerán los avisos de nuevas
+                  ofertas y actualizaciones de tus
+                  postulaciones cuando conectemos
+                  el sistema con la API.
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+        <!-- DATOS DEL USUARIO -->
         <div class="user-avatar-name">
           <strong>Carlos Martínez</strong>
           <small>Graduado</small>
         </div>
+
       </div>
+
     </header>
 
-    <!-- Cuerpo del Dashboard -->
+    <!-- CUERPO DEL DASHBOARD -->
     <div class="dashboard-content">
-      <div class="welcome-banner">
-        <span class="mi-portal">MI PORTAL</span>
-        <h1>¡Hola, Carlos!</h1>
-        <p>Aquí tienes un resumen de tu actividad profesional.</p>
-      </div>
 
-      <!-- Tarjetas superiores de estado -->
-      <div class="dashboard-stats-grid">
-        <div class="card completion-card">
-          <div class="comp-header">
-            <h3>Completa tu perfil</h3>
-            <span class="comp-percent">72%</span>
-          </div>
-          <p>Mejora tus recomendaciones</p>
-          <div class="progress-bar-bg">
-            <div class="progress-bar-fill" style="width: 72%;"></div>
-          </div>
-          <ul class="checklist">
-            <li class="checked">✓ Datos personales</li>
-            <li class="checked">✓ Información académica</li>
-            <li class="pending">3 Agregar experiencia laboral (Completar)</li>
-            <li class="pending">4 Subir currículum vitae (Completar)</li>
-          </ul>
-        </div>
+      <!-- VISTA DE ACCESO Y SEGURIDAD -->
+      @if (vistaSeguridad) {
 
-        <div class="card activity-card">
-          <div class="comp-header">
-            <h3>Tu actividad</h3>
-            <small>Últimos 30 días</small>
+        <section class="security-section">
+
+          <div class="security-heading">
+
+            <span class="mi-portal">
+              CONFIGURACIÓN DE CUENTA
+            </span>
+
+            <h1>Acceso y seguridad</h1>
+
+            <p>
+              Consulta las opciones de seguridad
+              de tu cuenta de graduado.
+            </p>
+
           </div>
-          <div class="activity-metrics">
-            <div class="metric-item">
-              <span class="metric-num">8</span>
-              <small>Postulaciones</small>
+
+          <div class="security-demo-notice">
+
+            <span aria-hidden="true">ℹ️</span>
+
+            <p>
+              <strong>Interfaz en preparación.</strong>
+              Las operaciones que requieren autenticación
+              estarán disponibles cuando se integre
+              la API del sistema.
+            </p>
+
+          </div>
+
+          <!-- INFORMACIÓN DE CUENTA -->
+          <div class="card security-card">
+
+            <div class="security-card-heading">
+
+              <h2>Información de la cuenta</h2>
+
+              <p>
+                Datos mostrados actualmente en
+                la maqueta del portal.
+              </p>
+
             </div>
-            <div class="metric-item">
-              <span class="metric-num">3</span>
-              <small>En revisión</small>
+
+            <div class="security-detail">
+
+              <span>Nombre</span>
+
+              <strong>Carlos Martínez</strong>
+
             </div>
-            <div class="metric-item">
-              <span class="metric-num">12</span>
-              <small>Vistas al perfil</small>
+
+            <div class="security-detail">
+
+              <span>Tipo de cuenta</span>
+
+              <strong>Graduado</strong>
+
             </div>
+
+            <div class="security-detail">
+
+              <span>Estado de verificación</span>
+
+              <strong class="security-muted">
+                No disponible en la demostración
+              </strong>
+
+            </div>
+
+            <a
+              routerLink="/perfil-graduado"
+              class="security-profile-link"
+            >
+              Ir a mi perfil &gt;
+            </a>
+
           </div>
-        </div>
-      </div>
 
-      <!-- Vacantes recomendadas -->
-      <div class="section-recommended">
-        <div class="section-header-flex">
-          <h3>Vacantes recomendadas para ti</h3>
-          <a routerLink="/bolsa-interna" class="view-all-link">Ver todas &gt;</a>
-        </div>
-        <p class="section-sub">Basadas en tus habilidades y preferencias.</p>
+          <!-- OPCIONES DE SEGURIDAD -->
+          <div class="card security-card">
 
-        <div class="jobs-grid-3">
-          <!-- Oferta 1 -->
-          <div class="job-card-mini">
-            <div class="job-header">
-              <span class="badge-comp as">AS</span>
+            <div class="security-card-heading">
+
+              <h2>Opciones de seguridad</h2>
+
+              <p>
+                Funciones que se habilitarán al
+                integrar la autenticación real.
+              </p>
+
+            </div>
+
+            <div class="security-option">
+
               <div>
-                <small>Applaudo Studios</small>
-                <h4>Desarrollador Frontend Jr.</h4>
-              </div>
-              <span class="match-badge">87% compatible</span>
-            </div>
-            <div class="job-loc">📍 San Salvador · 💼 Híbrido</div>
-            <div class="tags"><span>React</span><span>TypeScript</span><span>Sin experiencia</span></div>
-            <div class="job-footer">
-              <small>🕒 Hace 2 días</small>
-              <a routerLink="/bolsa-interna" class="view-offer">Ver oferta &gt;</a>
-            </div>
-          </div>
 
-          <!-- Oferta 2 -->
-          <div class="job-card-mini">
-            <div class="job-header">
-              <span class="badge-comp ba">BA</span>
+                <h3>🔑 Cambiar contraseña</h3>
+
+                <p>
+                  Actualizar tu contraseña y
+                  confirmar el cambio de forma segura.
+                </p>
+
+              </div>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
+
+            </div>
+
+            <div class="security-option">
+
               <div>
-                <small>Banco Agrícola</small>
-                <h4>Analista de Datos</h4>
-              </div>
-              <span class="match-badge">87% compatible</span>
-            </div>
-            <div class="job-loc">📍 Antiguo Cuscatlán · 💼 Presencial</div>
-            <div class="tags"><span>SQL</span><span>Power BI</span><span>Python</span></div>
-            <div class="job-footer">
-              <small>🕒 Hace 4 días</small>
-              <a routerLink="/bolsa-interna" class="view-offer">Ver oferta &gt;</a>
-            </div>
-          </div>
 
-          <!-- Oferta 3 -->
-          <div class="job-card-mini">
-            <div class="job-header">
-              <span class="badge-comp el">EL</span>
+                <h3>✉️ Verificación de correo</h3>
+
+                <p>
+                  Comprobar que el correo electrónico
+                  pertenece al titular de la cuenta.
+                </p>
+
+              </div>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
+
+            </div>
+
+            <div class="security-option">
+
               <div>
-                <small>Elaniin</small>
-                <h4>QA Tester Trainee</h4>
-              </div>
-              <span class="match-badge">87% compatible</span>
-            </div>
-            <div class="job-loc">📍 San Salvador · 💼 Remoto</div>
-            <div class="tags"><span>Testing</span><span>Pasantía</span></div>
-            <div class="job-footer">
-              <small>🕒 Hace 1 semana</small>
-              <a routerLink="/bolsa-interna" class="view-offer">Ver oferta &gt;</a>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Banner inferior de actualización -->
-      <div class="card update-banner-card">
-        <div>
-          <h3>Mantén tu información actualizada</h3>
-          <p>Tu última actualización fue hace 2 meses. Los perfiles recientes reciben más visitas.</p>
+                <h3>🛡️ Protección de sesión</h3>
+
+                <p>
+                  Proteger el acceso al portal y
+                  finalizar sesiones autenticadas.
+                </p>
+
+              </div>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- REGRESAR AL RESUMEN -->
+          <button
+            type="button"
+            class="btn-security-back"
+            (click)="mostrarResumen()"
+          >
+            &larr; Volver al resumen
+          </button>
+
+        </section>
+
+      } @else {
+
+        <!-- RESUMEN NORMAL DEL DASHBOARD -->
+
+        <div class="welcome-banner">
+
+          <span class="mi-portal">
+            MI PORTAL
+          </span>
+
+          <h1>¡Hola, Carlos!</h1>
+
+          <p>
+            Aquí tienes un resumen de tu
+            actividad profesional.
+          </p>
+
         </div>
-        <button class="btn-update-profile" routerLink="/perfil-graduado">Actualizar perfil</button>
-      </div>
+
+        <!-- TARJETAS SUPERIORES -->
+        <div class="dashboard-stats-grid">
+
+          <!-- PERFIL COMPLETO -->
+          <div class="card completion-card">
+
+            <div class="comp-header">
+
+              <h3>Completa tu perfil</h3>
+
+              <span class="comp-percent">
+                72%
+              </span>
+
+            </div>
+
+            <p>
+              Mejora tus recomendaciones
+            </p>
+
+            <div class="progress-bar-bg">
+
+              <div
+                class="progress-bar-fill"
+                style="width: 72%;"
+              ></div>
+
+            </div>
+
+            <ul class="checklist">
+
+              <li class="checked">
+                ✓ Datos personales
+              </li>
+
+              <li class="checked">
+                ✓ Información académica
+              </li>
+
+              <li class="pending">
+                3 Agregar experiencia laboral (Completar)
+              </li>
+
+              <li class="pending">
+                4 Subir currículum vitae (Completar)
+              </li>
+
+            </ul>
+
+          </div>
+
+          <!-- ACTIVIDAD -->
+          <div class="card activity-card">
+
+            <div class="comp-header">
+
+              <h3>Tu actividad</h3>
+
+              <small>Últimos 30 días</small>
+
+            </div>
+
+            <div class="activity-metrics">
+
+              <div class="metric-item">
+
+                <span class="metric-num">8</span>
+
+                <small>Postulaciones</small>
+
+              </div>
+
+              <div class="metric-item">
+
+                <span class="metric-num">3</span>
+
+                <small>En revisión</small>
+
+              </div>
+
+              <div class="metric-item">
+
+                <span class="metric-num">12</span>
+
+                <small>Vistas al perfil</small>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- VACANTES RECOMENDADAS -->
+        <div class="section-recommended">
+
+          <div class="section-header-flex">
+
+            <h3>
+              Vacantes recomendadas para ti
+            </h3>
+
+            <a
+              routerLink="/bolsa-interna"
+              class="view-all-link"
+            >
+              Ver todas &gt;
+            </a>
+
+          </div>
+
+          <p class="section-sub">
+            Basadas en tus habilidades y preferencias.
+          </p>
+
+          <div class="jobs-grid-3">
+
+            <!-- OFERTA 1 -->
+            <div class="job-card-mini">
+
+              <div class="job-header">
+
+                <span class="badge-comp as">
+                  AS
+                </span>
+
+                <div>
+
+                  <small>Applaudo Studios</small>
+
+                  <h4>Desarrollador Frontend Jr.</h4>
+
+                </div>
+
+                <span class="match-badge">
+                  87% compatible
+                </span>
+
+              </div>
+
+              <div class="job-loc">
+                📍 San Salvador · 💼 Híbrido
+              </div>
+
+              <div class="tags">
+
+                <span>React</span>
+                <span>TypeScript</span>
+                <span>Sin experiencia</span>
+
+              </div>
+
+              <div class="job-footer">
+
+                <small>🕒 Hace 2 días</small>
+
+                <a
+                  routerLink="/bolsa-interna"
+                  class="view-offer"
+                >
+                  Ver oferta &gt;
+                </a>
+
+              </div>
+
+            </div>
+
+            <!-- OFERTA 2 -->
+            <div class="job-card-mini">
+
+              <div class="job-header">
+
+                <span class="badge-comp ba">
+                  BA
+                </span>
+
+                <div>
+
+                  <small>Banco Agrícola</small>
+
+                  <h4>Analista de Datos</h4>
+
+                </div>
+
+                <span class="match-badge">
+                  87% compatible
+                </span>
+
+              </div>
+
+              <div class="job-loc">
+                📍 Antiguo Cuscatlán · 💼 Presencial
+              </div>
+
+              <div class="tags">
+
+                <span>SQL</span>
+                <span>Power BI</span>
+                <span>Python</span>
+
+              </div>
+
+              <div class="job-footer">
+
+                <small>🕒 Hace 4 días</small>
+
+                <a
+                  routerLink="/bolsa-interna"
+                  class="view-offer"
+                >
+                  Ver oferta &gt;
+                </a>
+
+              </div>
+
+            </div>
+
+            <!-- OFERTA 3 -->
+            <div class="job-card-mini">
+
+              <div class="job-header">
+
+                <span class="badge-comp el">
+                  EL
+                </span>
+
+                <div>
+
+                  <small>Elaniin</small>
+
+                  <h4>QA Tester Trainee</h4>
+
+                </div>
+
+                <span class="match-badge">
+                  87% compatible
+                </span>
+
+              </div>
+
+              <div class="job-loc">
+                📍 San Salvador · 💼 Remoto
+              </div>
+
+              <div class="tags">
+
+                <span>Testing</span>
+                <span>Pasantía</span>
+
+              </div>
+
+              <div class="job-footer">
+
+                <small>🕒 Hace 1 semana</small>
+
+                <a
+                  routerLink="/bolsa-interna"
+                  class="view-offer"
+                >
+                  Ver oferta &gt;
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- BANNER PARA ACTUALIZAR PERFIL -->
+        <div class="card update-banner-card">
+
+          <div>
+
+            <h3>
+              Mantén tu información actualizada
+            </h3>
+
+            <p>
+              Tu última actualización fue hace 2 meses.
+              Los perfiles recientes reciben más visitas.
+            </p>
+
+          </div>
+
+          <button
+            type="button"
+            class="btn-update-profile"
+            routerLink="/perfil-graduado"
+          >
+            Actualizar perfil
+          </button>
+
+        </div>
+
+      }
+
     </div>
+
   </main>
+
 </div>

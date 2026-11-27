@@ -1,174 +1,774 @@
+
 <div class="portal-shell">
-  <aside class="sidebar">
+
+  <!-- MENÚ LATERAL DE EMPRESA -->
+  <aside
+    id="menu-lateral-empresa"
+    class="sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
+
     <div class="sidebar-brand">
-      <img src="/ues.png" alt="Logo UES" class="brand-logo" />
+      <img
+        src="/ues.png"
+        alt="Logo UES"
+        class="brand-logo"
+      />
+
       <div class="brand-text">
-        <span class="brand-title">Portal de Graduados</span>
-        <span class="brand-sub">Ingeniería de Sistemas Informáticos</span>
+        <span class="brand-title">
+          Portal de Graduados
+        </span>
+        <span class="brand-sub">
+          Ingeniería de Sistemas Informáticos
+        </span>
       </div>
     </div>
 
+    <!-- CERRAR MENÚ MÓVIL -->
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
+
     <div class="sidebar-section">
-      <p class="sidebar-label">MENÚ PRINCIPAL</p>
+      <p class="sidebar-label">
+        MENÚ PRINCIPAL
+      </p>
+
       <nav class="sidebar-nav">
-        <a routerLink="/mis-ofertas-empresa" class="nav-item">
+
+        <a
+          routerLink="/mis-ofertas-empresa"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">💼</span>
           <span>Mis ofertas</span>
         </a>
-        <a routerLink="/publicar-oferta" class="nav-item">
+
+        <a
+          routerLink="/publicar-oferta"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">＋</span>
           <span>Publicar oferta</span>
         </a>
-        <a routerLink="/candidatos" class="nav-item is-active">
+
+        <a
+          routerLink="/candidatos"
+          class="nav-item is-active"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">👥</span>
           <span>Candidatos</span>
         </a>
-        <a href="javascript:void(0)" class="nav-item">
+
+        <a
+          routerLink="/buscar-perfiles"
+          class="nav-item"
+          (click)="cerrarMenu()"
+        >
           <span class="nav-icon">🔍</span>
           <span>Buscar perfiles</span>
         </a>
+
       </nav>
     </div>
 
+    <!-- PIE DEL MENÚ -->
     <div class="sidebar-footer">
-      <a href="javascript:void(0)" class="footer-link">
+
+      <button
+        type="button"
+        class="footer-link footer-button"
+        (click)="abrirSeguridad()"
+      >
         <span>🔒</span>
         <span>Acceso y seguridad</span>
-      </a>
-      <a routerLink="/login-empresa" class="footer-link">
+      </button>
+
+      <a
+        routerLink="/"
+        class="footer-link"
+        (click)="cerrarMenu()"
+      >
         <span>↪</span>
         <span>Cerrar sesión</span>
       </a>
 
       <div class="institution-badge">
-        <img src="/ues.png" alt="UES" class="institution-logo" />
+        <img
+          src="/ues.png"
+          alt="UES"
+          class="institution-logo"
+        />
+
         <div class="institution-info">
           <strong>UES</strong>
           <span>Universidad de El Salvador</span>
           <span>Facultad de Ingeniería</span>
         </div>
       </div>
+
     </div>
   </aside>
 
+  <!-- FONDO OSCURO PARA CERRAR MENÚ -->
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
+
   <div class="main-area">
+
+    <!-- BARRA SUPERIOR -->
     <header class="topbar">
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="
+          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
+        "
+        aria-controls="menu-lateral-empresa"
+      >
+        ☰
+      </button>
+
       <div class="topbar-actions">
-        <button type="button" class="icon-btn" aria-label="Notificaciones">
-          <span>🔔</span>
-          <span class="notif-dot"></span>
-        </button>
+
+        <!-- NOTIFICACIONES -->
+        <div class="notification-wrapper">
+
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
+
+          @if (notificacionesAbiertas) {
+            <div
+              class="notifications-panel"
+              role="region"
+              aria-label="Notificaciones de empresa"
+            >
+
+              <div class="notifications-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  type="button"
+                  class="notifications-close"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div class="notifications-empty">
+                <span aria-hidden="true">🔔</span>
+
+                <strong>
+                  Sin notificaciones disponibles
+                </strong>
+
+                <p>
+                  Las notificaciones reales
+                  aparecerán aquí cuando
+                  conectemos la API.
+                </p>
+              </div>
+            </div>
+          }
+
+        </div>
+
+        <!-- EMPRESA -->
         <div class="company-chip">
-          <span class="company-avatar">SV</span>
+
+          <span class="company-avatar">
+            SV
+          </span>
+
           <div class="company-meta">
-            <span class="company-name">Soluciones SV</span>
-            <span class="company-role">Empresa</span>
+            <span class="company-name">
+              Soluciones SV
+            </span>
+            <span class="company-role">
+              Empresa
+            </span>
           </div>
+
         </div>
       </div>
+
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
+
       <div class="page-header">
-        <span class="eyebrow">PROCESOS ACTIVOS</span>
+        <span class="eyebrow">
+          PROCESOS ACTIVOS
+        </span>
+
         <h1>Candidatos</h1>
-        <p class="page-subtitle">Revisa y gestiona los perfiles que se postularon a tus ofertas.</p>
+
+        <p class="page-subtitle">
+          Revisa y gestiona los perfiles
+          que se postularon a tus ofertas.
+        </p>
       </div>
 
-      <form class="search-bar" (submit)="$event.preventDefault()">
-        <span class="search-icon">🔍</span>
+      <!-- AVISO DE DEMOSTRACIÓN -->
+      <div class="demo-notice">
+        <span aria-hidden="true">ℹ️</span>
+
+        <p>
+          <strong>Modo demostración.</strong>
+          Los perfiles, los porcentajes de
+          compatibilidad y los estados que aparecen
+          aquí son ejemplos. No se han consultado
+          postulaciones reales en la API.
+        </p>
+      </div>
+
+      <!-- BUSCADOR -->
+      <form
+        class="search-bar"
+        (ngSubmit)="buscarCandidatos()"
+      >
+
+        <span class="search-icon">
+          🔍
+        </span>
+
         <input
           type="text"
+          name="textoBusqueda"
+          [(ngModel)]="textoBusqueda"
           placeholder="Buscar por nombre, habilidad o perfil..."
+          aria-label="Buscar candidatos"
         />
-        <button type="submit" class="btn-primary">Buscar</button>
+
+        <button
+          type="submit"
+          class="btn-primary"
+        >
+          Buscar
+        </button>
+
       </form>
 
+      <!-- FILTRO Y RESULTADOS -->
+      <div class="filter-row">
+
+        <div class="filter-control">
+          <label for="estadoCandidato">
+            Estado de postulación
+          </label>
+
+          <select
+            id="estadoCandidato"
+            name="estadoCandidato"
+            [(ngModel)]="filtroEstado"
+          >
+            <option value="Todos">
+              Todos los estados
+            </option>
+
+            <option value="En revisión">
+              En revisión
+            </option>
+
+            <option value="Preseleccionado">
+              Preseleccionados
+            </option>
+
+            <option value="Descartado">
+              Descartados
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-summary">
+          <span>
+            {{ candidatosFiltrados.length }}
+            de
+            {{ candidatos.length }}
+            candidatos de ejemplo
+          </span>
+
+          <button
+            type="button"
+            class="clear-filter-button"
+            (click)="limpiarFiltros()"
+          >
+            Limpiar filtros
+          </button>
+        </div>
+
+      </div>
+
+      <!-- TARJETAS DE CANDIDATOS -->
       <section class="candidates-grid">
-        <article class="candidate-card">
-          <div class="card-top">
-            <span class="avatar-circle avatar-pink">MM</span>
-            <span class="match-badge">92% compatible</span>
-          </div>
-          <div class="candidate-info">
-            <h2>María Fernanda Mejía</h2>
-            <p class="candidate-role">Desarrolladora Full Stack</p>
-            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2022</p>
-          </div>
-          <div class="skills-row">
-            <span class="skill-pill">React</span>
-            <span class="skill-pill">Node.js</span>
-            <span class="skill-pill">PostgreSQL</span>
-          </div>
-          <div class="card-actions">
-            <button type="button" class="btn-outline">👁 Ver perfil</button>
-            <button type="button" class="btn-icon-square" aria-label="Enviar mensaje">✉</button>
-          </div>
-        </article>
 
-        <article class="candidate-card">
-          <div class="card-top">
-            <span class="avatar-circle avatar-blue">JL</span>
-            <span class="match-badge">88% compatible</span>
-          </div>
-          <div class="candidate-info">
-            <h2>José Luis Ramírez</h2>
-            <p class="candidate-role">Analista de Datos</p>
-            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2023</p>
-          </div>
-          <div class="skills-row">
-            <span class="skill-pill">Python</span>
-            <span class="skill-pill">SQL</span>
-            <span class="skill-pill">Power BI</span>
-          </div>
-          <div class="card-actions">
-            <button type="button" class="btn-outline">👁 Ver perfil</button>
-            <button type="button" class="btn-icon-square" aria-label="Enviar mensaje">✉</button>
-          </div>
-        </article>
+        @for (
+          candidato of candidatosFiltrados;
+          track candidato.id
+        ) {
 
-        <article class="candidate-card">
-          <div class="card-top">
-            <span class="avatar-circle avatar-purple">AV</span>
-            <span class="match-badge">84% compatible</span>
-          </div>
-          <div class="candidate-info">
-            <h2>Andrea Vásquez</h2>
-            <p class="candidate-role">QA Engineer Jr.</p>
-            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2024</p>
-          </div>
-          <div class="skills-row">
-            <span class="skill-pill">Testing</span>
-            <span class="skill-pill">Cypress</span>
-            <span class="skill-pill">Jira</span>
-          </div>
-          <div class="card-actions">
-            <button type="button" class="btn-outline">👁 Ver perfil</button>
-            <button type="button" class="btn-icon-square" aria-label="Enviar mensaje">✉</button>
-          </div>
-        </article>
+          <article class="candidate-card">
 
-        <article class="candidate-card">
-          <div class="card-top">
-            <span class="avatar-circle avatar-green">RC</span>
-            <span class="match-badge">79% compatible</span>
+            <div class="card-top">
+
+              <span
+                class="avatar-circle"
+                [class.avatar-pink]="candidato.color === 'pink'"
+                [class.avatar-blue]="candidato.color === 'blue'"
+                [class.avatar-purple]="candidato.color === 'purple'"
+                [class.avatar-green]="candidato.color === 'green'"
+              >
+                {{ candidato.iniciales }}
+              </span>
+
+              <span class="match-badge">
+                {{ candidato.compatibilidad }}%
+                compatible
+              </span>
+
+            </div>
+
+            <div class="candidate-info">
+
+              <h2>
+                {{ candidato.nombre }}
+              </h2>
+
+              <p class="candidate-role">
+                {{ candidato.rol }}
+              </p>
+
+              <p class="candidate-career">
+                {{ candidato.carrera }}
+                ·
+                {{ candidato.anio }}
+              </p>
+
+              <span
+                class="application-status"
+                [class.status-selected]="
+                  candidato.estado === 'Preseleccionado'
+                "
+                [class.status-rejected]="
+                  candidato.estado === 'Descartado'
+                "
+              >
+                {{ candidato.estado }}
+              </span>
+
+            </div>
+
+            <div class="skills-row">
+
+              @for (
+                habilidad of candidato.habilidades;
+                track habilidad
+              ) {
+                <span class="skill-pill">
+                  {{ habilidad }}
+                </span>
+              }
+
+            </div>
+
+            <div class="card-actions">
+
+              <button
+                type="button"
+                class="btn-outline"
+                (click)="abrirPerfil(candidato)"
+              >
+                👁 Ver perfil
+              </button>
+
+              <button
+                type="button"
+                class="btn-icon-square"
+                [attr.aria-label]="
+                  'Consultar contacto de ' +
+                  candidato.nombre
+                "
+                title="Consultar contacto"
+                (click)="abrirContacto(candidato)"
+              >
+                ✉
+              </button>
+
+            </div>
+
+          </article>
+
+        } @empty {
+
+          <div class="empty-results">
+
+            <span aria-hidden="true">🔍</span>
+
+            <h2>
+              No se encontraron candidatos
+            </h2>
+
+            <p>
+              Prueba con otro nombre, habilidad,
+              perfil o estado de postulación.
+            </p>
+
+            <button
+              type="button"
+              class="btn-primary"
+              (click)="limpiarFiltros()"
+            >
+              Mostrar todos
+            </button>
+
           </div>
-          <div class="candidate-info">
-            <h2>Roberto Castillo</h2>
-            <p class="candidate-role">Soporte e Infraestructura</p>
-            <p class="candidate-career">Ingeniería de Sistemas Informáticos · 2025</p>
-          </div>
-          <div class="skills-row">
-            <span class="skill-pill">Linux</span>
-            <span class="skill-pill">Redes</span>
-            <span class="skill-pill">Azure</span>
-          </div>
-          <div class="card-actions">
-            <button type="button" class="btn-outline">👁 Ver perfil</button>
-            <button type="button" class="btn-icon-square" aria-label="Enviar mensaje">✉</button>
-          </div>
-        </article>
+
+        }
+
       </section>
+
     </main>
   </div>
+
+  <!-- DETALLE DE CANDIDATO -->
+  @if (candidatoSeleccionado; as candidato) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarDetalle()"
+    >
+
+      <section
+        class="candidate-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-detalle-candidato"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <div>
+            <span class="eyebrow">
+              {{
+                tipoDetalle === 'perfil'
+                  ? 'DETALLE DEL PERFIL'
+                  : 'INFORMACIÓN DE CONTACTO'
+              }}
+            </span>
+
+            <h2 id="titulo-detalle-candidato">
+              {{
+                tipoDetalle === 'perfil'
+                  ? 'Perfil del candidato'
+                  : 'Contacto del candidato'
+              }}
+            </h2>
+          </div>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar detalle"
+            (click)="cerrarDetalle()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <!-- IDENTIFICACIÓN DEL CANDIDATO -->
+        <div class="modal-candidate-summary">
+
+          <span
+            class="avatar-circle"
+            [class.avatar-pink]="candidato.color === 'pink'"
+            [class.avatar-blue]="candidato.color === 'blue'"
+            [class.avatar-purple]="candidato.color === 'purple'"
+            [class.avatar-green]="candidato.color === 'green'"
+          >
+            {{ candidato.iniciales }}
+          </span>
+
+          <div>
+            <h3>{{ candidato.nombre }}</h3>
+            <p>{{ candidato.rol }}</p>
+          </div>
+
+        </div>
+
+        @if (tipoDetalle === 'perfil') {
+
+          <div class="profile-data">
+
+            <div>
+              <span>Carrera</span>
+              <strong>{{ candidato.carrera }}</strong>
+            </div>
+
+            <div>
+              <span>Año de graduación</span>
+              <strong>{{ candidato.anio }}</strong>
+            </div>
+
+            <div>
+              <span>Compatibilidad ilustrativa</span>
+              <strong>
+                {{ candidato.compatibilidad }}%
+              </strong>
+            </div>
+
+          </div>
+
+          <div class="modal-section">
+
+            <h3>Habilidades</h3>
+
+            <div class="skills-row">
+              @for (
+                habilidad of candidato.habilidades;
+                track habilidad
+              ) {
+                <span class="skill-pill">
+                  {{ habilidad }}
+                </span>
+              }
+            </div>
+
+          </div>
+
+          <div class="modal-section">
+
+            <label
+              for="estadoPostulacion"
+              class="modal-label"
+            >
+              Estado de postulación
+            </label>
+
+            <select
+              id="estadoPostulacion"
+              name="estadoPostulacion"
+              class="modal-select"
+              [ngModel]="candidato.estado"
+              (ngModelChange)="
+                actualizarEstado(candidato, $event)
+              "
+            >
+              <option value="En revisión">
+                En revisión
+              </option>
+
+              <option value="Preseleccionado">
+                Preseleccionado
+              </option>
+
+              <option value="Descartado">
+                Descartado
+              </option>
+            </select>
+
+            <p class="modal-helper">
+              El cambio solo se aplicará a
+              esta demostración.
+            </p>
+
+            @if (mensajeEstado) {
+              <div
+                class="status-message"
+                role="status"
+              >
+                {{ mensajeEstado }}
+              </div>
+            }
+
+          </div>
+
+          <div class="modal-notice">
+            Este es un perfil de ejemplo. Los datos
+            completos y el currículum estarán
+            disponibles cuando se integre la API.
+          </div>
+
+        } @else {
+
+          <div class="modal-section">
+
+            <h3>Datos de contacto</h3>
+
+            <p class="contact-description">
+              Todavía no hay información de contacto
+              autorizada disponible desde la API.
+              No se ha enviado ningún correo
+              ni mensaje.
+            </p>
+
+          </div>
+
+          <div class="modal-notice">
+            Esta opción servirá para consultar
+            medios de contacto permitidos,
+            sin implementar un chat interno.
+          </div>
+
+        }
+
+        <div class="modal-actions">
+
+          @if (tipoDetalle === 'contacto') {
+
+            <button
+              type="button"
+              class="btn-outline"
+              (click)="abrirPerfil(candidato)"
+            >
+              Ver perfil
+            </button>
+
+          }
+
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="cerrarDetalle()"
+          >
+            Cerrar
+          </button>
+
+        </div>
+
+      </section>
+    </div>
+
+  }
+
+  <!-- ACCESO Y SEGURIDAD -->
+  @if (seguridadAbierta) {
+
+    <div
+      class="modal-overlay"
+      (click)="cerrarSeguridad()"
+    >
+
+      <section
+        class="security-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="titulo-seguridad"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-heading">
+
+          <h2 id="titulo-seguridad">
+            🔒 Acceso y seguridad
+          </h2>
+
+          <button
+            type="button"
+            class="modal-close"
+            aria-label="Cerrar seguridad"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+
+        </div>
+
+        <p class="security-description">
+          Información de demostración
+          de la cuenta empresarial.
+        </p>
+
+        <div class="security-row">
+          <span>Empresa</span>
+          <strong>Soluciones SV</strong>
+        </div>
+
+        <div class="security-row">
+          <span>Tipo de cuenta</span>
+          <strong>Empresa</strong>
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🔑 Cambiar contraseña
+          </strong>
+
+          <p>
+            Disponible cuando integremos
+            la autenticación de la API.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            ✉️ Verificación de correo
+          </strong>
+
+          <p>
+            Pendiente de conexión
+            con el servidor.
+          </p>
+
+        </div>
+
+        <div class="security-option">
+
+          <strong>
+            🛡️ Protección de sesión
+          </strong>
+
+          <p>
+            Se implementará con el sistema
+            de autenticación y permisos.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-primary security-close-button"
+          (click)="cerrarSeguridad()"
+        >
+          Cerrar
+        </button>
+
+      </section>
+
+    </div>
+
+  }
+
 </div>
