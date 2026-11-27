@@ -92,14 +92,12 @@ Content-Type: application/json
   "requisitos": "Ninguno, es solo una prueba.",
   "modalidad": "Remoto",
   "clasificacionOportunidad": "Empleo",
+  "rangoSalarial": "$500 - $700",
   "fechaCierre": "2027-03-31T23:59:00"
 }
 
 ### 12. Cerrarla (200)
-PUT {{ofertas}}/{{cerrada.response.body.idOferta}}/estado
-Content-Type: application/json
-
-{ "estado": "Cerrada" }
+PUT {{ofertas}}/{{cerrada.response.body.idOferta}}/cierre
 
 ### 13. Postular a una oferta cerrada (409)
 POST {{base}}

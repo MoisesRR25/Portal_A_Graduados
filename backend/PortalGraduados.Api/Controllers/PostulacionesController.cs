@@ -12,13 +12,13 @@ namespace PortalGraduados.Api.Controllers
     [Route("api/[controller]")]
     public class PostulacionesController : ControllerBase
     {
-        // Estados provisionales: confirmar con el equipo y el SRS
+        
         private const string Pendiente = "Pendiente";
         private const string EnRevision = "En revision";
         private const string Aceptada = "Aceptada";
         private const string Rechazada = "Rechazada";
 
-        private const string OfertaActiva = "Activa";
+        private const string OfertaPublicada = "Publicada";
 
         private static readonly Dictionary<string, string[]> Transiciones = new()
         {
@@ -124,13 +124,13 @@ namespace PortalGraduados.Api.Controllers
             if (oferta is null)
                 return BadRequest(new { mensaje = $"No existe la oferta con id {dto.IdOferta}." });
 
-            if (!graduado.Verificado)
-                return Conflict(new { mensaje = "El perfil del graduado aun no esta verificado y no puede postular." });
+           if (!graduado.Verificado || !graduado.Consentimiento)
+           return Conflict(new { mensaje = "El perfil debe estar verificado y con el consentimiento aceptado para poder postular." });
 
             var ahora = Ahora();
 
-            if (oferta.Estado != OfertaActiva || oferta.FechaCierre <= ahora)
-                return Conflict(new { mensaje = "La oferta esta cerrada o vencida y no acepta postulaciones." });
+            if (oferta.Estado != OfertaPublicada || oferta.FechaCierre <= ahora)
+            return Conflict(new { mensaje = "La oferta no esta publicada o ya vencio, y no acepta postulaciones." });
 
             var cv = string.IsNullOrWhiteSpace(dto.CvEnviado) ? graduado.CvAdjunto : dto.CvEnviado.Trim();
 

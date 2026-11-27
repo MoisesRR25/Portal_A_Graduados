@@ -1,0 +1,145 @@
+@base = http://localhost:8080/api/ofertas
+@empresas = http://localhost:8080/api/empresas
+
+### 1. Registrar una empresa nueva (201)
+# @name emp
+POST {{empresas}}
+Content-Type: application/json
+
+{
+  "correo": "revision@empresa.com",
+  "contrasena": "Prueba12345",
+  "nombreComercial": "Revision SA",
+  "razonSocial": "Revision Sociedad Anonima",
+  "telefonoContacto": "22228888"
+}
+
+### 2. Aprobar la empresa (200)
+PUT {{empresas}}/{{emp.response.body.idEmpresa}}/aprobacion
+Content-Type: application/json
+
+{ "aprobada": true }
+
+### 3. Primera oferta, aunque trae rango salarial: queda En revision (201)
+# @name primera
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": {{emp.response.body.idEmpresa}},
+  "cargo": "Tester QA",
+  "area": "Revision QA",
+  "ubicacion": "San Salvador",
+  "descripcionCorta": "Pruebas de calidad de software",
+  "descripcion": "Diseno y ejecucion de pruebas funcionales de la plataforma.",
+  "requisitos": "Conocimientos de pruebas y SQL basico.",
+  "rangoSalarial": "$900 - $1100",
+  "modalidad": "Remoto",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-05-31T23:59:00"
+}
+
+### 4. El listado por defecto no la muestra, X-Total-Count = 0 (200)
+GET {{base}}?area=revision qa
+
+### 5. Con el estado pedido si aparece (200)
+GET {{base}}?area=revision qa&estado=En revision
+
+### 6. Rechazar sin motivo (400)
+PUT {{base}}/{{primera.response.body.idOferta}}/revision
+Content-Type: application/json
+
+{ "aprobada": false }
+
+### 7. Aprobar (200, estado Publicada)
+PUT {{base}}/{{primera.response.body.idOferta}}/revision
+Content-Type: application/json
+
+{ "aprobada": true }
+
+### 8. Revisarla otra vez (409)
+PUT {{base}}/{{primera.response.body.idOferta}}/revision
+Content-Type: application/json
+
+{ "aprobada": true }
+
+### 9. Segunda oferta con rango salarial: se publica directo (201, estado Publicada)
+# @name segunda
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": {{emp.response.body.idEmpresa}},
+  "cargo": "Analista QA",
+  "area": "Revision QA",
+  "ubicacion": "Santa Ana",
+  "descripcionCorta": "Analisis de calidad de software",
+  "descripcion": "Analisis de requisitos y diseno de casos de prueba.",
+  "requisitos": "Estudiante o graduado de sistemas informaticos.",
+  "rangoSalarial": "$700 - $900",
+  "modalidad": "Hibrido",
+  "clasificacionOportunidad": "Pasantia",
+  "fechaCierre": "2027-05-31T23:59:00"
+}
+
+### 10. Tercera oferta sin rango salarial: queda En revision (201)
+# @name tercera
+POST {{base}}
+Content-Type: application/json
+
+{
+  "idEmpresa": {{emp.response.body.idEmpresa}},
+  "cargo": "Soporte QA",
+  "area": "Revision QA",
+  "ubicacion": "San Miguel",
+  "descripcionCorta": "Soporte al equipo de calidad",
+  "descripcion": "Apoyo en la ejecucion de pruebas y reporte de errores.",
+  "requisitos": "Interes en pruebas de software y buena redaccion.",
+  "modalidad": "Presencial",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-05-31T23:59:00"
+}
+
+### 11. Rechazar con motivo (200, estado Rechazada)
+PUT {{base}}/{{tercera.response.body.idOferta}}/revision
+Content-Type: application/json
+
+{ "aprobada": false, "motivo": "Falta informacion sobre las funciones del puesto." }
+
+### 12. Editar una oferta rechazada (409)
+PUT {{base}}/{{tercera.response.body.idOferta}}
+Content-Type: application/json
+
+{
+  "cargo": "Soporte QA",
+  "area": "Revision QA",
+  "ubicacion": "San Miguel",
+  "descripcionCorta": "Soporte al equipo de calidad",
+  "descripcion": "Apoyo en la ejecucion de pruebas y reporte de errores.",
+  "requisitos": "Interes en pruebas de software y buena redaccion.",
+  "modalidad": "Presencial",
+  "clasificacionOportunidad": "Empleo",
+  "fechaCierre": "2027-06-30T23:59:00"
+}
+
+### 13. Quitar el rango salarial a una oferta publicada: vuelve a En revision (200)
+PUT {{base}}/{{segunda.response.body.idOferta}}
+Content-Type: application/json
+
+{
+  "cargo": "Analista QA",
+  "area": "Revision QA",
+  "ubicacion": "Santa Ana",
+  "descripcionCorta": "Analisis de calidad de software",
+  "descripcion": "Analisis de requisitos y diseno de casos de prueba.",
+  "requisitos": "Estudiante o graduado de sistemas informaticos.",
+  "modalidad": "Hibrido",
+  "clasificacionOportunidad": "Pasantia",
+  "fechaCierre": "2027-05-31T23:59:00"
+}
+
+### 14. Cerrar una oferta que no esta publicada (409)
+PUT {{base}}/{{segunda.response.body.idOferta}}/cierre
+
+### 15. Cerrar la primera, que si esta publicada (200, estado Cerrada)
+PUT {{base}}/{{primera.response.body.idOferta}}/cierre

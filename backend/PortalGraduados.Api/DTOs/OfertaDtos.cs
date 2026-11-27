@@ -84,11 +84,22 @@ namespace PortalGraduados.Api.DTOs
         public int IdEmpresa { get; set; }
     }
 
-    public class CambioEstadoOfertaDto
+        public class RevisionOfertaDto : IValidatableObject
     {
-        [Required(ErrorMessage = "El estado es obligatorio.")]
-        [AllowedValues("Activa", "Cerrada",
-            ErrorMessage = "El estado debe ser Activa o Cerrada.")]
-        public string Estado { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Debe indicar si la oferta se aprueba (true) o se rechaza (false).")]
+        public bool? Aprobada { get; set; }
+
+        [StringLength(500, ErrorMessage = "El motivo no puede superar 500 caracteres.")]
+        public string? Motivo { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Aprobada == false && string.IsNullOrWhiteSpace(Motivo))
+            {
+                yield return new ValidationResult(
+                    "Debe indicar el motivo del rechazo.",
+                    new[] { nameof(Motivo) });
+            }
+        }
     }
 }

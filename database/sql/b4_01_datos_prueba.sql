@@ -19,7 +19,7 @@ SELECT 1,
             THEN (now() AT TIME ZONE 'utc') + ((g % 90) + 1) * interval '1 day'
             ELSE (now() AT TIME ZONE 'utc') - ((g % 90) + 1) * interval '1 day'
        END,
-       CASE WHEN g % 10 < 3 THEN 'Activa' ELSE 'Cerrada' END
+       CASE WHEN g % 10 < 3 THEN 'publicada' ELSE 'Cerrada' END
 FROM generate_series(1, 50000) AS g;
 
 ANALYZE oferta;
