@@ -11,7 +11,9 @@
 
 Orden recomendado
 1. ✅ Semilla de roles + migración aplicada + cadena de conexión local (completado).
-2. Unificar estados de oferta y corregir scripts B4.
+2. 🔄 Unificar estados de oferta y corregir scripts B4 (en proceso).
+   - Hecho: estados canónicos `Publicada`, `Cerrada` y `En revision` alineados con la API en los scripts b4_01 a b4_05.
+   - Pendiente: ejecutar los scripts contra la base local y verificar que b4_02 use el índice `ix_oferta_publicada_area_fecha`.
 3. Implementar autenticación JWT y autorización por roles.
 4. Aplicar ownership y privacidad en todos los controladores.
 5. Implementar endpoints faltantes: reportes, notificaciones, cargas, panel, verificación y matching.
@@ -29,7 +31,7 @@ Sin embargo, el apartado de API y base de datos **todavía no está listo para e
 2. **Autenticación, autorización y privacidad:** no existe login ni control de acceso por rol; varios endpoints exponen datos personales o permiten operaciones sin validar propiedad.
 3. **Requisitos funcionales incompletos:** faltan endpoints de reportes, notificaciones, cargas masivas, panel de estadísticas, verificación de identidad y matching.
 
-A esto se suman correcciones de reglas de negocio, índices/restricciones en PostgreSQL, inconsistencias en los scripts B4 y falta de documentación/pruebas.
+A esto se suman correcciones de reglas de negocio, índices/restricciones en PostgreSQL y falta de documentación/pruebas.
 
 ---
 
@@ -254,7 +256,7 @@ Consecuencia: los 50,000 registros de prueba no son visibles desde la API y el �
 - [x] Configurar cadena de conexión local.
 - [x] Agregar `depends_on` de `api` hacia `postgres`.
 - [ ] Corregir o configurar HTTPS.
-- [ ] Unificar estados de oferta y corregir scripts B4.
+- [x] Unificar estados de oferta y corregir scripts B4.
 
 ### Prioridad 2 — Seguridad
 
