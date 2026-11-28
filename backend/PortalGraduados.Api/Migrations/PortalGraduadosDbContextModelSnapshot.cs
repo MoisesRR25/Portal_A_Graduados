@@ -173,6 +173,11 @@ namespace PortalGraduados.Api.Migrations
                         .HasColumnType("character varying(100)")
                         .HasColumnName("area_trabajo");
 
+                    b.Property<string>("Carnet")
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)")
+                        .HasColumnName("carnet");
+
                     b.Property<bool>("Consentimiento")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
@@ -234,6 +239,9 @@ namespace PortalGraduados.Api.Migrations
                         .HasColumnName("verificado");
 
                     b.HasKey("IdGraduado");
+
+                    b.HasIndex("Carnet")
+                        .IsUnique();
 
                     b.HasIndex("IdUsuario")
                         .IsUnique();

@@ -1,6 +1,11 @@
 
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
 namespace PortalGraduados.Api.Models
 {
+    [Index(nameof(Carnet), IsUnique = true)]
     public class Graduado
     {
         public int IdGraduado { get; set; }
@@ -13,6 +18,13 @@ namespace PortalGraduados.Api.Models
         public string Apellidos { get; set; } = string.Empty;
 
         public string Telefono { get; set; } = string.Empty;
+
+        // Carnet universitario.
+        // Nullable para conservar los perfiles existentes.
+
+        [Column("carnet")]
+        [MaxLength(7)]
+        public string? Carnet { get; set; }
 
         // Información académica
         public int AnioGraduacion { get; set; }

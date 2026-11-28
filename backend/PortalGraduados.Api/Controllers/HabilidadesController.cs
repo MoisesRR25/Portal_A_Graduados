@@ -1,3 +1,5 @@
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -11,23 +13,46 @@ namespace PortalGraduados.Api.Controllers
     [Route("api/[controller]")]
     public class HabilidadesController : ControllerBase
     {
+        private const string Administrador =
+            "Administrador de la Escuela";
+
         private readonly PortalGraduadosDbContext _context;
 
-        public HabilidadesController(PortalGraduadosDbContext context)
+        public HabilidadesController(
+            PortalGraduadosDbContext context)
         {
             _context = context;
         }
 
-        // GET /api/habilidades?categoria=Backend
+        // ==========================================
+        // LISTAR CATÁLOGO DE HABILIDADES
+        // ==========================================
+
+        [Authorize(Roles = Administrador + ",Graduado,Empresa")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HabilidadDto>>> Listar([FromQuery] string? categoria)
+        public async Task<ActionResult<IEnumerable<HabilidadDto>>>
+            Listar(
+                [FromQuery] string? categoria,
+                [FromQuery] string? busqueda)
         {
-            var consulta = _context.Habilidades.AsNoTracking();
+            var consulta = _context.Habilidades
+                .AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(categoria))
             {
-                var cat = categoria.Trim();
-                consulta = consulta.Where(h => h.Categoria == cat);
+                var cat = categoria.Trim().ToLower();
+
+                consulta = consulta.Where(h =>
+                    h.Categoria.ToLower() == cat);
+            }
+
+            if (!string.IsNullOrWhiteSpace(busqueda))
+            {
+                var texto = busqueda.Trim().ToLower();
+
+                consulta = consulta.Where(h =>
+                    h.NombreHabilidad.ToLower()
+                        .Contains(texto));
             }
 
             var lista = await consulta
@@ -43,28 +68,52 @@ namespace PortalGraduados.Api.Controllers
             return Ok(lista);
         }
 
-        // GET /api/habilidades/5
+        // ==========================================
+        // CONSULTAR HABILIDAD
+        // ==========================================
+
+        [Authorize(Roles = Administrador + ",Graduado,Empresa")]
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<HabilidadDto>> ObtenerPorId(int id)
+        public async Task<ActionResult<HabilidadDto>>
+            ObtenerPorId(int id)
         {
             var habilidad = await _context.Habilidades
                 .AsNoTracking()
-                .FirstOrDefaultAsync(h => h.IdHabilidad == id);
+                .FirstOrDefaultAsync(h =>
+                    h.IdHabilidad == id);
 
             if (habilidad is null)
-                return NotFound(new { mensaje = $"No existe la habilidad con id {id}." });
+                return NotFound(new
+                {
+                    mensaje = "No existe la habilidad."
+                });
 
             return Ok(ADto(habilidad));
         }
 
-        // POST /api/habilidades
+        // ==========================================
+        // CREAR HABILIDAD
+        // ==========================================
+
+        [Authorize(Roles = Administrador)]
         [HttpPost]
-        public async Task<ActionResult<HabilidadDto>> Crear([FromBody] HabilidadRequestDto dto)
+        public async Task<ActionResult<HabilidadDto>>
+            Crear([FromBody] HabilidadRequestDto dto)
         {
             var nombre = dto.NombreHabilidad.Trim();
 
-            if (await _context.Habilidades.AnyAsync(h => h.NombreHabilidad == nombre))
-                return Conflict(new { mensaje = $"Ya existe una habilidad llamada '{nombre}'." });
+            var nombreNormalizado = nombre.ToLower();
+
+            if (await _context.Habilidades.AnyAsync(h =>
+                h.NombreHabilidad.ToLower() ==
+                nombreNormalizado))
+            {
+                return Conflict(new
+                {
+                    mensaje =
+                        $"Ya existe una habilidad llamada '{nombre}'."
+                });
+            }
 
             var habilidad = new Habilidad
             {
@@ -78,69 +127,139 @@ namespace PortalGraduados.Api.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException ex) when (ex.InnerException is PostgresException
-                { SqlState: PostgresErrorCodes.UniqueViolation })
+            catch (DbUpdateException ex)
+                when (ex.InnerException is PostgresException
+                {
+                    SqlState: PostgresErrorCodes.UniqueViolation
+                })
             {
-                return Conflict(new { mensaje = $"Ya existe una habilidad llamada '{nombre}'." });
+                return Conflict(new
+                {
+                    mensaje = "La habilidad ya existe."
+                });
             }
 
-            return CreatedAtAction(nameof(ObtenerPorId),
-                new { id = habilidad.IdHabilidad }, ADto(habilidad));
+            return CreatedAtAction(
+                nameof(ObtenerPorId),
+                new { id = habilidad.IdHabilidad },
+                ADto(habilidad));
         }
 
-        // PUT /api/habilidades/5
+        // ==========================================
+        // ACTUALIZAR HABILIDAD
+        // ==========================================
+
+        [Authorize(Roles = Administrador)]
         [HttpPut("{id:int}")]
-        public async Task<ActionResult<HabilidadDto>> Actualizar(int id, [FromBody] HabilidadRequestDto dto)
+        public async Task<ActionResult<HabilidadDto>>
+            Actualizar(
+                int id,
+                [FromBody] HabilidadRequestDto dto)
         {
-            var habilidad = await _context.Habilidades.FindAsync(id);
+            var habilidad =
+                await _context.Habilidades.FindAsync(id);
 
             if (habilidad is null)
-                return NotFound(new { mensaje = $"No existe la habilidad con id {id}." });
+                return NotFound();
 
             var nombre = dto.NombreHabilidad.Trim();
 
-            if (await _context.Habilidades.AnyAsync(h => h.NombreHabilidad == nombre && h.IdHabilidad != id))
-                return Conflict(new { mensaje = $"Ya existe otra habilidad llamada '{nombre}'." });
+            var nombreNormalizado = nombre.ToLower();
+
+            if (await _context.Habilidades.AnyAsync(h =>
+                h.NombreHabilidad.ToLower() ==
+                    nombreNormalizado &&
+                h.IdHabilidad != id))
+            {
+                return Conflict(new
+                {
+                    mensaje =
+                        "Ya existe otra habilidad con ese nombre."
+                });
+            }
 
             habilidad.NombreHabilidad = nombre;
+
             habilidad.Categoria = dto.Categoria.Trim();
 
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException ex) when (ex.InnerException is PostgresException
-                { SqlState: PostgresErrorCodes.UniqueViolation })
+            catch (DbUpdateException ex)
+                when (ex.InnerException is PostgresException
+                {
+                    SqlState: PostgresErrorCodes.UniqueViolation
+                })
             {
-                return Conflict(new { mensaje = $"Ya existe otra habilidad llamada '{nombre}'." });
+                return Conflict(new
+                {
+                    mensaje = "La habilidad ya existe."
+                });
             }
 
             return Ok(ADto(habilidad));
         }
 
-        // DELETE /api/habilidades/5
+        // ==========================================
+        // ELIMINAR HABILIDAD
+        // ==========================================
+
+        [Authorize(Roles = Administrador)]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Eliminar(int id)
         {
-            var habilidad = await _context.Habilidades.FindAsync(id);
+            var habilidad =
+                await _context.Habilidades.FindAsync(id);
 
             if (habilidad is null)
-                return NotFound(new { mensaje = $"No existe la habilidad con id {id}." });
+                return NotFound();
 
-            // Las claves foráneas usan Restrict: no se puede borrar si está en uso
-            var enUso = await _context.GraduadoHabilidades.AnyAsync(gh => gh.IdHabilidad == id)
-                     || await _context.OfertaHabilidades.AnyAsync(oh => oh.IdHabilidad == id);
+            var enUso =
+                await _context.GraduadoHabilidades.AnyAsync(
+                    gh => gh.IdHabilidad == id)
+                ||
+                await _context.OfertaHabilidades.AnyAsync(
+                    oh => oh.IdHabilidad == id);
 
             if (enUso)
-                return Conflict(new { mensaje = "La habilidad está asociada a graduados u ofertas y no se puede eliminar." });
+            {
+                return Conflict(new
+                {
+                    mensaje =
+                        "La habilidad está asociada a graduados u ofertas."
+                });
+            }
 
             _context.Habilidades.Remove(habilidad);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+                when (ex.InnerException is PostgresException
+                {
+                    SqlState:
+                        PostgresErrorCodes.ForeignKeyViolation
+                })
+            {
+                return Conflict(new
+                {
+                    mensaje =
+                        "La habilidad tiene registros asociados."
+                });
+            }
 
             return NoContent();
         }
 
-        private static HabilidadDto ADto(Habilidad h) => new()
+        // ==========================================
+        // CONVERTIR ENTIDAD A DTO
+        // ==========================================
+
+        private static HabilidadDto ADto(
+            Habilidad h) => new()
         {
             IdHabilidad = h.IdHabilidad,
             NombreHabilidad = h.NombreHabilidad,

@@ -1,10 +1,12 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PortalGraduados.Api.Data;
 
 namespace PortalGraduados.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("health/database")]
     public class DatabaseHealthController : ControllerBase
@@ -21,15 +23,18 @@ namespace PortalGraduados.Api.Controllers
         public async Task<IActionResult> Get(
             CancellationToken cancellationToken)
         {
-            bool conectado = await _context.Database
-                .CanConnectAsync(cancellationToken);
+            bool conectado =
+                await _context.Database.CanConnectAsync(
+                    cancellationToken
+                );
 
             if (!conectado)
             {
                 return StatusCode(503, new
                 {
                     estado = "ERROR",
-                    mensaje = "No se pudo conectar a PostgreSQL"
+                    mensaje =
+                        "No se pudo conectar a PostgreSQL"
                 });
             }
 
