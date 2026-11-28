@@ -161,6 +161,7 @@
           </button>
 
           @if (notificacionesAbiertas) {
+
             <div
               id="panel-notificaciones-empresa"
               class="notifications-panel"
@@ -182,6 +183,7 @@
               </div>
 
               <div class="notifications-empty">
+
                 <span class="notifications-empty-icon">
                   🔔
                 </span>
@@ -196,9 +198,11 @@
                   postulaciones, revisión de ofertas
                   y aprobación de la empresa.
                 </p>
+
               </div>
 
             </div>
+
           }
 
         </div>
@@ -225,6 +229,7 @@
         <section class="security-section">
 
           <div class="security-heading">
+
             <span class="mi-portal">
               CONFIGURACIÓN DE CUENTA
             </span>
@@ -235,9 +240,11 @@
               Consulta las opciones de seguridad
               de tu cuenta empresarial.
             </p>
+
           </div>
 
           <div class="security-demo-notice">
+
             <span aria-hidden="true">ℹ️</span>
 
             <p>
@@ -245,11 +252,13 @@
               La autenticación, verificación y gestión
               de contraseñas dependerán de la API.
             </p>
+
           </div>
 
           <div class="security-card">
 
             <h2>Información de la cuenta</h2>
+
             <p class="security-description">
               Datos de demostración del portal.
             </p>
@@ -290,7 +299,10 @@
                   contraseña de acceso.
                 </p>
               </div>
-              <span class="security-pending">Pendiente</span>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
             </div>
 
             <div class="security-option">
@@ -301,7 +313,10 @@
                   de la empresa.
                 </p>
               </div>
-              <span class="security-pending">Pendiente</span>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
             </div>
 
             <div class="security-option">
@@ -312,7 +327,10 @@
                   cierre de sesión.
                 </p>
               </div>
-              <span class="security-pending">Pendiente</span>
+
+              <span class="security-pending">
+                Pendiente
+              </span>
             </div>
 
           </div>
@@ -333,6 +351,7 @@
         <div class="welcome-header-flex">
 
           <div>
+
             <span class="mi-portal">
               GESTIÓN DE VACANTES
             </span>
@@ -343,6 +362,7 @@
               Administra las oportunidades laborales
               de tu empresa.
             </p>
+
           </div>
 
           <!-- CORRECCIÓN: AHORA SÍ NAVEGA -->
@@ -359,6 +379,7 @@
         <div class="verification-banner">
 
           <div class="banner-left">
+
             <span class="banner-icon">🕒</span>
 
             <div>
@@ -372,6 +393,7 @@
                 antes de habilitar sus operaciones reales.
               </p>
             </div>
+
           </div>
 
           <!-- CORRECCIÓN: YA NO ES UN ENLACE VACÍO -->
@@ -392,6 +414,7 @@
             class="verification-details"
             role="status"
           >
+
             <strong>
               Estado real no disponible
             </strong>
@@ -403,6 +426,7 @@
               aquí podremos mostrar si la solicitud
               está pendiente, aprobada o rechazada.
             </p>
+
           </div>
 
         }
@@ -417,6 +441,7 @@
         <div class="stats-cards-grid">
 
           <div class="stat-card-row">
+
             <div class="stat-icon-box blue">💼</div>
 
             <div>
@@ -425,27 +450,33 @@
               </span>
               <small>Ofertas mostradas</small>
             </div>
+
           </div>
 
           <div class="stat-card-row">
+
             <div class="stat-icon-box pink">👁️</div>
 
             <div>
               <span class="stat-num">842</span>
               <small>Visualizaciones</small>
             </div>
+
           </div>
 
           <div class="stat-card-row">
+
             <div class="stat-icon-box green">👥</div>
 
             <div>
               <span class="stat-num">48</span>
               <small>Postulaciones</small>
             </div>
+
           </div>
 
           <div class="stat-card-row">
+
             <div class="stat-icon-box yellow">🕒</div>
 
             <div>
@@ -454,19 +485,24 @@
               </span>
               <small>Pendientes de aprobación</small>
             </div>
+
           </div>
 
         </div>
 
         <!-- CONFIRMACIÓN DE CAMBIOS LOCALES -->
         @if (mensajeAccion) {
+
           <div
             class="local-action-notice"
             role="status"
           >
+
             <span aria-hidden="true">ℹ️</span>
             <p>{{ mensajeAccion }}</p>
+
           </div>
+
         }
 
         <!-- TABLA DE OFERTAS -->
@@ -548,7 +584,9 @@
               @for (oferta of ofertasVisibles; track oferta.id) {
 
                 <tr>
+
                   <td>
+
                     <div class="offer-title-cell">
 
                       <strong>
@@ -559,9 +597,15 @@
                         {{ oferta.ubicacion }}
                         ·
                         {{ oferta.modalidad }}
+
+                        <!-- NUEVO: MOSTRAR SALARIO -->
+                        <br>
+                        Salario: {{ obtenerRangoSalarial(oferta) }}
+
                       </small>
 
                     </div>
+
                   </td>
 
                   <td>
@@ -587,6 +631,7 @@
                   </td>
 
                   <td>
+
                     <div class="action-icons-row">
 
                       <button
@@ -625,7 +670,9 @@
                       </button>
 
                     </div>
+
                   </td>
+
                 </tr>
 
               } @empty {
@@ -714,6 +761,12 @@
               <strong>{{ oferta.modalidad }}</strong>
             </div>
 
+            <!-- NUEVO: DETALLE DEL RANGO SALARIAL -->
+            <div>
+              <span>Rango salarial</span>
+              <strong>{{ obtenerRangoSalarial(oferta) }}</strong>
+            </div>
+
             <div>
               <span>Publicación</span>
               <strong>{{ oferta.fecha }}</strong>
@@ -730,6 +783,20 @@
             </div>
 
           </div>
+
+          <!-- NUEVO: AVISO DE OFERTA SIN SALARIO -->
+          @if (
+            oferta.salarioMinimo === null &&
+            oferta.salarioMaximo === null &&
+            oferta.estado === 'Pendiente'
+          ) {
+
+            <p class="modal-demo-note">
+              ⚠️ Esta oferta no incluye un rango salarial
+              y requiere revisión administrativa.
+            </p>
+
+          }
 
           <p class="modal-demo-note">
             Información ficticia utilizada para probar
@@ -763,6 +830,7 @@
               name="titulo"
               type="text"
               [(ngModel)]="tituloEdicion"
+              (ngModelChange)="errorEdicion = ''"
               maxlength="150"
               minlength="3"
               required
@@ -777,6 +845,7 @@
               name="ubicacion"
               type="text"
               [(ngModel)]="ubicacionEdicion"
+              (ngModelChange)="errorEdicion = ''"
               maxlength="120"
               minlength="2"
               required
@@ -790,23 +859,89 @@
               id="editar-oferta-modalidad"
               name="modalidad"
               [(ngModel)]="modalidadEdicion"
+              (ngModelChange)="errorEdicion = ''"
               required
             >
+
               <option value="Presencial">
                 Presencial
               </option>
+
               <option value="Híbrido">
                 Híbrido
               </option>
+
               <option value="Remoto">
                 Remoto
               </option>
+
             </select>
 
-            @if (errorEdicion) {
+            <!-- NUEVO: EDITAR SALARIO MÍNIMO -->
+            <label for="editar-salario-minimo">
+              Salario mínimo ($)
+            </label>
+
+            <input
+              id="editar-salario-minimo"
+              name="salarioMinimo"
+              type="number"
+              [(ngModel)]="salarioMinimoEdicion"
+              (ngModelChange)="errorEdicion = ''"
+              min="0.01"
+              step="0.01"
+              placeholder="Ej. 500"
+              aria-describedby="ayuda-salario-edicion"
+            >
+
+            <!-- NUEVO: EDITAR SALARIO MÁXIMO -->
+            <label for="editar-salario-maximo">
+              Salario máximo ($)
+            </label>
+
+            <input
+              id="editar-salario-maximo"
+              name="salarioMaximo"
+              type="number"
+              [(ngModel)]="salarioMaximoEdicion"
+              (ngModelChange)="errorEdicion = ''"
+              min="0.01"
+              step="0.01"
+              placeholder="Ej. 800"
+              aria-describedby="ayuda-salario-edicion"
+            >
+
+            <!-- NUEVO: INFORMACIÓN DEL SALARIO -->
+            <small
+              id="ayuda-salario-edicion"
+              class="modal-demo-note"
+            >
+              El rango salarial es opcional.
+              Completa ambos campos o déjalos vacíos.
+            </small>
+
+            <!-- VALIDACIÓN DEL FORMULARIO -->
+            @if (errorRangoSalarial || errorEdicion) {
+
               <p class="modal-error" role="alert">
-                {{ errorEdicion }}
+                {{ errorRangoSalarial || errorEdicion }}
               </p>
+
+            }
+
+            <!-- NUEVO: AVISO DE REVISIÓN ADMINISTRATIVA -->
+            @if (requiereRevisionPorSalario) {
+
+              <p class="modal-demo-note" role="status">
+
+                ⚠️ <strong>Revisión administrativa.</strong>
+
+                Al guardar sin rango salarial, la oferta
+                pasará a pendiente de aprobación
+                en esta demostración.
+
+              </p>
+
             }
 
             <p class="modal-demo-note">
@@ -842,8 +977,10 @@
         @if (accionActual === 'cerrar') {
 
           <p class="modal-confirm-message">
+
             ¿Deseas marcar como cerrada la oferta
             <strong>{{ oferta.titulo }}</strong>?
+
           </p>
 
           <p class="modal-demo-note">

@@ -17,6 +17,7 @@
       />
 
       <div class="brand-text">
+
         <span class="brand-title">
           Portal de Graduados
         </span>
@@ -24,6 +25,7 @@
         <span class="brand-sub">
           Ingeniería de Sistemas Informáticos
         </span>
+
       </div>
 
     </div>
@@ -109,9 +111,13 @@
         />
 
         <div class="institution-info">
+
           <strong>UES</strong>
+
           <span>Universidad de El Salvador</span>
+
           <span>Facultad de Ingeniería</span>
+
         </div>
 
       </div>
@@ -190,7 +196,9 @@
 
               <div class="notifications-empty">
 
-                <span aria-hidden="true">🔔</span>
+                <span aria-hidden="true">
+                  🔔
+                </span>
 
                 <strong>
                   Sin notificaciones reales
@@ -219,12 +227,15 @@
           </span>
 
           <div class="admin-meta">
+
             <span class="admin-name">
               Ana Rodríguez
             </span>
+
             <span class="admin-role">
               Administradora
             </span>
+
           </div>
 
         </div>
@@ -276,11 +287,17 @@
         </span>
 
         <p>
-          <strong>Validación local de demostración.</strong>
+
+          <strong>
+            Validación local de demostración.
+          </strong>
+
           Puedes seleccionar un Excel real para
-          comprobar sus registros. Ningún archivo
-          se envía al servidor ni se guarda
-          en PostgreSQL.
+          comprobar sus registros.
+
+          Ningún archivo se envía al servidor
+          ni se guarda en PostgreSQL.
+
         </p>
 
       </div>
@@ -414,7 +431,11 @@
                 </strong>
 
                 <small>
-                  Archivo validado localmente
+                  {{
+                    simulacionConfirmada
+                      ? 'Simulación de carga finalizada'
+                      : 'Archivo validado localmente'
+                  }}
                 </small>
 
               </div>
@@ -443,41 +464,80 @@
           <ul>
 
             <li>
+
               Utiliza un archivo <strong>.xlsx</strong>
               con las columnas: Nombre completo,
               Correo, Carnet, Año de graduación
               y Estado laboral.
+
             </li>
 
             <li>
+
               Los correos electrónicos deben
               tener formato válido y no estar
               duplicados dentro del archivo.
+
+            </li>
+
+            <!-- NUEVO: FORMATO DE CARNET -->
+            <li>
+
+              Los carnets deben contener
+              <strong>dos letras y cinco números</strong>.
+
+              Ejemplo: <strong>RR23015</strong>.
+
+              No deben estar vacíos ni repetidos.
+
             </li>
 
             <li>
-              Los carnets no deben estar vacíos
-              ni repetidos dentro del archivo.
-            </li>
 
-            <li>
               El año de graduación debe estar
               entre 1990 y
               {{ anioActual }}.
+
             </li>
 
             <li>
+
+              El nombre completo y el estado
+              laboral son obligatorios.
+
+            </li>
+
+            <li>
+
               Los registros deben estar en la
               primera hoja del Excel.
+
               Se admiten archivos de hasta 10 MB.
+
+            </li>
+
+            <!-- NUEVO: ESTADO DE ACTIVACIÓN -->
+            <li>
+
+              Los graduados importados quedarían en estado
+
+              <strong>Pendiente de activación</strong>
+
+              hasta verificar su contacto y aceptar
+              la declaración de veracidad y el consentimiento.
+
             </li>
 
           </ul>
 
           <p class="requirements-note">
+
+            El formato de carnet utilizado es provisional.
+
             Los duplicados que ya existan en la
             base de datos solo podrán verificarse
             cuando se conecte la API.
+
           </p>
 
         </div>
@@ -492,17 +552,23 @@
           <div>
 
             <h2>
+
               {{
                 archivoValidado
                   ? 'Resumen del archivo analizado'
                   : 'Resumen de última carga (ejemplo)'
               }}
+
             </h2>
 
             <p class="card-sub">
+
               {{ nombreResumen }}
+
               ·
+
               {{ fechaResumen }}
+
             </p>
 
           </div>
@@ -510,7 +576,8 @@
           <span
             class="status-pill"
             [class.status-success]="
-              archivoValidado && totalErroresActual === 0
+              archivoValidado &&
+              (totalErroresActual === 0 || simulacionConfirmada)
             "
           >
             {{ estadoResumen }}
@@ -540,7 +607,7 @@
             </strong>
 
             <span>
-              Registros sin errores
+              Registros válidos
             </span>
 
           </div>
@@ -552,7 +619,7 @@
             </strong>
 
             <span>
-              Registros observados
+              Registros rechazados
             </span>
 
           </div>
@@ -573,25 +640,40 @@
               <div>
 
                 <strong>
+
                   {{ rechazadosResumen }}
-                  registros con observaciones
+
+                  {{
+                    rechazadosResumen === 1
+                      ? 'registro con observaciones'
+                      : 'registros con observaciones'
+                  }}
+
                 </strong>
 
                 @if (archivoValidado) {
 
                   <p>
-                    Algunos registros contienen
-                    campos inválidos o duplicados.
+
+                    {{
+                      rechazadosResumen === 1
+                        ? 'Un registro contiene campos inválidos o duplicados.'
+                        : 'Algunos registros contienen campos inválidos o duplicados.'
+                    }}
+
                     Puedes consultar la vista previa
                     y descargar el reporte.
+
                   </p>
 
                 } @else {
 
                   <p>
+
                     Ejemplo original: filas
                     14, 38, 72 y 105, con correo
                     inválido o carnet duplicado.
+
                   </p>
 
                 }
@@ -641,13 +723,60 @@
 
         }
 
+        <!-- NUEVO: RESULTADO DE LA SIMULACIÓN -->
+        @if (simulacionConfirmada) {
+
+          <div class="success-alert">
+
+            <span aria-hidden="true">
+              ✓
+            </span>
+
+            <div>
+
+              <strong>
+
+                {{ totalPendientesActivacion }}
+
+                {{
+                  totalPendientesActivacion === 1
+                    ? 'registro pendiente de activación'
+                    : 'registros pendientes de activación'
+                }}
+
+                (simulación)
+
+              </strong>
+
+              <p>
+
+                Los registros válidos quedarían
+                pendientes de activación.
+
+                No serían visibles para las empresas
+                hasta completar la verificación
+                y el consentimiento.
+
+                No se crearon cuentas reales.
+
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
         @if (!archivoValidado) {
 
           <p class="summary-footnote">
+
             Los valores del resumen anterior
             son exclusivamente demostrativos.
+
             Selecciona un archivo para obtener
             un análisis de tus propios registros.
+
           </p>
 
         }
@@ -668,8 +797,11 @@
               </h2>
 
               <p class="card-sub">
-                Revisa las filas antes de
-                realizar una carga real.
+
+                Revisa las filas y los resultados
+                de validación antes de realizar
+                una carga real.
+
               </p>
 
             </div>
@@ -692,19 +824,26 @@
           <div class="preview-counter">
 
             <span>
+
               Mostrando
               {{ registrosVistaPrevia.length }}
+
               de
+
               {{ registrosFiltrados.length }}
+
               registros
+
             </span>
 
             <span>
+
               {{
                 soloErrores
                   ? 'Registros con observaciones'
                   : 'Todos los registros'
               }}
+
             </span>
 
           </div>
@@ -715,15 +854,28 @@
             <table class="preview-table">
 
               <thead>
+
                 <tr>
+
                   <th>Fila</th>
+
                   <th>Nombre completo</th>
+
                   <th>Correo</th>
+
                   <th>Carnet</th>
+
                   <th>Año</th>
+
                   <th>Estado laboral</th>
+
                   <th>Validación</th>
+
+                  <!-- NUEVO: ESTADO DE ACTIVACIÓN -->
+                  <th>Estado simulado</th>
+
                 </tr>
+
               </thead>
 
               <tbody>
@@ -763,6 +915,7 @@
                       {{ registro.estadoLaboral || '—' }}
                     </td>
 
+                    <!-- RESULTADO DE VALIDACIÓN -->
                     <td>
 
                       @if (
@@ -798,6 +951,37 @@
 
                     </td>
 
+                    <!-- NUEVO: ESTADO DEL REGISTRO -->
+                    <td>
+
+                      @if (registro.errores.length > 0) {
+
+                        <span class="row-status row-invalid">
+
+                          {{ obtenerEstadoRegistro(registro) }}
+
+                        </span>
+
+                      } @else if (simulacionConfirmada) {
+
+                        <span>
+
+                          {{ obtenerEstadoRegistro(registro) }}
+
+                        </span>
+
+                      } @else {
+
+                        <span class="row-status row-valid">
+
+                          {{ obtenerEstadoRegistro(registro) }}
+
+                        </span>
+
+                      }
+
+                    </td>
+
                   </tr>
 
                 } @empty {
@@ -805,7 +989,7 @@
                   <tr>
 
                     <td
-                      colspan="7"
+                      colspan="8"
                       class="empty-table"
                     >
                       No hay registros que
@@ -837,11 +1021,30 @@
           <!-- ACCIONES -->
           <div class="preview-actions">
 
-            <p>
-              Los registros se validaron en memoria.
-              Todavía no están almacenados
-              en el portal.
-            </p>
+            @if (simulacionConfirmada) {
+
+              <p>
+
+                La simulación ha finalizado.
+                Los registros válidos quedarían
+                pendientes de activación.
+
+                Puedes descargar el reporte completo
+                para consultar todos los resultados.
+
+              </p>
+
+            } @else {
+
+              <p>
+
+                Los registros se validaron en memoria.
+                Todavía no están almacenados
+                en el portal.
+
+              </p>
+
+            }
 
             <div class="preview-buttons">
 
@@ -853,13 +1056,34 @@
                 Limpiar
               </button>
 
+              <!-- NUEVO: REPORTE COMPLETO -->
+              <button
+                type="button"
+                class="btn-outline-sm"
+                [disabled]="!archivoValidado"
+                (click)="descargarReporteResultados()"
+              >
+                ⬇ Reporte completo
+              </button>
+
+              <!-- CONFIRMAR SIMULACIÓN -->
               <button
                 type="button"
                 class="btn-primary-sm"
-                [disabled]="totalValidosActual === 0"
+                [disabled]="
+                  totalValidosActual === 0 ||
+                  simulacionConfirmada ||
+                  procesandoArchivo
+                "
                 (click)="abrirConfirmacion()"
               >
-                Simular carga
+
+                {{
+                  simulacionConfirmada
+                    ? 'Simulación finalizada'
+                    : 'Simular carga'
+                }}
+
               </button>
 
             </div>
@@ -908,32 +1132,62 @@
         </div>
 
         <p class="modal-description">
+
           El archivo contiene
+
           <strong>
             {{ totalValidosActual }}
           </strong>
-          registros que pasaron las validaciones
-          locales.
+
+          {{
+            totalValidosActual === 1
+              ? 'registro que pasó la validación local.'
+              : 'registros que pasaron las validaciones locales.'
+          }}
+
         </p>
 
         @if (totalErroresActual > 0) {
 
           <p class="modal-description">
-            Los
+
             <strong>
               {{ totalErroresActual }}
             </strong>
-            registros con errores quedarían
-            pendientes de corrección.
+
+            {{
+              totalErroresActual === 1
+                ? 'registro con errores sería rechazado.'
+                : 'registros con errores serían rechazados.'
+            }}
+
           </p>
 
         }
 
+        <!-- NUEVO: PENDIENTE DE ACTIVACIÓN -->
+        <p class="modal-description">
+
+          Los registros válidos quedarían en estado
+
+          <strong>
+            Pendiente de activación.
+          </strong>
+
+          Estos perfiles no serían visibles
+          para las empresas hasta completar
+          su proceso de activación.
+
+        </p>
+
         <div class="modal-notice">
+
           Esta es una simulación.
+
           Al confirmar no se enviará el archivo
           a la API, no se crearán graduados
           y no cambiará PostgreSQL.
+
         </div>
 
         <div class="modal-actions">
@@ -996,13 +1250,16 @@
         </div>
 
         <p class="security-description">
+
           Información de demostración
           de la cuenta administradora.
+
         </p>
 
         <div class="security-row">
 
           <span>Usuario</span>
+
           <strong>Ana Rodríguez</strong>
 
         </div>
@@ -1010,6 +1267,7 @@
         <div class="security-row">
 
           <span>Rol</span>
+
           <strong>Administradora</strong>
 
         </div>
@@ -1021,8 +1279,10 @@
           </strong>
 
           <p>
+
             Se habilitará cuando se conecte
             la autenticación real de la API.
+
           </p>
 
         </div>
@@ -1034,8 +1294,10 @@
           </strong>
 
           <p>
+
             Pendiente de integración
             con el servidor.
+
           </p>
 
         </div>
@@ -1047,10 +1309,12 @@
           </strong>
 
           <p>
+
             Las cargas reales necesitarán
             autorización administrativa,
             validaciones del servidor y
             control de duplicados en PostgreSQL.
+
           </p>
 
         </div>

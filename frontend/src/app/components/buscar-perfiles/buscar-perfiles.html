@@ -9,6 +9,7 @@
   >
 
     <div class="sidebar-brand">
+
       <img
         src="/ues.png"
         alt="Logo UES"
@@ -16,6 +17,7 @@
       />
 
       <div class="brand-text">
+
         <span class="brand-title">
           Portal de Graduados
         </span>
@@ -23,7 +25,9 @@
         <span class="brand-sub">
           Ingeniería de Sistemas Informáticos
         </span>
+
       </div>
+
     </div>
 
     <!-- CERRAR MENÚ MÓVIL -->
@@ -37,6 +41,7 @@
     </button>
 
     <div class="sidebar-section">
+
       <p class="sidebar-label">
         MENÚ PRINCIPAL
       </p>
@@ -80,6 +85,7 @@
         </a>
 
       </nav>
+
     </div>
 
     <!-- PIE DEL MENÚ -->
@@ -104,6 +110,7 @@
       </a>
 
       <div class="institution-badge">
+
         <img
           src="/ues.png"
           alt="UES"
@@ -111,10 +118,15 @@
         />
 
         <div class="institution-info">
+
           <strong>UES</strong>
+
           <span>Universidad de El Salvador</span>
+
           <span>Facultad de Ingeniería</span>
+
         </div>
+
       </div>
 
     </div>
@@ -142,9 +154,7 @@
         class="mobile-menu-button"
         (click)="alternarMenu()"
         [attr.aria-expanded]="menuAbierto"
-        [attr.aria-label]="
-          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
-        "
+        [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
         aria-controls="menu-lateral-empresa"
       >
         ☰
@@ -174,6 +184,7 @@
             >
 
               <div class="notifications-header">
+
                 <h3>Notificaciones</h3>
 
                 <button
@@ -184,10 +195,14 @@
                 >
                   ✕
                 </button>
+
               </div>
 
               <div class="notifications-empty">
-                <span aria-hidden="true">🔔</span>
+
+                <span aria-hidden="true">
+                  🔔
+                </span>
 
                 <strong>
                   Sin notificaciones disponibles
@@ -197,6 +212,7 @@
                   Los avisos reales aparecerán
                   aquí cuando conectemos la API.
                 </p>
+
               </div>
 
             </div>
@@ -213,6 +229,7 @@
           </span>
 
           <div class="company-meta">
+
             <span class="company-name">
               Soluciones SV
             </span>
@@ -220,17 +237,20 @@
             <span class="company-role">
               Empresa
             </span>
+
           </div>
 
         </div>
 
       </div>
+
     </header>
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="content-container">
 
       <div class="page-header">
+
         <span class="eyebrow">
           BANCO DE TALENTO
         </span>
@@ -241,19 +261,29 @@
           Encuentra graduados según las
           necesidades de tu equipo.
         </p>
+
       </div>
 
       <!-- AVISO DE DEMOSTRACIÓN -->
       <div class="demo-notice">
-        <span aria-hidden="true">ℹ️</span>
+
+        <span aria-hidden="true">
+          ℹ️
+        </span>
 
         <p>
+
           <strong>Modo demostración.</strong>
-          Los perfiles, la compatibilidad y los datos
-          de experiencia y disponibilidad son ejemplos.
+
+          Los perfiles y sus ubicaciones son ejemplos.
+          Solo se muestran perfiles activos y los datos
+          permitidos para las empresas.
+
           Todavía no se consulta información real
           de graduados desde la API.
+
         </p>
+
       </div>
 
       <!-- BUSCADOR -->
@@ -270,7 +300,7 @@
           type="text"
           name="textoBusqueda"
           [(ngModel)]="textoBusqueda"
-          placeholder="Buscar por nombre, habilidad o perfil..."
+          placeholder="Buscar por nombre, habilidad, área o ubicación..."
           aria-label="Buscar perfiles de graduados"
         />
 
@@ -283,40 +313,21 @@
 
       </form>
 
-      <!-- FILTROS -->
+      <!-- ====================================== -->
+      <!-- FILTROS PERMITIDOS - RF-10 -->
+      <!-- ====================================== -->
+
       <div class="filters-grid">
 
-        <!-- ESTADO ACADÉMICO -->
-        <select
-          aria-label="Estado académico"
-          name="filtroAcademico"
-          [(ngModel)]="filtroAcademico"
-        >
-          <option value="">
-            Estado académico
-          </option>
-
-          <option value="graduado">
-            Graduado
-          </option>
-
-          <option value="egresado">
-            Egresado
-          </option>
-
-          <option value="estudiante">
-            Estudiante activo
-          </option>
-        </select>
-
-        <!-- ÁREA PROFESIONAL -->
+        <!-- FILTRO POR ÁREA PROFESIONAL -->
         <select
           aria-label="Área profesional"
           name="filtroArea"
           [(ngModel)]="filtroArea"
         >
+
           <option value="">
-            Área profesional
+            Todas las áreas
           </option>
 
           <option value="desarrollo">
@@ -334,52 +345,55 @@
           <option value="infraestructura">
             Infraestructura y redes
           </option>
+
         </select>
 
-        <!-- EXPERIENCIA -->
+        <!-- NUEVO: FILTRO POR UBICACIÓN -->
         <select
-          aria-label="Experiencia"
-          name="filtroExperiencia"
-          [(ngModel)]="filtroExperiencia"
+          aria-label="Ubicación"
+          name="filtroUbicacion"
+          [(ngModel)]="filtroUbicacion"
         >
+
           <option value="">
-            Experiencia
+            Todas las ubicaciones
           </option>
 
-          <option value="sin-experiencia">
-            Sin experiencia
-          </option>
+          @for (
+            ubicacion of ubicaciones;
+            track ubicacion
+          ) {
 
-          <option value="1-2">
-            1 a 2 años
-          </option>
+            <option [value]="ubicacion">
+              {{ ubicacion }}
+            </option>
 
-          <option value="3-mas">
-            3 años o más
-          </option>
+          }
+
         </select>
 
-        <!-- DISPONIBILIDAD -->
+        <!-- NUEVO: FILTRO POR HABILIDAD -->
         <select
-          aria-label="Disponibilidad"
-          name="filtroDisponibilidad"
-          [(ngModel)]="filtroDisponibilidad"
+          aria-label="Habilidad"
+          name="filtroHabilidad"
+          [(ngModel)]="filtroHabilidad"
         >
+
           <option value="">
-            Disponibilidad
+            Todas las habilidades
           </option>
 
-          <option value="inmediata">
-            Inmediata
-          </option>
+          @for (
+            habilidad of habilidadesDisponibles;
+            track habilidad
+          ) {
 
-          <option value="tiempo-completo">
-            Tiempo completo
-          </option>
+            <option [value]="habilidad">
+              {{ habilidad }}
+            </option>
 
-          <option value="pasantia">
-            Pasantía / Medio tiempo
-          </option>
+          }
+
         </select>
 
       </div>
@@ -387,11 +401,19 @@
       <!-- RESUMEN DE RESULTADOS -->
       <div class="results-toolbar">
 
-        <span class="results-count">
+        <span
+          class="results-count"
+          aria-live="polite"
+        >
+
           {{ perfilesFiltrados.length }}
+
           de
+
           {{ perfiles.length }}
-          perfiles de ejemplo
+
+          perfiles activos de ejemplo
+
         </span>
 
         <button
@@ -404,7 +426,10 @@
 
       </div>
 
-      <!-- TARJETAS -->
+      <!-- ====================================== -->
+      <!-- TARJETAS DE GRADUADOS -->
+      <!-- ====================================== -->
+
       <section class="candidates-grid">
 
         @for (
@@ -426,31 +451,33 @@
                 {{ perfil.iniciales }}
               </span>
 
-              <span class="match-badge">
-                {{ perfil.compatibilidad }}%
-                compatible
-              </span>
-
             </div>
 
+            <!-- DATOS PERMITIDOS PARA EMPRESAS -->
             <div class="candidate-info">
 
+              <!-- NOMBRE -->
               <h2>
                 {{ perfil.nombre }}
               </h2>
 
+              <!-- ÁREA PROFESIONAL -->
               <p class="candidate-role">
-                {{ perfil.profesion }}
+
+                {{ nombreArea(perfil.area) }}
+
               </p>
 
+              <!-- NUEVO: UBICACIÓN -->
               <p class="candidate-career">
-                {{ perfil.carrera }}
-                ·
-                {{ perfil.anio }}
+
+                📍 {{ perfil.ubicacion }}
+
               </p>
 
             </div>
 
+            <!-- HABILIDADES -->
             <div class="skills-row">
 
               @for (
@@ -459,7 +486,9 @@
               ) {
 
                 <span class="skill-pill">
+
                   {{ habilidad }}
+
                 </span>
 
               }
@@ -485,15 +514,19 @@
           <!-- NO HAY RESULTADOS -->
           <div class="empty-results">
 
-            <span aria-hidden="true">🔍</span>
+            <span aria-hidden="true">
+              🔍
+            </span>
 
             <h2>
               No se encontraron perfiles
             </h2>
 
             <p>
+
               Prueba con otra búsqueda o cambia
               los filtros seleccionados.
+
             </p>
 
             <button
@@ -514,7 +547,10 @@
 
   </div>
 
+  <!-- ====================================== -->
   <!-- VENTANA DE PERFIL -->
+  <!-- ====================================== -->
+
   @if (perfilSeleccionado; as perfil) {
 
     <div
@@ -533,6 +569,7 @@
         <div class="modal-heading">
 
           <div>
+
             <span class="eyebrow">
               BANCO DE TALENTO
             </span>
@@ -540,6 +577,7 @@
             <h2 id="titulo-perfil">
               Perfil de graduado
             </h2>
+
           </div>
 
           <button
@@ -553,6 +591,7 @@
 
         </div>
 
+        <!-- ENCABEZADO DEL PERFIL -->
         <div class="profile-header">
 
           <span
@@ -566,62 +605,44 @@
           </span>
 
           <div>
-            <h3>{{ perfil.nombre }}</h3>
-            <p>{{ perfil.profesion }}</p>
+
+            <h3>
+              {{ perfil.nombre }}
+            </h3>
+
+            <p>
+              {{ nombreArea(perfil.area) }}
+            </p>
+
           </div>
 
         </div>
 
-        <!-- INFORMACIÓN ACADÉMICA -->
+        <!-- INFORMACIÓN PERMITIDA - RF-10 -->
         <div class="profile-details">
 
           <div>
-            <span>Estado académico</span>
-            <strong>
-              {{ nombreEstado(perfil.estadoAcademico) }}
-            </strong>
-          </div>
 
-          <div>
-            <span>Carrera</span>
-            <strong>{{ perfil.carrera }}</strong>
-          </div>
+            <span>
+              Área profesional
+            </span>
 
-          <div>
-            <span>Año</span>
-            <strong>{{ perfil.anio }}</strong>
-          </div>
-
-          <div>
-            <span>Área profesional</span>
             <strong>
               {{ nombreArea(perfil.area) }}
             </strong>
+
           </div>
 
           <div>
-            <span>Experiencia ilustrativa</span>
-            <strong>
-              {{ nombreExperiencia(perfil.experiencia) }}
-            </strong>
-          </div>
 
-          <div>
-            <span>Disponibilidad ilustrativa</span>
-            <strong>
-              {{
-                nombreDisponibilidad(
-                  perfil.disponibilidad
-                )
-              }}
-            </strong>
-          </div>
+            <span>
+              Ubicación
+            </span>
 
-          <div>
-            <span>Compatibilidad de ejemplo</span>
             <strong>
-              {{ perfil.compatibilidad }}%
+              📍 {{ perfil.ubicacion }}
             </strong>
+
           </div>
 
         </div>
@@ -639,7 +660,9 @@
             ) {
 
               <span class="skill-pill">
+
                 {{ habilidad }}
+
               </span>
 
             }
@@ -648,11 +671,32 @@
 
         </div>
 
+        <!-- NUEVO: PRIVACIDAD DEL GRADUADO -->
         <div class="profile-notice">
-          Este perfil contiene datos de demostración.
-          El currículum y la información real
-          dependerán de los datos autorizados
-          disponibles desde la API.
+
+          <strong>
+            🔒 Privacidad del graduado
+          </strong>
+
+          <p>
+            Las empresas pueden consultar únicamente
+            el nombre, el área profesional,
+            las habilidades y la ubicación.
+          </p>
+
+          <p>
+            El currículum y los datos de contacto
+            solo podrán consultarse cuando el
+            graduado se postule a una oferta
+            de esta empresa.
+          </p>
+
+          <p>
+            Este perfil contiene información
+            de demostración. Los permisos reales
+            se verificarán mediante la API.
+          </p>
+
         </div>
 
         <div class="modal-actions">
@@ -673,7 +717,10 @@
 
   }
 
+  <!-- ====================================== -->
   <!-- ACCESO Y SEGURIDAD -->
+  <!-- ====================================== -->
+
   @if (seguridadAbierta) {
 
     <div
@@ -707,13 +754,16 @@
         </div>
 
         <p class="security-description">
+
           Información de demostración
           de la cuenta empresarial.
+
         </p>
 
         <div class="security-row">
 
           <span>Empresa</span>
+
           <strong>Soluciones SV</strong>
 
         </div>
@@ -721,34 +771,53 @@
         <div class="security-row">
 
           <span>Tipo de cuenta</span>
+
           <strong>Empresa</strong>
 
         </div>
 
         <div class="security-option">
-          <strong>🔑 Cambiar contraseña</strong>
+
+          <strong>
+            🔑 Cambiar contraseña
+          </strong>
 
           <p>
+
             Pendiente de integrar con la
             autenticación de la API.
+
           </p>
+
         </div>
 
         <div class="security-option">
-          <strong>✉️ Verificación de correo</strong>
+
+          <strong>
+            ✉️ Verificación de correo
+          </strong>
 
           <p>
+
             Pendiente de conexión con el servidor.
+
           </p>
+
         </div>
 
         <div class="security-option">
-          <strong>🛡️ Protección de sesión</strong>
+
+          <strong>
+            🛡️ Protección de sesión
+          </strong>
 
           <p>
+
             Se habilitará cuando exista
             autenticación y control de permisos.
+
           </p>
+
         </div>
 
         <button
@@ -766,4 +835,3 @@
   }
 
 </div>
-  

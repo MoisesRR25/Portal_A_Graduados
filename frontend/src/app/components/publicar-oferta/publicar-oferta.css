@@ -495,3 +495,8 @@
   }
 
 }
+@media (max-width: 640px) {
+  .field-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

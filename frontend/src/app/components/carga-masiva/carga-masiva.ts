@@ -1,7 +1,12 @@
 
-import { Component, HostListener } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  inject
+} from '@angular/core';
 
+import { RouterLink } from '@angular/router';
 import { readSheet } from 'read-excel-file/browser';
 import writeExcelFile from 'write-excel-file/browser';
 
@@ -24,6 +29,12 @@ interface RegistroGraduado {
 export class CargaMasiva {
 
   // ========================================
+  // DETECTOR DE CAMBIOS DE ANGULAR
+  // ========================================
+
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  // ========================================
   // NAVEGACIÓN Y PANELES
   // ========================================
 
@@ -37,6 +48,9 @@ export class CargaMasiva {
 
   readonly tamanoMaximo = 10 * 1024 * 1024;
   readonly anioActual = new Date().getFullYear();
+
+  // Formato provisional: dos letras y cinco números.
+  private readonly formatoCarnet = /^[A-Z]{2}\d{5}$/;
 
   procesandoArchivo = false;
   arrastrandoArchivo = false;
@@ -59,9 +73,13 @@ export class CargaMasiva {
 
   confirmacionAbierta = false;
 
+  // NUEVO: controlar la confirmación de la carga.
+  simulacionConfirmada = false;
+
   // ========================================
   // RESUMEN ORIGINAL DE DEMOSTRACIÓN
   // ========================================
+
   // Estos valores son ficticios.
   // No representan una carga realizada.
 
@@ -91,6 +109,14 @@ export class CargaMasiva {
     return this.registros.filter(
       registro => registro.errores.length > 0
     ).length;
+  }
+
+  // NUEVO: pendientes de activación simulados.
+
+  get totalPendientesActivacion(): number {
+    return this.simulacionConfirmada
+      ? this.totalValidosActual
+      : 0;
   }
 
   // ========================================
@@ -133,11 +159,32 @@ export class CargaMasiva {
       return 'Ejemplo visual';
     }
 
+    if (this.simulacionConfirmada) {
+      return 'Simulación finalizada';
+    }
+
     if (this.totalErroresActual > 0) {
       return 'Validado con observaciones';
     }
 
     return 'Validado sin observaciones';
+  }
+
+  // ========================================
+  // NUEVO: ESTADO DE CADA REGISTRO
+  // ========================================
+
+  obtenerEstadoRegistro(registro: RegistroGraduado): string {
+
+    if (registro.errores.length > 0) {
+      return 'Rechazado';
+    }
+
+    if (this.simulacionConfirmada) {
+      return 'Pendiente de activación (simulado)';
+    }
+
+    return 'Apto para carga';
   }
 
   // ========================================
@@ -183,6 +230,7 @@ export class CargaMasiva {
   // ========================================
 
   alternarMenu(): void {
+
     this.menuAbierto = !this.menuAbierto;
 
     if (this.menuAbierto) {
@@ -212,7 +260,9 @@ export class CargaMasiva {
   // ========================================
 
   abrirSeguridad(): void {
+
     this.seguridadAbierta = true;
+
     this.cerrarMenu();
     this.cerrarNotificaciones();
     this.cerrarConfirmacion();
@@ -273,6 +323,9 @@ export class CargaMasiva {
         'No se pudo generar la plantilla Excel. ' +
         'Comprueba que las bibliotecas estén instaladas.';
 
+    } finally {
+
+      this.cdr.markForCheck();
     }
   }
 
@@ -313,7 +366,9 @@ export class CargaMasiva {
   }
 
   salirArrastre(evento: DragEvent): void {
+
     evento.preventDefault();
+
     this.arrastrandoArchivo = false;
   }
 
@@ -322,6 +377,7 @@ export class CargaMasiva {
   ): Promise<void> {
 
     evento.preventDefault();
+
     this.arrastrandoArchivo = false;
 
     if (this.procesandoArchivo) {
@@ -389,6 +445,7 @@ export class CargaMasiva {
     }
 
     // Limpiar resultados de un análisis anterior.
+
     this.errorArchivo = '';
     this.mensajeInformativo = '';
     this.nombreArchivo = '';
@@ -399,9 +456,14 @@ export class CargaMasiva {
     this.soloErrores = false;
     this.limiteVistaPrevia = 10;
 
+    this.simulacionConfirmada = false;
+
     this.cerrarConfirmacion();
 
-    // Validar extensión.
+    // ========================================
+    // VALIDAR EXTENSIÓN
+    // ========================================
+
     if (!archivo.name.toLowerCase().endsWith('.xlsx')) {
 
       this.errorArchivo =
@@ -412,7 +474,10 @@ export class CargaMasiva {
       return;
     }
 
-    // Validar archivo vacío.
+    // ========================================
+    // VALIDAR ARCHIVO VACÍO
+    // ========================================
+
     if (archivo.size === 0) {
 
       this.errorArchivo =
@@ -421,7 +486,10 @@ export class CargaMasiva {
       return;
     }
 
-    // Validar tamaño máximo.
+    // ========================================
+    // VALIDAR TAMAÑO MÁXIMO
+    // ========================================
+
     if (archivo.size > this.tamanoMaximo) {
 
       this.errorArchivo =
@@ -430,12 +498,57 @@ export class CargaMasiva {
       return;
     }
 
+    // ========================================
+    // INICIAR PROCESAMIENTO
+    // ========================================
+
     this.procesandoArchivo = true;
+
+    // Conservar corrección de actualización de Angular.
+    this.cdr.markForCheck();
+
+    let temporizadorLectura:
+      ReturnType<typeof setTimeout> | undefined;
 
     try {
 
-      // Lee la primera hoja del archivo Excel.
-      const filas = await readSheet(archivo);
+      console.info(
+        '[Carga masiva] Iniciando lectura:',
+        archivo.size,
+        'bytes'
+      );
+
+      // ========================================
+      // LEER ARCHIVO EXCEL
+      // ========================================
+      // Límite de espera de 15 segundos.
+
+      const filas = await Promise.race([
+
+        readSheet(archivo),
+
+        new Promise<never>((_, reject) => {
+
+          temporizadorLectura = setTimeout(() => {
+
+            reject(
+              new Error(
+                'Tiempo máximo de lectura superado (15 segundos).'
+              )
+            );
+
+          }, 15000);
+        })
+      ]);
+
+      console.info(
+        '[Carga masiva] Filas leídas:',
+        filas.length
+      );
+
+      // ========================================
+      // VALIDAR CANTIDAD DE FILAS
+      // ========================================
 
       if (filas.length < 2) {
 
@@ -445,6 +558,10 @@ export class CargaMasiva {
 
         return;
       }
+
+      // ========================================
+      // VALIDAR ENCABEZADOS
+      // ========================================
 
       const encabezados = filas[0].map(
         valor => this.normalizarEncabezado(valor)
@@ -462,7 +579,6 @@ export class CargaMasiva {
         nombre => encabezados.indexOf(nombre)
       );
 
-      // Comprobar todas las columnas.
       if (posiciones.some(posicion => posicion === -1)) {
 
         this.errorArchivo =
@@ -474,7 +590,10 @@ export class CargaMasiva {
         return;
       }
 
-      // Comprobar encabezados repetidos.
+      // ========================================
+      // VALIDAR ENCABEZADOS DUPLICADOS
+      // ========================================
+
       const encabezadosRepetidos =
         columnasRequeridas.some(
           nombre =>
@@ -492,14 +611,21 @@ export class CargaMasiva {
         return;
       }
 
-      // Registrar correos y carnets dentro del archivo.
-      // NO se consulta la base de datos.
+      // ========================================
+      // CONTROL DE CORREOS Y CARNETS DUPLICADOS
+      // ========================================
+      // Solo se valida dentro del archivo.
+      // No se consulta PostgreSQL.
+
       const correosEncontrados = new Set<string>();
       const carnetsEncontrados = new Set<string>();
 
       const resultados: RegistroGraduado[] = [];
 
-      // La fila 1 contiene los encabezados.
+      // ========================================
+      // RECORRER LOS REGISTROS
+      // ========================================
+
       for (let indice = 1; indice < filas.length; indice++) {
 
         const fila = filas[indice];
@@ -518,7 +644,7 @@ export class CargaMasiva {
 
         const carnet = this.valorCelda(
           fila[posiciones[2]]
-        );
+        ).toUpperCase();
 
         const anio = this.valorCelda(
           fila[posiciones[3]]
@@ -528,7 +654,8 @@ export class CargaMasiva {
           fila[posiciones[4]]
         );
 
-        // Omitir las filas completamente vacías.
+        // Omitir filas completamente vacías.
+
         if (
           !nombre &&
           !correo &&
@@ -541,21 +668,20 @@ export class CargaMasiva {
 
         const errores: string[] = [];
 
-        // ====================================
+        // ========================================
         // VALIDAR NOMBRE
-        // ====================================
+        // ========================================
 
         if (nombre.length < 3) {
 
           errores.push(
             'Nombre completo obligatorio (mínimo 3 caracteres)'
           );
-
         }
 
-        // ====================================
+        // ========================================
         // VALIDAR CORREO
-        // ====================================
+        // ========================================
 
         const correoNormalizado =
           correo.toLowerCase();
@@ -568,8 +694,9 @@ export class CargaMasiva {
           errores.push(
             'Correo electrónico inválido'
           );
-
         }
+
+        // Comprobar correos duplicados.
 
         if (correoNormalizado) {
 
@@ -584,16 +711,12 @@ export class CargaMasiva {
           } else {
 
             correosEncontrados.add(correoNormalizado);
-
           }
         }
 
-        // ====================================
+        // ========================================
         // VALIDAR CARNET
-        // ====================================
-
-        const carnetNormalizado =
-          carnet.toUpperCase();
+        // ========================================
 
         if (!carnet) {
 
@@ -601,19 +724,19 @@ export class CargaMasiva {
             'Carnet obligatorio'
           );
 
-        } else if (carnet.length > 40) {
+        } else if (!this.formatoCarnet.test(carnet)) {
 
           errores.push(
-            'Carnet demasiado largo'
+            'Carnet inválido: debe contener dos letras ' +
+            'y cinco números. Ejemplo: RR23015'
           );
-
         }
 
-        if (carnetNormalizado) {
+        // Comprobar carnets duplicados.
 
-          if (
-            carnetsEncontrados.has(carnetNormalizado)
-          ) {
+        if (carnet) {
+
+          if (carnetsEncontrados.has(carnet)) {
 
             errores.push(
               'Carnet duplicado dentro del archivo'
@@ -621,17 +744,15 @@ export class CargaMasiva {
 
           } else {
 
-            carnetsEncontrados.add(carnetNormalizado);
-
+            carnetsEncontrados.add(carnet);
           }
         }
 
-        // ====================================
+        // ========================================
         // VALIDAR AÑO DE GRADUACIÓN
-        // ====================================
+        // ========================================
 
         const formatoAnio = /^\d{4}$/;
-
         const numeroAnio = Number(anio);
 
         if (
@@ -645,12 +766,11 @@ export class CargaMasiva {
             'Año de graduación inválido: debe estar entre 1990 y ' +
             this.anioActual
           );
-
         }
 
-        // ====================================
+        // ========================================
         // VALIDAR ESTADO LABORAL
-        // ====================================
+        // ========================================
 
         if (!estadoLaboral) {
 
@@ -663,12 +783,11 @@ export class CargaMasiva {
           errores.push(
             'Estado laboral demasiado largo'
           );
-
         }
 
-        // ====================================
-        // GUARDAR RESULTADO EN MEMORIA
-        // ====================================
+        // ========================================
+        // GUARDAR RESULTADOS EN MEMORIA
+        // ========================================
 
         resultados.push({
           fila: indice + 1,
@@ -679,8 +798,11 @@ export class CargaMasiva {
           estadoLaboral,
           errores
         });
-
       }
+
+      // ========================================
+      // COMPROBAR QUE EXISTAN REGISTROS
+      // ========================================
 
       if (resultados.length === 0) {
 
@@ -689,6 +811,10 @@ export class CargaMasiva {
 
         return;
       }
+
+      // ========================================
+      // MOSTRAR RESULTADOS
+      // ========================================
 
       this.registros = resultados;
 
@@ -703,27 +829,51 @@ export class CargaMasiva {
 
       this.archivoValidado = true;
 
+      const validos = this.totalValidosActual;
+      const rechazados = this.totalErroresActual;
+
       this.mensajeInformativo =
         'Archivo leído y validado localmente. ' +
-        'Se encontraron ' +
-        this.totalValidosActual +
-        ' registros sin errores y ' +
-        this.totalErroresActual +
-        ' registros con observaciones. ' +
+        `Resultado: ${validos} ` +
+        `${validos === 1 ? 'registro válido' : 'registros válidos'} y ` +
+        `${rechazados} ` +
+        `${rechazados === 1 ? 'registro rechazado' : 'registros rechazados'}. ` +
         'No se guardó ningún dato en PostgreSQL.';
 
-    } catch {
+    } catch (error) {
+
+      console.error(
+        '[Carga masiva] Error al leer o validar Excel:',
+        error
+      );
 
       this.errorArchivo =
         'No fue posible leer el archivo Excel. ' +
         'Comprueba que sea un .xlsx válido, ' +
         'que no esté protegido con contraseña ' +
-        'y que no esté dañado.';
+        'y que no esté dañado.' +
+        (
+          error instanceof Error
+            ? ' Detalle: ' + error.message
+            : ''
+        );
 
     } finally {
 
+      // ========================================
+      // FINALIZAR PROCESAMIENTO
+      // ========================================
+
+      if (temporizadorLectura !== undefined) {
+        clearTimeout(temporizadorLectura);
+      }
+
       this.procesandoArchivo = false;
 
+      // CORRECCIÓN CONSERVADA:
+      // Notificar a Angular que debe actualizar la interfaz.
+
+      this.cdr.markForCheck();
     }
   }
 
@@ -757,6 +907,7 @@ export class CargaMasiva {
     }
 
     const filas: string[][] = [
+
       [
         'Fila',
         'Nombre completo',
@@ -778,6 +929,87 @@ export class CargaMasiva {
       ])
     ];
 
+    this.generarCSV(
+      filas,
+      'reporte_errores_graduados.csv'
+    );
+
+    this.mensajeInformativo =
+      'Se generó el reporte de errores en formato CSV, ' +
+      'compatible con Excel.';
+  }
+
+  // ========================================
+  // NUEVO: REPORTE COMPLETO DE RESULTADOS
+  // ========================================
+
+  descargarReporteResultados(): void {
+
+    this.errorArchivo = '';
+
+    if (!this.archivoValidado) {
+
+      this.errorArchivo =
+        'Selecciona y valida primero un archivo Excel.';
+
+      return;
+    }
+
+    const filas: string[][] = [
+
+      [
+        'Fila',
+        'Nombre completo',
+        'Correo',
+        'Carnet',
+        'Año de graduación',
+        'Estado laboral',
+        'Resultado de validación',
+        'Estado de activación simulado',
+        'Errores'
+      ],
+
+      ...this.registros.map(registro => [
+
+        String(registro.fila),
+        registro.nombre,
+        registro.correo,
+        registro.carnet,
+        registro.anio,
+        registro.estadoLaboral,
+
+        registro.errores.length === 0
+          ? 'Aceptado en validación local'
+          : 'Rechazado',
+
+        this.obtenerEstadoRegistro(registro),
+
+        registro.errores.length === 0
+          ? 'Sin errores'
+          : registro.errores.join(' | ')
+      ])
+    ];
+
+    this.generarCSV(
+      filas,
+      'reporte_resultados_graduados.csv'
+    );
+
+    this.mensajeInformativo =
+      'Se generó el reporte completo de registros ' +
+      'aceptados y rechazados. ' +
+      'El reporte corresponde únicamente a la validación local.';
+  }
+
+  // ========================================
+  // GENERAR ARCHIVOS CSV
+  // ========================================
+
+  private generarCSV(
+    filas: string[][],
+    nombre: string
+  ): void {
+
     const contenido =
       '\uFEFFsep=;\r\n' +
       filas.map(
@@ -795,12 +1027,8 @@ export class CargaMasiva {
 
     this.descargarBlob(
       archivo,
-      'reporte_errores_graduados.csv'
+      nombre
     );
-
-    this.mensajeInformativo =
-      'Se generó el reporte de errores en formato CSV, ' +
-      'compatible con Excel.';
   }
 
   // ========================================
@@ -809,8 +1037,9 @@ export class CargaMasiva {
 
   private escaparCSV(valor: string): string {
 
-    // Evitar que valores de texto se interpreten
-    // como fórmulas al abrir el CSV con Excel.
+    // Evitar que los valores se interpreten
+    // como fórmulas al abrir el CSV en Excel.
+
     const contenido =
       /^[\s]*[=+\-@]/.test(valor)
         ? "'" + valor
@@ -842,7 +1071,8 @@ export class CargaMasiva {
     enlace.click();
     enlace.remove();
 
-    // Liberar la URL después de iniciar la descarga.
+    // Liberar la URL después de la descarga.
+
     setTimeout(() => {
       URL.revokeObjectURL(url);
     }, 1000);
@@ -856,7 +1086,9 @@ export class CargaMasiva {
 
     if (
       !this.archivoValidado ||
-      this.totalValidosActual === 0
+      this.totalValidosActual === 0 ||
+      this.simulacionConfirmada ||
+      this.procesandoArchivo
     ) {
       return;
     }
@@ -872,18 +1104,33 @@ export class CargaMasiva {
 
     if (
       !this.archivoValidado ||
-      this.totalValidosActual === 0
+      this.totalValidosActual === 0 ||
+      this.simulacionConfirmada ||
+      !this.confirmacionAbierta
     ) {
+
       this.cerrarConfirmacion();
       return;
     }
 
+    // NUEVO: marcar la carga como simulada.
+    // No se crean cuentas ni se importan registros reales.
+
+    this.simulacionConfirmada = true;
+
+    this.errorArchivo = '';
+
+    const validos = this.totalValidosActual;
+    const rechazados = this.totalErroresActual;
+
     this.mensajeInformativo =
-      'Simulación finalizada: ' +
-      this.totalValidosActual +
-      ' registros estarían listos para ser enviados ' +
-      'a la API. No se importó ningún graduado, ' +
-      'no se guardaron datos y no se envió ninguna solicitud.';
+      'Simulación finalizada. ' +
+      `${validos} ` +
+      `${validos === 1 ? 'registro quedaría' : 'registros quedarían'} ` +
+      'en estado pendiente de activación. ' +
+      `${rechazados} ` +
+      `${rechazados === 1 ? 'registro sería rechazado' : 'registros serían rechazados'}. ` +
+      'No se importó ningún graduado ni se guardaron datos en PostgreSQL.';
 
     this.cerrarConfirmacion();
   }
@@ -894,10 +1141,15 @@ export class CargaMasiva {
 
   limpiarAnalisis(): void {
 
+    if (this.procesandoArchivo) {
+      return;
+    }
+
     this.registros = [];
 
     this.archivoValidado = false;
     this.procesandoArchivo = false;
+    this.arrastrandoArchivo = false;
 
     this.nombreArchivo = '';
     this.fechaAnalisis = '';
@@ -908,10 +1160,13 @@ export class CargaMasiva {
     this.soloErrores = false;
     this.limiteVistaPrevia = 10;
 
+    this.simulacionConfirmada = false;
+
     this.cerrarConfirmacion();
   }
 
   cerrarMensajes(): void {
+
     this.errorArchivo = '';
     this.mensajeInformativo = '';
   }
@@ -922,6 +1177,7 @@ export class CargaMasiva {
 
   @HostListener('document:keydown.escape')
   cerrarConEscape(): void {
+
     this.cerrarMenu();
     this.cerrarNotificaciones();
     this.cerrarSeguridad();

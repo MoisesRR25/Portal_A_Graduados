@@ -13,6 +13,11 @@ interface DatosOferta {
   contrato: string;
   ubicacion: string;
   modalidad: string;
+
+  // NUEVO: rango salarial opcional
+  salarioMinimo: number | null;
+  salarioMaximo: number | null;
+
   descripcion: string;
 
   // CORREGIDO: es un texto, no un arreglo
@@ -62,6 +67,10 @@ export class PublicarOferta {
   tipoContrato = 'tiempo-completo';
   ubicacionOferta = '';
   modalidadOferta = 'hibrido';
+
+  // NUEVO: rango salarial opcional
+  salarioMinimo: number | null = null;
+  salarioMaximo: number | null = null;
 
   descripcionOferta = '';
   requisitosOferta = '';
@@ -224,6 +233,84 @@ export class PublicarOferta {
   }
 
   // ==========================================
+  // NUEVO: VALIDAR RANGO SALARIAL
+  // ==========================================
+
+  get errorRangoSalarial(): string {
+
+    const minimo = this.salarioMinimo;
+    const maximo = this.salarioMaximo;
+
+    // El rango salarial es opcional.
+    if (minimo === null && maximo === null) {
+      return '';
+    }
+
+    // Si se especifica un salario,
+    // deben completarse ambos campos.
+    if (minimo === null || maximo === null) {
+      return 'Completa ambos salarios o deja ambos campos vacíos.';
+    }
+
+    // Evitar números inválidos, negativos o cero.
+    if (
+      !Number.isFinite(minimo) ||
+      !Number.isFinite(maximo) ||
+      minimo < 0.01 ||
+      maximo < 0.01
+    ) {
+      return 'Los salarios deben ser iguales o mayores que $0.01.';
+    }
+
+    // Validar el orden del rango.
+    if (minimo > maximo) {
+      return 'El salario mínimo no puede superar al salario máximo.';
+    }
+
+    // Permitir como máximo dos decimales.
+    if (
+      Math.abs(minimo - Math.round(minimo * 100) / 100) > 0.00000001 ||
+      Math.abs(maximo - Math.round(maximo * 100) / 100) > 0.00000001
+    ) {
+      return 'Los salarios deben tener como máximo dos decimales.';
+    }
+
+    return '';
+  }
+
+  // ==========================================
+  // NUEVO: MOSTRAR RANGO SALARIAL
+  // ==========================================
+
+  get rangoSalarial(): string {
+
+    if (this.errorRangoSalarial) {
+      return 'Rango salarial inválido';
+    }
+
+    if (
+      this.salarioMinimo === null ||
+      this.salarioMaximo === null
+    ) {
+      return 'No especificado';
+    }
+
+    return '$' + this.salarioMinimo.toFixed(2) +
+      ' - $' + this.salarioMaximo.toFixed(2);
+  }
+
+  // ==========================================
+  // NUEVO: REVISIÓN ADMINISTRATIVA POR SALARIO
+  // ==========================================
+
+  get requiereRevisionPorSalario(): boolean {
+    return (
+      this.salarioMinimo === null &&
+      this.salarioMaximo === null
+    );
+  }
+
+  // ==========================================
   // OBTENER DATOS DEL FORMULARIO
   // ==========================================
 
@@ -234,6 +321,11 @@ export class PublicarOferta {
       contrato: this.tipoContrato,
       ubicacion: this.ubicacionOferta.trim(),
       modalidad: this.modalidadOferta,
+
+      // NUEVO: guardar salarios en el borrador
+      salarioMinimo: this.salarioMinimo,
+      salarioMaximo: this.salarioMaximo,
+
       descripcion: this.descripcionOferta.trim(),
 
       // CORREGIDO: ambos son de tipo string
@@ -283,6 +375,10 @@ export class PublicarOferta {
     this.ubicacionOferta = datos.ubicacion;
     this.modalidadOferta = datos.modalidad;
 
+    // NUEVO: restaurar salarios
+    this.salarioMinimo = datos.salarioMinimo;
+    this.salarioMaximo = datos.salarioMaximo;
+
     this.descripcionOferta = datos.descripcion;
 
     // CORREGIDO: string asignado a string
@@ -326,6 +422,12 @@ export class PublicarOferta {
 
     // Marcar los campos para mostrar errores
     formulario.control.markAllAsTouched();
+
+    // NUEVO: validar rango salarial
+    if (this.errorRangoSalarial) {
+      this.errorGeneral = this.errorRangoSalarial;
+      return;
+    }
 
     if (formulario.invalid) {
       this.errorGeneral =
@@ -397,10 +499,28 @@ export class PublicarOferta {
 
     this.vistaPreviaAbierta = false;
 
-    this.mensajeInformativo =
-      'Los datos de la oferta están listos para revisión. ' +
-      'Esta es una demostración: la oferta NO se ha enviado ' +
-      'a la Escuela ni guardado en PostgreSQL.';
+    // NUEVO: informar si requiere revisión
+    // por no especificar rango salarial.
+
+    if (this.requiereRevisionPorSalario) {
+
+      this.mensajeInformativo =
+        'Los datos de la oferta están listos para revisión. ' +
+        'La oferta requeriría revisión administrativa ' +
+        'porque no incluye un rango salarial. ' +
+        'Esta es una demostración: la oferta NO se ha enviado ' +
+        'a la Escuela ni guardado en PostgreSQL.';
+
+    } else {
+
+      this.mensajeInformativo =
+        'Los datos de la oferta están listos para revisión. ' +
+        'El rango salarial fue validado correctamente. ' +
+        'La API determinará si requiere revisión por otros motivos. ' +
+        'Esta es una demostración: la oferta NO se ha enviado ' +
+        'a la Escuela ni guardado en PostgreSQL.';
+
+    }
   }
 
   // ==========================================

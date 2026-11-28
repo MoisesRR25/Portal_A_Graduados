@@ -9,6 +9,7 @@
   >
 
     <div class="sidebar-brand">
+
       <img
         src="/ues.png"
         alt="Logo UES"
@@ -16,13 +17,17 @@
       />
 
       <div class="brand-text">
+
         <span class="brand-title">
           Portal de Graduados
         </span>
+
         <span class="brand-sub">
           Ingeniería de Sistemas Informáticos
         </span>
+
       </div>
+
     </div>
 
     <!-- CERRAR MENÚ MÓVIL -->
@@ -36,6 +41,7 @@
     </button>
 
     <div class="sidebar-section">
+
       <p class="sidebar-label">
         MENÚ PRINCIPAL
       </p>
@@ -79,6 +85,7 @@
         </a>
 
       </nav>
+
     </div>
 
     <!-- PIE DEL MENÚ -->
@@ -103,6 +110,7 @@
       </a>
 
       <div class="institution-badge">
+
         <img
           src="/ues.png"
           alt="UES"
@@ -110,13 +118,19 @@
         />
 
         <div class="institution-info">
+
           <strong>UES</strong>
+
           <span>Universidad de El Salvador</span>
+
           <span>Facultad de Ingeniería</span>
+
         </div>
+
       </div>
 
     </div>
+
   </aside>
 
   <!-- FONDO OSCURO PARA CERRAR MENÚ -->
@@ -155,14 +169,31 @@
           <button
             type="button"
             class="icon-btn"
-            aria-label="Notificaciones"
+            [attr.aria-label]="
+              'Notificaciones: ' +
+              totalNotificacionesPendientes +
+              ' sin leer'
+            "
             [attr.aria-expanded]="notificacionesAbiertas"
             (click)="alternarNotificaciones()"
           >
+
             🔔
+
+            @if (totalNotificacionesPendientes > 0) {
+
+              <span class="nav-badge">
+
+                {{ totalNotificacionesPendientes }}
+
+              </span>
+
+            }
+
           </button>
 
           @if (notificacionesAbiertas) {
+
             <div
               class="notifications-panel"
               role="region"
@@ -170,6 +201,7 @@
             >
 
               <div class="notifications-header">
+
                 <h3>Notificaciones</h3>
 
                 <button
@@ -180,22 +212,93 @@
                 >
                   ✕
                 </button>
+
               </div>
 
+              <!-- NOTIFICACIONES SIMULADAS -->
               <div class="notifications-empty">
-                <span aria-hidden="true">🔔</span>
 
                 <strong>
-                  Sin notificaciones disponibles
+                  {{ totalNotificacionesPendientes }}
+                  sin leer
                 </strong>
 
                 <p>
-                  Las notificaciones reales
-                  aparecerán aquí cuando
-                  conectemos la API.
+                  Avisos de nuevas candidaturas
+                  de demostración.
                 </p>
+
               </div>
+
+              @for (
+                notificacion of notificaciones;
+                track notificacion.id
+              ) {
+
+                <div class="security-option">
+
+                  <strong>
+
+                    {{
+                      notificacion.leida
+                        ? '✓ Leída'
+                        : '🔔 Nueva candidatura'
+                    }}
+
+                  </strong>
+
+                  <p>
+
+                    {{ notificacion.mensaje }}
+
+                  </p>
+
+                  <p>
+
+                    {{ notificacion.fecha }}
+
+                  </p>
+
+                  <button
+                    type="button"
+                    class="clear-filter-button"
+                    (click)="abrirNotificacion(notificacion)"
+                  >
+                    Ver candidatura
+                  </button>
+
+                </div>
+
+              } @empty {
+
+                <div class="notifications-empty">
+
+                  <span aria-hidden="true">
+                    🔔
+                  </span>
+
+                  <strong>
+                    Sin notificaciones disponibles
+                  </strong>
+
+                </div>
+
+              }
+
+              @if (totalNotificacionesPendientes > 0) {
+
+                <button
+                  type="button"
+                  class="clear-filter-button"
+                  (click)="marcarTodasComoLeidas()"
+                >
+                  Marcar todas como leídas
+                </button>
+
+              }
+
             </div>
+
           }
 
         </div>
@@ -208,15 +311,19 @@
           </span>
 
           <div class="company-meta">
+
             <span class="company-name">
               Soluciones SV
             </span>
+
             <span class="company-role">
               Empresa
             </span>
+
           </div>
 
         </div>
+
       </div>
 
     </header>
@@ -225,6 +332,7 @@
     <main class="content-container">
 
       <div class="page-header">
+
         <span class="eyebrow">
           PROCESOS ACTIVOS
         </span>
@@ -232,22 +340,35 @@
         <h1>Candidatos</h1>
 
         <p class="page-subtitle">
+
           Revisa y gestiona los perfiles
           que se postularon a tus ofertas.
+
         </p>
+
       </div>
 
       <!-- AVISO DE DEMOSTRACIÓN -->
       <div class="demo-notice">
-        <span aria-hidden="true">ℹ️</span>
+
+        <span aria-hidden="true">
+          ℹ️
+        </span>
 
         <p>
+
           <strong>Modo demostración.</strong>
-          Los perfiles, los porcentajes de
-          compatibilidad y los estados que aparecen
-          aquí son ejemplos. No se han consultado
-          postulaciones reales en la API.
+
+          Los perfiles, las candidaturas,
+          los porcentajes de compatibilidad,
+          los datos de contacto, los CV y las
+          notificaciones son ficticios.
+
+          No se han consultado postulaciones
+          reales en la API.
+
         </p>
+
       </div>
 
       <!-- BUSCADOR -->
@@ -264,7 +385,7 @@
           type="text"
           name="textoBusqueda"
           [(ngModel)]="textoBusqueda"
-          placeholder="Buscar por nombre, habilidad o perfil..."
+          placeholder="Buscar por nombre, habilidad, perfil u oferta..."
           aria-label="Buscar candidatos"
         />
 
@@ -277,12 +398,53 @@
 
       </form>
 
-      <!-- FILTRO Y RESULTADOS -->
+      <!-- FILTROS Y RESULTADOS -->
       <div class="filter-row">
 
+        <!-- FILTRO POR OFERTA -->
         <div class="filter-control">
+
+          <label for="ofertaCandidato">
+            Oferta laboral
+          </label>
+
+          <select
+            id="ofertaCandidato"
+            name="ofertaCandidato"
+            [(ngModel)]="filtroOferta"
+          >
+
+            <option [ngValue]="null">
+
+              Todas mis ofertas
+
+            </option>
+
+            @for (
+              oferta of ofertasEmpresa;
+              track oferta.id
+            ) {
+
+              <option [ngValue]="oferta.id">
+
+                {{ oferta.titulo }}
+                ({{ contarCandidatosOferta(oferta.id) }})
+
+              </option>
+
+            }
+
+          </select>
+
+        </div>
+
+        <!-- FILTRO POR ESTADO -->
+        <div class="filter-control">
+
           <label for="estadoCandidato">
+
             Estado de postulación
+
           </label>
 
           <select
@@ -290,30 +452,48 @@
             name="estadoCandidato"
             [(ngModel)]="filtroEstado"
           >
+
             <option value="Todos">
+
               Todos los estados
+
             </option>
 
             <option value="En revisión">
-              En revisión
+
+              En revisión ({{ totalEnRevision }})
+
             </option>
 
             <option value="Preseleccionado">
+
               Preseleccionados
+              ({{ totalPreseleccionados }})
+
             </option>
 
             <option value="Descartado">
-              Descartados
+
+              Descartados ({{ totalDescartados }})
+
             </option>
+
           </select>
+
         </div>
 
         <div class="filter-summary">
-          <span>
+
+          <span aria-live="polite">
+
             {{ candidatosFiltrados.length }}
+
             de
+
             {{ candidatos.length }}
-            candidatos de ejemplo
+
+            candidaturas de ejemplo
+
           </span>
 
           <button
@@ -323,6 +503,7 @@
           >
             Limpiar filtros
           </button>
+
         </div>
 
       </div>
@@ -350,8 +531,10 @@
               </span>
 
               <span class="match-badge">
+
                 {{ candidato.compatibilidad }}%
                 compatible
+
               </span>
 
             </div>
@@ -367,11 +550,38 @@
               </p>
 
               <p class="candidate-career">
+
                 {{ candidato.carrera }}
+
                 ·
+
                 {{ candidato.anio }}
+
               </p>
 
+              <!-- NUEVO: OFERTA DE LA POSTULACIÓN -->
+              <p class="candidate-career">
+
+                💼
+
+                <strong>Oferta:</strong>
+
+                {{
+                  obtenerTituloOferta(candidato.ofertaId)
+                }}
+
+              </p>
+
+              <!-- NUEVO: FECHA DE POSTULACIÓN -->
+              <p class="candidate-career">
+
+                📅
+
+                {{ candidato.fechaPostulacion }}
+
+              </p>
+
+              <!-- ESTADO DE POSTULACIÓN -->
               <span
                 class="application-status"
                 [class.status-selected]="
@@ -381,7 +591,9 @@
                   candidato.estado === 'Descartado'
                 "
               >
+
                 {{ candidato.estado }}
+
               </span>
 
             </div>
@@ -392,9 +604,13 @@
                 habilidad of candidato.habilidades;
                 track habilidad
               ) {
+
                 <span class="skill-pill">
+
                   {{ habilidad }}
+
                 </span>
+
               }
 
             </div>
@@ -430,15 +646,21 @@
 
           <div class="empty-results">
 
-            <span aria-hidden="true">🔍</span>
+            <span aria-hidden="true">
+              🔍
+            </span>
 
             <h2>
+
               No se encontraron candidatos
+
             </h2>
 
             <p>
+
               Prueba con otro nombre, habilidad,
-              perfil o estado de postulación.
+              perfil, oferta o estado de postulación.
+
             </p>
 
             <button
@@ -456,6 +678,7 @@
       </section>
 
     </main>
+
   </div>
 
   <!-- DETALLE DE CANDIDATO -->
@@ -477,21 +700,27 @@
         <div class="modal-heading">
 
           <div>
+
             <span class="eyebrow">
+
               {{
                 tipoDetalle === 'perfil'
                   ? 'DETALLE DEL PERFIL'
                   : 'INFORMACIÓN DE CONTACTO'
               }}
+
             </span>
 
             <h2 id="titulo-detalle-candidato">
+
               {{
                 tipoDetalle === 'perfil'
                   ? 'Perfil del candidato'
                   : 'Contacto del candidato'
               }}
+
             </h2>
+
           </div>
 
           <button
@@ -515,63 +744,184 @@
             [class.avatar-purple]="candidato.color === 'purple'"
             [class.avatar-green]="candidato.color === 'green'"
           >
+
             {{ candidato.iniciales }}
+
           </span>
 
           <div>
+
             <h3>{{ candidato.nombre }}</h3>
+
             <p>{{ candidato.rol }}</p>
+
           </div>
 
         </div>
 
+        <!-- INFORMACIÓN DEL PERFIL -->
         @if (tipoDetalle === 'perfil') {
 
           <div class="profile-data">
 
             <div>
+
               <span>Carrera</span>
+
               <strong>{{ candidato.carrera }}</strong>
+
             </div>
 
             <div>
+
               <span>Año de graduación</span>
+
               <strong>{{ candidato.anio }}</strong>
+
             </div>
 
             <div>
+
               <span>Compatibilidad ilustrativa</span>
+
               <strong>
+
                 {{ candidato.compatibilidad }}%
+
               </strong>
+
+            </div>
+
+            <div>
+
+              <span>Oferta laboral</span>
+
+              <strong>
+
+                {{
+                  obtenerTituloOferta(candidato.ofertaId)
+                }}
+
+              </strong>
+
+            </div>
+
+            <div>
+
+              <span>Fecha de postulación</span>
+
+              <strong>
+
+                {{ candidato.fechaPostulacion }}
+
+              </strong>
+
+            </div>
+
+            <div>
+
+              <span>Estado actual</span>
+
+              <strong>
+
+                {{ candidato.estado }}
+
+              </strong>
+
             </div>
 
           </div>
 
+          <!-- HABILIDADES -->
           <div class="modal-section">
 
             <h3>Habilidades</h3>
 
             <div class="skills-row">
+
               @for (
                 habilidad of candidato.habilidades;
                 track habilidad
               ) {
+
                 <span class="skill-pill">
+
                   {{ habilidad }}
+
                 </span>
+
               }
+
             </div>
 
           </div>
 
+          <!-- NUEVO: CURRÍCULUM -->
+          <div class="modal-section">
+
+            <h3>
+              📄 Currículum vitae
+            </h3>
+
+            <div class="profile-data">
+
+              <div>
+
+                <span>Archivo de ejemplo</span>
+
+                <strong>
+
+                  {{ candidato.nombreCV }}
+
+                </strong>
+
+              </div>
+
+              <div>
+
+                <span>Formato</span>
+
+                <strong>PDF</strong>
+
+              </div>
+
+            </div>
+
+            <p class="modal-helper">
+
+              Puedes descargar un PDF ficticio
+              para comprobar el funcionamiento
+              de esta opción.
+
+              No corresponde a un CV real
+              enviado por un graduado.
+
+            </p>
+
+            <div class="modal-actions">
+
+              <button
+                type="button"
+                class="btn-outline"
+                (click)="descargarCV(candidato)"
+              >
+                ⬇ Descargar CV de ejemplo
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- CAMBIAR ESTADO -->
           <div class="modal-section">
 
             <label
               for="estadoPostulacion"
               class="modal-label"
             >
+
               Estado de postulación
+
             </label>
 
             <select
@@ -583,64 +933,146 @@
                 actualizarEstado(candidato, $event)
               "
             >
-              <option value="En revisión">
-                En revisión
-              </option>
 
-              <option value="Preseleccionado">
-                Preseleccionado
-              </option>
+              @for (
+                estado of estadosPostulacion;
+                track estado
+              ) {
 
-              <option value="Descartado">
-                Descartado
-              </option>
+                <option [value]="estado">
+
+                  {{ estado }}
+
+                </option>
+
+              }
+
             </select>
 
             <p class="modal-helper">
-              El cambio solo se aplicará a
-              esta demostración.
-            </p>
 
-            @if (mensajeEstado) {
-              <div
-                class="status-message"
-                role="status"
-              >
-                {{ mensajeEstado }}
-              </div>
-            }
+              El cambio solo se aplicará
+              a esta demostración.
+
+            </p>
 
           </div>
 
           <div class="modal-notice">
-            Este es un perfil de ejemplo. Los datos
-            completos y el currículum estarán
-            disponibles cuando se integre la API.
+
+            Este es un perfil de ejemplo asociado
+            a una oferta de esta empresa.
+
+            Los datos reales y los permisos
+            se comprobarán mediante la API.
+
           </div>
 
         } @else {
 
+          <!-- DATOS DE CONTACTO -->
           <div class="modal-section">
 
-            <h3>Datos de contacto</h3>
+            <h3>
+              Datos de contacto
+            </h3>
 
-            <p class="contact-description">
-              Todavía no hay información de contacto
-              autorizada disponible desde la API.
+            <div class="profile-data">
+
+              <div>
+
+                <span>Nombre completo</span>
+
+                <strong>
+
+                  {{ candidato.nombre }}
+
+                </strong>
+
+              </div>
+
+              <div>
+
+                <span>Correo de ejemplo</span>
+
+                <strong>
+
+                  {{ candidato.correo }}
+
+                </strong>
+
+              </div>
+
+              <div>
+
+                <span>Oferta laboral</span>
+
+                <strong>
+
+                  {{
+                    obtenerTituloOferta(candidato.ofertaId)
+                  }}
+
+                </strong>
+
+              </div>
+
+              <div>
+
+                <span>Fecha de postulación</span>
+
+                <strong>
+
+                  {{ candidato.fechaPostulacion }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+            <p class="modal-helper">
+
+              Los datos de contacto son ficticios.
+
               No se ha enviado ningún correo
               ni mensaje.
+
             </p>
 
           </div>
 
+          <!-- PRIVACIDAD -->
           <div class="modal-notice">
-            Esta opción servirá para consultar
-            medios de contacto permitidos,
-            sin implementar un chat interno.
+
+            🔒 Los datos de contacto solo deben
+            estar disponibles para la empresa
+            que recibió la postulación.
+
+            Esta opción no incluye un chat interno.
+
+            La autorización real se verificará
+            en la API.
+
           </div>
 
         }
 
+        <!-- MENSAJES DE ACCIONES -->
+        @if (mensajeEstado) {
+
+          <div
+            class="status-message"
+            role="status"
+          >
+
+            {{ mensajeEstado }}
+
+          </div>
+
+        }
+
+        <!-- ACCIONES DE LA VENTANA -->
         <div class="modal-actions">
 
           @if (tipoDetalle === 'contacto') {
@@ -651,6 +1083,16 @@
               (click)="abrirPerfil(candidato)"
             >
               Ver perfil
+            </button>
+
+          } @else {
+
+            <button
+              type="button"
+              class="btn-outline"
+              (click)="abrirContacto(candidato)"
+            >
+              ✉ Consultar contacto
             </button>
 
           }
@@ -666,6 +1108,7 @@
         </div>
 
       </section>
+
     </div>
 
   }
@@ -689,7 +1132,9 @@
         <div class="modal-heading">
 
           <h2 id="titulo-seguridad">
+
             🔒 Acceso y seguridad
+
           </h2>
 
           <button
@@ -704,29 +1149,41 @@
         </div>
 
         <p class="security-description">
+
           Información de demostración
           de la cuenta empresarial.
+
         </p>
 
         <div class="security-row">
+
           <span>Empresa</span>
+
           <strong>Soluciones SV</strong>
+
         </div>
 
         <div class="security-row">
+
           <span>Tipo de cuenta</span>
+
           <strong>Empresa</strong>
+
         </div>
 
         <div class="security-option">
 
           <strong>
+
             🔑 Cambiar contraseña
+
           </strong>
 
           <p>
+
             Disponible cuando integremos
             la autenticación de la API.
+
           </p>
 
         </div>
@@ -734,12 +1191,16 @@
         <div class="security-option">
 
           <strong>
+
             ✉️ Verificación de correo
+
           </strong>
 
           <p>
+
             Pendiente de conexión
             con el servidor.
+
           </p>
 
         </div>
@@ -747,12 +1208,16 @@
         <div class="security-option">
 
           <strong>
+
             🛡️ Protección de sesión
+
           </strong>
 
           <p>
+
             Se implementará con el sistema
             de autenticación y permisos.
+
           </p>
 
         </div>

@@ -2,341 +2,980 @@
 <div class="dashboard-layout">
 
   <!-- MENÚ LATERAL -->
-  <aside id="menu-lateral-graduado" class="dashboard-sidebar"
-         [class.mobile-open]="menuAbierto">
+  <aside
+    id="menu-lateral-graduado"
+    class="dashboard-sidebar"
+    [class.mobile-open]="menuAbierto"
+  >
 
     <div class="sidebar-brand">
+
       <span class="ues-badge">
-        <img src="/ues.png" alt="Universidad de El Salvador"
-             width="50" height="50">
+
+        <img
+          src="/ues.png"
+          alt="Universidad de El Salvador"
+          width="50"
+          height="50"
+        >
+
       </span>
+
       <div>
+
         <strong>Portal de Graduados</strong>
-        <small>Ingeniería de Sistemas Informáticos</small>
+
+        <small>
+          Ingeniería de Sistemas Informáticos
+        </small>
+
       </div>
+
     </div>
 
-    <button type="button" class="sidebar-close-button"
-            aria-label="Cerrar menú" (click)="cerrarMenu()">✕</button>
+    <button
+      type="button"
+      class="sidebar-close-button"
+      aria-label="Cerrar menú"
+      (click)="cerrarMenu()"
+    >
+      ✕
+    </button>
 
-    <div class="nav-section-title">MENÚ PRINCIPAL</div>
+    <div class="nav-section-title">
+      MENÚ PRINCIPAL
+    </div>
 
     <nav class="sidebar-nav">
-      <a routerLink="/dashboard" class="nav-item"
-         (click)="cerrarMenu()">🏠 Resumen</a>
 
-      <a routerLink="/perfil-graduado" class="nav-item"
-         (click)="cerrarMenu()">👤 Mi perfil</a>
+      <a
+        routerLink="/dashboard"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        🏠 Resumen
+      </a>
 
-      <a routerLink="/bolsa-interna" class="nav-item"
-         (click)="cerrarMenu()">💼 Bolsa de trabajo</a>
+      <a
+        routerLink="/perfil-graduado"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        👤 Mi perfil
+      </a>
 
-      <a routerLink="/mis-postulaciones" class="nav-item active"
-         (click)="cerrarMenu()">📄 Mis postulaciones</a>
+      <a
+        routerLink="/bolsa-interna"
+        class="nav-item"
+        (click)="cerrarMenu()"
+      >
+        💼 Bolsa de trabajo
+      </a>
+
+      <a
+        routerLink="/mis-postulaciones"
+        class="nav-item active"
+        (click)="cerrarMenu()"
+      >
+        📄 Mis postulaciones
+      </a>
+
     </nav>
 
     <div class="sidebar-bottom">
-      <nav class="sidebar-nav">
-        <button type="button" class="nav-item post-nav-button"
-                (click)="abrirSeguridad()">🔒 Acceso y seguridad</button>
 
-        <a routerLink="/" class="nav-item text-red"
-           (click)="cerrarMenu()">🚪 Cerrar sesión</a>
+      <nav class="sidebar-nav">
+
+        <button
+          type="button"
+          class="nav-item post-nav-button"
+          (click)="abrirSeguridad()"
+        >
+          🔒 Acceso y seguridad
+        </button>
+
+        <a
+          routerLink="/"
+          class="nav-item text-red"
+          (click)="cerrarMenu()"
+        >
+          🚪 Cerrar sesión
+        </a>
+
       </nav>
 
       <div class="sidebar-footer-card">
-        <small>Universidad de El Salvador</small>
-        <span>Facultad de Ingeniería</span>
+
+        <small>
+          Universidad de El Salvador
+        </small>
+
+        <span>
+          Facultad de Ingeniería
+        </span>
+
       </div>
+
     </div>
+
   </aside>
 
   <!-- FONDO DEL MENÚ MÓVIL -->
-  <button type="button" class="mobile-backdrop"
-          [class.visible]="menuAbierto"
-          (click)="cerrarMenu()" tabindex="-1"
-          aria-label="Cerrar menú de navegación"></button>
+  <button
+    type="button"
+    class="mobile-backdrop"
+    [class.visible]="menuAbierto"
+    (click)="cerrarMenu()"
+    tabindex="-1"
+    aria-label="Cerrar menú de navegación"
+  ></button>
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="dashboard-main">
 
+    <!-- BARRA SUPERIOR -->
     <header class="dashboard-topbar">
-      <button type="button" class="mobile-menu-button"
-              (click)="alternarMenu()"
-              [attr.aria-expanded]="menuAbierto"
-              [attr.aria-label]="menuAbierto ? 'Cerrar menú' : 'Abrir menú'"
-              aria-controls="menu-lateral-graduado">☰</button>
+
+      <button
+        type="button"
+        class="mobile-menu-button"
+        (click)="alternarMenu()"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="
+          menuAbierto ? 'Cerrar menú' : 'Abrir menú'
+        "
+        aria-controls="menu-lateral-graduado"
+      >
+        ☰
+      </button>
 
       <span></span>
 
       <div class="user-profile-badge">
+
+        <!-- NOTIFICACIONES -->
         <div class="post-notifications-wrap">
-          <button type="button" class="notification-icon post-notification-btn"
-                  aria-label="Notificaciones"
-                  [attr.aria-expanded]="notificacionesAbiertas"
-                  (click)="alternarNotificaciones()">🔔</button>
+
+          <button
+            type="button"
+            class="notification-icon post-notification-btn"
+            aria-label="Notificaciones"
+            [attr.aria-expanded]="notificacionesAbiertas"
+            (click)="alternarNotificaciones()"
+          >
+            🔔
+          </button>
 
           @if (notificacionesAbiertas) {
-            <div class="post-notifications-panel">
+
+            <div
+              class="post-notifications-panel"
+              role="region"
+              aria-label="Notificaciones del graduado"
+            >
+
               <div class="post-panel-heading">
-                <strong>Notificaciones</strong>
-                <button type="button" aria-label="Cerrar notificaciones"
-                        (click)="cerrarNotificaciones()">✕</button>
+
+                <strong>
+                  Notificaciones
+                </strong>
+
+                <button
+                  type="button"
+                  aria-label="Cerrar notificaciones"
+                  (click)="cerrarNotificaciones()"
+                >
+                  ✕
+                </button>
+
               </div>
-              <p>No hay notificaciones reales. Esta función estará
-                 disponible cuando se conecte la API.</p>
+
+              <p>
+
+                No hay notificaciones reales.
+
+                Esta función estará disponible
+                cuando se conecte la API.
+
+              </p>
+
             </div>
+
           }
+
         </div>
 
         <div class="user-avatar-name">
-          <strong>Carlos Martínez</strong>
-          <small>Graduado</small>
+
+          <strong>
+            {{ nombreGraduado }}
+          </strong>
+
+          <small>
+            Graduado
+          </small>
+
         </div>
+
       </div>
+
     </header>
 
     <div class="dashboard-content">
 
       <!-- ENCABEZADO -->
       <div class="welcome-header">
-        <span class="mi-portal">SEGUIMIENTO</span>
+
+        <span class="mi-portal">
+          SEGUIMIENTO
+        </span>
+
         <h1>Mis postulaciones</h1>
-        <p>Monitorea el estado de tus procesos de selección activos y pasados.</p>
+
+        <p>
+
+          Monitorea el estado de tus procesos
+          de selección activos y pasados.
+
+        </p>
+
       </div>
 
       <!-- AVISO DE DEMOSTRACIÓN -->
       <div class="post-demo-notice">
+
         <strong>Modo demostración.</strong>
-        Se muestran cinco postulaciones de ejemplo.
-        Sus estados no provienen todavía de la API ni se actualizan automáticamente.
+
+        Se muestran las postulaciones de ejemplo
+        del graduado actual.
+
+        Las fechas, los estados y los nombres
+        de currículum son ficticios.
+
+        Todavía no se consulta información desde
+        la API ni se reciben automáticamente
+        los cambios realizados por las empresas.
+
       </div>
 
+      <!-- ====================================== -->
       <!-- TARJETAS DE RESUMEN -->
+      <!-- ====================================== -->
+
       <div class="stats-cards-grid">
 
+        <!-- TOTAL -->
         <div class="stat-card">
-          <span class="stat-num">{{ totalPostulaciones }}</span>
-          <small>Total postulaciones</small>
+
+          <span class="stat-num">
+
+            {{ totalPostulaciones }}
+
+          </span>
+
+          <small>
+            Total postulaciones
+          </small>
+
         </div>
 
+        <!-- EN REVISIÓN -->
         <div class="stat-card">
-          <span class="stat-num yellow">{{ totalRevision }}</span>
-          <small>En revisión</small>
+
+          <span class="stat-num yellow">
+
+            {{ totalRevision }}
+
+          </span>
+
+          <small>
+            En revisión
+          </small>
+
         </div>
 
+        <!-- PRESELECCIONADAS -->
         <div class="stat-card">
-          <span class="stat-num green">{{ totalEntrevistas }}</span>
-          <small>En entrevista</small>
+
+          <span class="stat-num green">
+
+            {{ totalPreseleccionadas }}
+
+          </span>
+
+          <small>
+            Preseleccionadas
+          </small>
+
         </div>
 
+        <!-- DESCARTADAS -->
         <div class="stat-card">
-          <span class="stat-num gray">{{ totalFinalizadas }}</span>
-          <small>Procesos finalizados</small>
+
+          <span class="stat-num gray">
+
+            {{ totalDescartadas }}
+
+          </span>
+
+          <small>
+            Descartadas
+          </small>
+
         </div>
 
       </div>
 
+      <!-- ====================================== -->
       <!-- FILTROS Y BÚSQUEDA -->
+      <!-- ====================================== -->
+
       <div class="postulations-filter-row">
 
-        <div class="tabs-filter" role="group"
-             aria-label="Filtrar postulaciones por estado">
+        <div
+          class="tabs-filter"
+          role="group"
+          aria-label="Filtrar postulaciones por estado"
+        >
 
-          <button type="button" class="tab-btn"
-                  [class.active]="filtroSeleccionado === 'todas'"
-                  [attr.aria-pressed]="filtroSeleccionado === 'todas'"
-                  (click)="seleccionarFiltro('todas')">
+          <!-- TODAS -->
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="
+              filtroSeleccionado === 'todas'
+            "
+            [attr.aria-pressed]="
+              filtroSeleccionado === 'todas'
+            "
+            (click)="seleccionarFiltro('todas')"
+          >
+
             Todas ({{ totalPostulaciones }})
+
           </button>
 
-          <button type="button" class="tab-btn"
-                  [class.active]="filtroSeleccionado === 'activas'"
-                  [attr.aria-pressed]="filtroSeleccionado === 'activas'"
-                  (click)="seleccionarFiltro('activas')">
+          <!-- ACTIVAS -->
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="
+              filtroSeleccionado === 'activas'
+            "
+            [attr.aria-pressed]="
+              filtroSeleccionado === 'activas'
+            "
+            (click)="seleccionarFiltro('activas')"
+          >
+
             Activas ({{ totalActivas }})
+
           </button>
 
-          <button type="button" class="tab-btn"
-                  [class.active]="filtroSeleccionado === 'finalizadas'"
-                  [attr.aria-pressed]="filtroSeleccionado === 'finalizadas'"
-                  (click)="seleccionarFiltro('finalizadas')">
+          <!-- FINALIZADAS -->
+          <button
+            type="button"
+            class="tab-btn"
+            [class.active]="
+              filtroSeleccionado === 'finalizadas'
+            "
+            [attr.aria-pressed]="
+              filtroSeleccionado === 'finalizadas'
+            "
+            (click)="seleccionarFiltro('finalizadas')"
+          >
+
             Finalizadas ({{ totalFinalizadas }})
+
           </button>
+
         </div>
 
+        <!-- BUSCADOR -->
         <div class="search-mini-wrapper">
-          <span class="search-icon" aria-hidden="true">🔍</span>
-          <input type="search" class="search-mini-input"
-                 placeholder="Filtrar por empresa o puesto..."
-                 aria-label="Filtrar postulaciones por empresa o puesto"
-                 [(ngModel)]="busqueda">
+
+          <span
+            class="search-icon"
+            aria-hidden="true"
+          >
+            🔍
+          </span>
+
+          <input
+            type="search"
+            class="search-mini-input"
+            placeholder="Filtrar por empresa, puesto o estado..."
+            aria-label="Filtrar postulaciones"
+            [(ngModel)]="busqueda"
+          >
+
         </div>
 
       </div>
 
       <!-- CONTADOR DE RESULTADOS -->
-      <p class="post-results-count">
-        Mostrando <strong>{{ postulacionesFiltradas.length }}</strong>
-        de {{ totalPostulaciones }} postulaciones de ejemplo
+      <p
+        class="post-results-count"
+        aria-live="polite"
+      >
+
+        Mostrando
+
+        <strong>
+          {{ postulacionesFiltradas.length }}
+        </strong>
+
+        de
+
+        {{ totalPostulaciones }}
+
+        postulaciones de ejemplo.
+
+        @if (busqueda || filtroSeleccionado !== 'todas') {
+
+          <button
+            type="button"
+            class="btn-details"
+            (click)="limpiarFiltros()"
+          >
+            Limpiar filtros
+          </button>
+
+        }
+
       </p>
 
       <p class="table-scroll-hint">
-        Desliza la tabla hacia los lados para ver todas las columnas.
+
+        Desliza la tabla hacia los lados
+        para ver todas las columnas.
+
       </p>
 
+      <!-- ====================================== -->
       <!-- TABLA DE POSTULACIONES -->
-      <div class="card table-card" role="region"
-           aria-label="Tabla de postulaciones con desplazamiento horizontal"
-           tabindex="0">
+      <!-- ====================================== -->
+
+      <div
+        class="card table-card"
+        role="region"
+        aria-label="Tabla de postulaciones con desplazamiento horizontal"
+        tabindex="0"
+      >
 
         <table class="postulations-table">
+
           <thead>
+
             <tr>
+
               <th>Empresa y Puesto</th>
+
               <th>Fecha de postulación</th>
+
               <th>Modalidad</th>
+
               <th>Estado</th>
+
               <th>Acciones</th>
+
             </tr>
+
           </thead>
 
           <tbody>
-            @for (postulacion of postulacionesFiltradas; track postulacion.id) {
+
+            @for (
+              postulacion of postulacionesFiltradas;
+              track postulacion.id
+            ) {
+
               <tr>
+
+                <!-- EMPRESA Y PUESTO -->
                 <td>
+
                   <div class="table-job-info">
-                    <span [class]="'badge-comp ' + postulacion.color">
+
+                    <span
+                      [class]="'badge-comp ' + postulacion.color"
+                    >
+
                       {{ postulacion.iniciales }}
+
                     </span>
 
                     <div>
-                      <strong>{{ postulacion.puesto }}</strong>
-                      <small>{{ postulacion.empresa }}</small>
+
+                      <strong>
+
+                        {{ postulacion.puesto }}
+
+                      </strong>
+
+                      <small>
+
+                        {{ postulacion.empresa }}
+
+                      </small>
+
                     </div>
+
                   </div>
+
                 </td>
 
-                <td>{{ postulacion.fecha }}</td>
-                <td>{{ postulacion.modalidad }}</td>
-
+                <!-- FECHA DE POSTULACIÓN -->
                 <td>
-                  <span class="status-badge"
-                        [class.review]="postulacion.estado === 'En revisión'"
-                        [class.interview]="postulacion.estado === 'Entrevista'"
-                        [class.closed]="postulacion.estado === 'Finalizado'">
+
+                  {{ formatearFecha(postulacion.fecha) }}
+
+                </td>
+
+                <!-- MODALIDAD -->
+                <td>
+
+                  {{ postulacion.modalidad }}
+
+                </td>
+
+                <!-- ESTADO UNIFICADO -->
+                <td>
+
+                  <span
+                    class="status-badge"
+                    [class.review]="
+                      postulacion.estado === 'En revisión'
+                    "
+                    [class.interview]="
+                      postulacion.estado === 'Preseleccionado'
+                    "
+                    [class.closed]="
+                      postulacion.estado === 'Descartado'
+                    "
+                  >
+
                     {{ postulacion.estado }}
+
                   </span>
+
                 </td>
 
+                <!-- ACCIONES -->
                 <td>
-                  <button type="button" class="btn-details"
-                          (click)="verDetalle(postulacion)">
+
+                  <button
+                    type="button"
+                    class="btn-details"
+                    (click)="verDetalle(postulacion)"
+                  >
                     Ver detalle ›
                   </button>
+
                 </td>
+
               </tr>
+
             } @empty {
+
+              <!-- SIN RESULTADOS -->
               <tr>
+
                 <td colspan="5">
+
                   <div class="post-empty">
-                    <span aria-hidden="true">🔎</span>
-                    <h3>No se encontraron postulaciones</h3>
-                    <p>Prueba otra búsqueda o cambia el filtro seleccionado.</p>
-                    <button type="button" class="post-secondary-btn"
-                            (click)="limpiarBusqueda()">
-                      Limpiar búsqueda
+
+                    <span aria-hidden="true">
+                      🔎
+                    </span>
+
+                    <h3>
+                      No se encontraron postulaciones
+                    </h3>
+
+                    <p>
+
+                      Prueba otra búsqueda o cambia
+                      el filtro seleccionado.
+
+                    </p>
+
+                    <button
+                      type="button"
+                      class="post-secondary-btn"
+                      (click)="limpiarFiltros()"
+                    >
+                      Limpiar filtros
                     </button>
+
                   </div>
+
                 </td>
+
               </tr>
+
             }
+
           </tbody>
+
         </table>
+
       </div>
+
     </div>
+
   </main>
 
+  <!-- ====================================== -->
   <!-- DETALLE DE POSTULACIÓN -->
+  <!-- ====================================== -->
+
   @if (postulacionSeleccionada; as postulacion) {
-    <div class="post-dialog-overlay" (click)="cerrarDetalle()">
-      <section class="post-dialog" role="dialog" aria-modal="true"
-               aria-labelledby="post-detail-title"
-               (click)="$event.stopPropagation()">
+
+    <div
+      class="post-dialog-overlay"
+      (click)="cerrarDetalle()"
+    >
+
+      <section
+        class="post-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="post-detail-title"
+        (click)="$event.stopPropagation()"
+      >
 
         <div class="post-dialog-header">
+
           <div>
-            <span class="mi-portal">SEGUIMIENTO DE SOLICITUD</span>
-            <h2 id="post-detail-title">{{ postulacion.puesto }}</h2>
-            <p>{{ postulacion.empresa }}</p>
+
+            <span class="mi-portal">
+              SEGUIMIENTO DE SOLICITUD
+            </span>
+
+            <h2 id="post-detail-title">
+
+              {{ postulacion.puesto }}
+
+            </h2>
+
+            <p>
+
+              {{ postulacion.empresa }}
+
+            </p>
+
           </div>
 
-          <button type="button" class="post-close"
-                  aria-label="Cerrar detalle" (click)="cerrarDetalle()">✕</button>
+          <button
+            type="button"
+            class="post-close"
+            aria-label="Cerrar detalle"
+            (click)="cerrarDetalle()"
+          >
+            ✕
+          </button>
+
         </div>
 
+        <!-- DATOS DE TRAZABILIDAD - RF-19 -->
         <dl class="post-detail-grid">
+
+          <!-- IDENTIFICADOR -->
           <div>
-            <dt>Empresa</dt>
-            <dd>{{ postulacion.empresa }}</dd>
-          </div>
-          <div>
-            <dt>Fecha de postulación</dt>
-            <dd>{{ postulacion.fecha }}</dd>
-          </div>
-          <div>
-            <dt>Modalidad</dt>
-            <dd>{{ postulacion.modalidad }}</dd>
-          </div>
-          <div>
-            <dt>Estado actual</dt>
+
+            <dt>
+              Número de postulación
+            </dt>
+
             <dd>
-              <span class="status-badge"
-                    [class.review]="postulacion.estado === 'En revisión'"
-                    [class.interview]="postulacion.estado === 'Entrevista'"
-                    [class.closed]="postulacion.estado === 'Finalizado'">
-                {{ postulacion.estado }}
-              </span>
+              #{{ postulacion.id }}
             </dd>
+
           </div>
+
+          <!-- GRADUADO -->
+          <div>
+
+            <dt>
+              Graduado
+            </dt>
+
+            <dd>
+
+              {{ nombreGraduado }}
+
+            </dd>
+
+          </div>
+
+          <!-- EMPRESA -->
+          <div>
+
+            <dt>
+              Empresa
+            </dt>
+
+            <dd>
+
+              {{ postulacion.empresa }}
+
+            </dd>
+
+          </div>
+
+          <!-- OFERTA -->
+          <div>
+
+            <dt>
+              Oferta laboral
+            </dt>
+
+            <dd>
+
+              {{ postulacion.puesto }}
+
+            </dd>
+
+          </div>
+
+          <!-- FECHA DE POSTULACIÓN -->
+          <div>
+
+            <dt>
+              Fecha de postulación
+            </dt>
+
+            <dd>
+
+              {{ formatearFecha(postulacion.fecha) }}
+
+            </dd>
+
+          </div>
+
+          <!-- MODALIDAD -->
+          <div>
+
+            <dt>
+              Modalidad
+            </dt>
+
+            <dd>
+
+              {{ postulacion.modalidad }}
+
+            </dd>
+
+          </div>
+
+          <!-- ESTADO ACTUAL -->
+          <div>
+
+            <dt>
+              Estado actual
+            </dt>
+
+            <dd>
+
+              <span
+                class="status-badge"
+                [class.review]="
+                  postulacion.estado === 'En revisión'
+                "
+                [class.interview]="
+                  postulacion.estado === 'Preseleccionado'
+                "
+                [class.closed]="
+                  postulacion.estado === 'Descartado'
+                "
+              >
+
+                {{ postulacion.estado }}
+
+              </span>
+
+            </dd>
+
+          </div>
+
+          <!-- FECHA DE ACTUALIZACIÓN -->
+          <div>
+
+            <dt>
+              Última actualización
+            </dt>
+
+            <dd>
+
+              {{
+                formatearFecha(
+                  postulacion.fechaActualizacion
+                )
+              }}
+
+            </dd>
+
+          </div>
+
+          <!-- CV ASOCIADO -->
+          <div>
+
+            <dt>
+              Currículum asociado
+            </dt>
+
+            <dd>
+
+              📄 {{ postulacion.nombreCV }}
+
+            </dd>
+
+          </div>
+
+          <div>
+
+            <dt>
+              Referencia del CV
+            </dt>
+
+            <dd>
+              Archivo de ejemplo
+            </dd>
+
+          </div>
+
         </dl>
 
+        <!-- DESCRIPCIÓN DEL ESTADO -->
         <div class="post-modal-notice">
-          Estos datos son ejemplos. El historial de cambios, las fechas de
-          entrevistas y los mensajes de la empresa dependerán de la API real.
+
+          <strong>
+            Estado de tu postulación
+          </strong>
+
+          <p>
+
+            {{
+              obtenerDescripcionEstado(
+                postulacion.estado
+              )
+            }}
+
+          </p>
+
+          <p>
+
+            Los datos corresponden a una
+            demostración local.
+
+            El estado real, las fechas de
+            actualización y el currículum
+            asociado se consultarán mediante
+            la API.
+
+          </p>
+
         </div>
 
+        <!-- ACCIONES -->
         <div class="post-dialog-actions">
-          <button type="button" class="post-secondary-btn"
-                  (click)="cerrarDetalle()">Cerrar</button>
+
+          <button
+            type="button"
+            class="post-secondary-btn"
+            (click)="cerrarDetalle()"
+          >
+            Cerrar
+          </button>
+
         </div>
+
       </section>
+
     </div>
+
   }
 
+  <!-- ====================================== -->
   <!-- ACCESO Y SEGURIDAD -->
+  <!-- ====================================== -->
+
   @if (seguridadAbierta) {
-    <div class="post-dialog-overlay" (click)="cerrarSeguridad()">
-      <section class="post-dialog post-security-dialog"
-               role="dialog" aria-modal="true"
-               aria-labelledby="post-security-title"
-               (click)="$event.stopPropagation()">
+
+    <div
+      class="post-dialog-overlay"
+      (click)="cerrarSeguridad()"
+    >
+
+      <section
+        class="post-dialog post-security-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="post-security-title"
+        (click)="$event.stopPropagation()"
+      >
 
         <div class="post-dialog-header">
-          <h2 id="post-security-title">🔒 Acceso y seguridad</h2>
-          <button type="button" class="post-close"
-                  aria-label="Cerrar" (click)="cerrarSeguridad()">✕</button>
+
+          <h2 id="post-security-title">
+
+            🔒 Acceso y seguridad
+
+          </h2>
+
+          <button
+            type="button"
+            class="post-close"
+            aria-label="Cerrar"
+            (click)="cerrarSeguridad()"
+          >
+            ✕
+          </button>
+
         </div>
 
-        <p>Esta es una cuenta de demostración de Carlos Martínez.</p>
-        <p>La gestión de contraseñas y sesiones estará disponible
-           cuando se conecte la autenticación real.</p>
+        <p>
+
+          Esta es una cuenta de demostración de
+
+          <strong>
+            {{ nombreGraduado }}.
+          </strong>
+
+        </p>
+
+        <p>
+
+          Cada graduado únicamente deberá
+          consultar sus propias postulaciones.
+
+        </p>
+
+        <p>
+
+          La gestión de contraseñas, sesiones
+          y permisos estará disponible cuando
+          se conecte la autenticación real.
+
+        </p>
 
         <div class="post-dialog-actions">
-          <button type="button" class="post-secondary-btn"
-                  (click)="cerrarSeguridad()">Cerrar</button>
+
+          <button
+            type="button"
+            class="post-secondary-btn"
+            (click)="cerrarSeguridad()"
+          >
+            Cerrar
+          </button>
+
         </div>
+
       </section>
+
     </div>
+
   }
+
 </div>

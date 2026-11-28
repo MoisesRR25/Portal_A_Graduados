@@ -180,6 +180,7 @@
             >
 
               <div class="notifications-header">
+
                 <h3>Notificaciones</h3>
 
                 <button
@@ -190,9 +191,11 @@
                 >
                   ✕
                 </button>
+
               </div>
 
               <div class="notifications-empty">
+
                 <span aria-hidden="true">🔔</span>
 
                 <strong>
@@ -205,6 +208,7 @@
                   aparecerán aquí cuando
                   integremos la API.
                 </p>
+
               </div>
 
             </div>
@@ -476,6 +480,93 @@
                 </select>
 
               </div>
+
+            </div>
+
+            <!-- ================================== -->
+            <!-- NUEVO: RANGO SALARIAL OPCIONAL -->
+            <!-- ================================== -->
+
+            <div class="field-grid-2">
+
+              <div class="field-group">
+
+                <label for="salarioMinimo">
+                  Salario mínimo ($)
+                </label>
+
+                <input
+                  id="salarioMinimo"
+                  name="salarioMinimo"
+                  type="number"
+                  placeholder="Ej. 500"
+                  [(ngModel)]="salarioMinimo"
+                  #salarioMinimoControl="ngModel"
+                  min="0.01"
+                  step="0.01"
+                  aria-describedby="ayuda-salario"
+                />
+
+                <small class="field-help">
+                  Campo opcional.
+                </small>
+
+              </div>
+
+              <div class="field-group">
+
+                <label for="salarioMaximo">
+                  Salario máximo ($)
+                </label>
+
+                <input
+                  id="salarioMaximo"
+                  name="salarioMaximo"
+                  type="number"
+                  placeholder="Ej. 800"
+                  [(ngModel)]="salarioMaximo"
+                  #salarioMaximoControl="ngModel"
+                  min="0.01"
+                  step="0.01"
+                  aria-describedby="ayuda-salario"
+                />
+
+                <small class="field-help">
+                  Campo opcional.
+                </small>
+
+              </div>
+
+            </div>
+
+            <!-- VALIDACIÓN DEL RANGO SALARIAL -->
+            @if (
+              errorRangoSalarial &&
+              (
+                salarioMinimoControl.touched ||
+                salarioMaximoControl.touched ||
+                formOferta.submitted
+              )
+            ) {
+              <div class="field-group">
+                <small class="field-error" role="alert">
+                  {{ errorRangoSalarial }}
+                </small>
+              </div>
+            }
+
+            <!-- AVISO SOBRE EL RANGO SALARIAL -->
+            <div class="field-group">
+
+              <small
+                id="ayuda-salario"
+                class="field-help"
+              >
+                El rango salarial es opcional.
+                Completa ambos valores o deja ambos campos
+                vacíos. Las ofertas sin rango salarial
+                requieren revisión administrativa.
+              </small>
 
             </div>
 
@@ -857,6 +948,12 @@
                 Indica la modalidad correctamente.
               </li>
 
+              <!-- NUEVO: CONSEJO SALARIAL -->
+              <li>
+                Especifica el rango salarial cuando
+                sea posible.
+              </li>
+
             </ul>
 
           </div>
@@ -868,9 +965,12 @@
             </span>
 
             <p>
-              Las ofertas deberán pasar por
-              la revisión institucional cuando
-              se conecte el sistema con la API.
+              La primera oferta de una empresa,
+              las ofertas reportadas y las ofertas
+              sin rango salarial requieren revisión
+              institucional. La comprobación definitiva
+              se realizará cuando se conecte el sistema
+              con la API.
             </p>
 
           </div>
@@ -934,39 +1034,78 @@
             {{ nombreModalidad }}
           </p>
         </div>
+
         <div class="preview-details">
+
           <div>
             <span>Área</span>
             <strong>{{ nombreArea }}</strong>
           </div>
+
           <div>
             <span>Tipo de contrato</span>
             <strong>{{ nombreContrato }}</strong>
           </div>
+
           <div>
             <span>Modalidad</span>
             <strong>{{ nombreModalidad }}</strong>
           </div>
+
+          <!-- NUEVO: MOSTRAR RANGO SALARIAL -->
+          <div>
+            <span>Rango salarial</span>
+            <strong>{{ rangoSalarial }}</strong>
+          </div>
+
           <div>
             <span>Fecha límite</span>
             <strong>{{ fechaLimite }}</strong>
           </div>
+
           <div>
             <span>Plazas disponibles</span>
             <strong>{{ plazasDisponibles }}</strong>
           </div>
+
         </div>
+
+        <!-- NUEVO: AVISO DE REVISIÓN ADMINISTRATIVA -->
+        @if (requiereRevisionPorSalario) {
+
+          <div class="preview-warning">
+
+            <span aria-hidden="true">⚠️</span>
+
+            <p>
+              <strong>Requiere revisión administrativa.</strong>
+
+              Esta oferta no incluye un rango salarial.
+              Cuando se integre la API, deberá quedar
+              en revisión hasta que el Administrador
+              de la Escuela la apruebe.
+            </p>
+
+          </div>
+
+        }
+
         <div class="preview-text-section">
           <h3>Descripción</h3>
           <p>{{ descripcionOferta }}</p>
         </div>
+
         <div class="preview-text-section">
           <h3>Requisitos</h3>
           <p>{{ requisitosOferta }}</p>
         </div>
+
         <div class="preview-text-section">
+
           <h3>Habilidades requeridas</h3>
+
           <div class="tags-list">
+
             @for (
               habilidad of habilidades;
               track habilidad
@@ -975,12 +1114,19 @@
                 {{ habilidad }}
               </span>
             }
+
           </div>
+
         </div>
+
         <div class="preview-text-section">
+
           <h3>Clasificación</h3>
+
           @if (clasificaciones.length > 0) {
+
             <div class="tags-list">
+
               @for (
                 clasificacion of clasificaciones;
                 track clasificacion
@@ -989,22 +1135,33 @@
                   {{ clasificacion }}
                 </span>
               }
+
             </div>
+
           } @else {
+
             <p>
               Sin clasificación adicional.
             </p>
+
           }
+
         </div>
+
         <div class="preview-warning">
+
           <span aria-hidden="true">ℹ️</span>
+
           <p>
             Esta vista es una demostración.
             Confirmar los datos no enviará
             ni publicará la oferta.
           </p>
+
         </div>
+
         <div class="modal-actions">
+
           <button
             type="button"
             class="btn-secondary"
@@ -1012,6 +1169,7 @@
           >
             Volver a editar
           </button>
+
           <button
             type="button"
             class="btn-primary"
@@ -1019,16 +1177,23 @@
           >
             Confirmar datos de prueba
           </button>
+
         </div>
+
       </section>
+
     </div>
+
   }
+
   <!-- ACCESO Y SEGURIDAD -->
   @if (seguridadAbierta) {
+
     <div
       class="modal-overlay"
       (click)="cerrarSeguridad()"
     >
+
       <section
         class="security-modal"
         role="dialog"
@@ -1036,10 +1201,13 @@
         aria-labelledby="titulo-seguridad"
         (click)="$event.stopPropagation()"
       >
+
         <div class="modal-heading">
+
           <h2 id="titulo-seguridad">
             🔒 Acceso y seguridad
           </h2>
+
           <button
             type="button"
             class="modal-close"
@@ -1048,39 +1216,56 @@
           >
             ✕
           </button>
+
         </div>
+
         <p class="security-description">
           Configuración de la cuenta empresarial.
           La información actual es de demostración.
         </p>
+
         <div class="security-row">
           <span>Empresa</span>
           <strong>Soluciones SV</strong>
         </div>
+
         <div class="security-row">
           <span>Tipo de cuenta</span>
           <strong>Empresa</strong>
         </div>
+
         <div class="security-option">
+
           <strong>🔑 Cambiar contraseña</strong>
+
           <p>
             Pendiente de integrar con la
             autenticación de la API.
           </p>
+
         </div>
+
         <div class="security-option">
+
           <strong>✉️ Verificación de correo</strong>
+
           <p>
             Pendiente de conexión con el servidor.
           </p>
+
         </div>
+
         <div class="security-option">
+
           <strong>🛡️ Protección de sesión</strong>
+
           <p>
             Se habilitará cuando exista
             autenticación real.
           </p>
+
         </div>
+
         <button
           type="button"
           class="btn-primary security-close-button"
@@ -1088,7 +1273,11 @@
         >
           Cerrar
         </button>
+
       </section>
+
     </div>
+
   }
+
 </div>

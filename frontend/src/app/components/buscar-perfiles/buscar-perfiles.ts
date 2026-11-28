@@ -3,41 +3,31 @@ import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-type EstadoAcademico =
-  | 'graduado'
-  | 'egresado'
-  | 'estudiante';
-
 type AreaProfesional =
   | 'desarrollo'
   | 'datos'
   | 'qa'
   | 'infraestructura';
 
-type Experiencia =
-  | 'sin-experiencia'
-  | '1-2'
-  | '3-mas';
-
-type Disponibilidad =
-  | 'inmediata'
-  | 'tiempo-completo'
-  | 'pasantia';
+type EstadoActivacion =
+  | 'activo'
+  | 'pendiente'
+  | 'inactivo';
 
 interface PerfilGraduado {
   id: number;
   nombre: string;
   iniciales: string;
   color: 'pink' | 'blue' | 'purple' | 'green';
-  profesion: string;
-  carrera: string;
-  anio: number;
-  habilidades: string[];
-  compatibilidad: number;
-  estadoAcademico: EstadoAcademico;
   area: AreaProfesional;
-  experiencia: Experiencia;
-  disponibilidad: Disponibilidad;
+  ubicacion: string;
+  habilidades: string[];
+}
+
+// Modelo utilizado únicamente para simular
+// los estados de activación.
+interface PerfilDemostracion extends PerfilGraduado {
+  estadoActivacion: EstadoActivacion;
 }
 
 @Component({
@@ -64,13 +54,12 @@ export class BuscarPerfiles {
   busquedaAplicada = '';
 
   // ==========================================
-  // FILTROS
+  // FILTROS PERMITIDOS - RF-10
   // ==========================================
 
-  filtroAcademico = '';
   filtroArea = '';
-  filtroExperiencia = '';
-  filtroDisponibilidad = '';
+  filtroUbicacion = '';
+  filtroHabilidad = '';
 
   // ==========================================
   // PERFIL SELECCIONADO
@@ -80,86 +69,140 @@ export class BuscarPerfiles {
 
   // ==========================================
   // PERFILES DE DEMOSTRACIÓN
+  // No proceden de la API ni de PostgreSQL.
   // ==========================================
 
-  perfiles: PerfilGraduado[] = [
+  private readonly perfilesDemostracion: PerfilDemostracion[] = [
     {
       id: 1,
       nombre: 'María Fernanda Mejía',
       iniciales: 'MM',
       color: 'pink',
-      profesion: 'Desarrolladora Full Stack',
-      carrera: 'Ingeniería de Sistemas Informáticos',
-      anio: 2022,
+      area: 'desarrollo',
+      ubicacion: 'San Salvador',
       habilidades: [
         'React',
         'Node.js',
         'PostgreSQL'
       ],
-      compatibilidad: 92,
-      estadoAcademico: 'graduado',
-      area: 'desarrollo',
-      experiencia: '3-mas',
-      disponibilidad: 'tiempo-completo'
+      estadoActivacion: 'activo'
     },
     {
       id: 2,
       nombre: 'José Luis Ramírez',
       iniciales: 'JL',
       color: 'blue',
-      profesion: 'Analista de Datos',
-      carrera: 'Ingeniería de Sistemas Informáticos',
-      anio: 2023,
+      area: 'datos',
+      ubicacion: 'San Miguel',
       habilidades: [
         'Python',
         'SQL',
         'Power BI'
       ],
-      compatibilidad: 88,
-      estadoAcademico: 'graduado',
-      area: 'datos',
-      experiencia: '1-2',
-      disponibilidad: 'inmediata'
+      estadoActivacion: 'activo'
     },
     {
       id: 3,
       nombre: 'Andrea Vásquez',
       iniciales: 'AV',
       color: 'purple',
-      profesion: 'QA Engineer Jr.',
-      carrera: 'Ingeniería de Sistemas Informáticos',
-      anio: 2024,
+      area: 'qa',
+      ubicacion: 'Santa Ana',
       habilidades: [
         'Testing',
         'Cypress',
         'Jira'
       ],
-      compatibilidad: 84,
-      estadoAcademico: 'graduado',
-      area: 'qa',
-      experiencia: 'sin-experiencia',
-      disponibilidad: 'pasantia'
+      estadoActivacion: 'activo'
     },
     {
       id: 4,
       nombre: 'Roberto Castillo',
       iniciales: 'RC',
       color: 'green',
-      profesion: 'Soporte e Infraestructura',
-      carrera: 'Ingeniería de Sistemas Informáticos',
-      anio: 2025,
+      area: 'infraestructura',
+      ubicacion: 'San Miguel',
       habilidades: [
         'Linux',
         'Redes',
         'Azure'
       ],
-      compatibilidad: 79,
-      estadoAcademico: 'graduado',
-      area: 'infraestructura',
-      experiencia: '1-2',
-      disponibilidad: 'tiempo-completo'
+      estadoActivacion: 'activo'
+    },
+
+    // NUEVO: perfil ficticio pendiente de activación.
+    // No debe aparecer en las búsquedas de empresas.
+    {
+      id: 5,
+      nombre: 'Graduado de prueba',
+      iniciales: 'GP',
+      color: 'blue',
+      area: 'desarrollo',
+      ubicacion: 'La Unión',
+      habilidades: [
+        'C#',
+        'Angular',
+        'MySQL'
+      ],
+      estadoActivacion: 'pendiente'
     }
   ];
+
+  // ==========================================
+  // PERFILES VISIBLES PARA LA EMPRESA
+  // RF-10, RF-13, RF-16 Y RN-06
+  // ==========================================
+
+  readonly perfiles: PerfilGraduado[] =
+    this.perfilesDemostracion
+      .filter(perfil =>
+        perfil.estadoActivacion === 'activo'
+      )
+      .map(perfil => ({
+        id: perfil.id,
+        nombre: perfil.nombre,
+        iniciales: perfil.iniciales,
+        color: perfil.color,
+        area: perfil.area,
+        ubicacion: perfil.ubicacion,
+        habilidades: [...perfil.habilidades]
+      }));
+
+  // ==========================================
+  // UBICACIONES DISPONIBLES
+  // ==========================================
+
+  readonly ubicaciones: string[] = [
+    'Ahuachapán',
+    'Santa Ana',
+    'Sonsonate',
+    'Chalatenango',
+    'La Libertad',
+    'San Salvador',
+    'Cuscatlán',
+    'La Paz',
+    'Cabañas',
+    'San Vicente',
+    'Usulután',
+    'San Miguel',
+    'Morazán',
+    'La Unión'
+  ];
+
+  // ==========================================
+  // HABILIDADES DE PERFILES ACTIVOS
+  // ==========================================
+
+  get habilidadesDisponibles(): string[] {
+
+    const habilidades = this.perfiles.flatMap(
+      perfil => perfil.habilidades
+    );
+
+    return [...new Set(habilidades)].sort(
+      (a, b) => a.localeCompare(b, 'es')
+    );
+  }
 
   // ==========================================
   // MENÚ MÓVIL
@@ -196,6 +239,7 @@ export class BuscarPerfiles {
 
   abrirSeguridad(): void {
     this.seguridadAbierta = true;
+
     this.cerrarMenu();
     this.cerrarNotificaciones();
     this.cerrarPerfil();
@@ -210,6 +254,7 @@ export class BuscarPerfiles {
   // ==========================================
 
   private normalizarTexto(texto: string): string {
+
     return texto
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
@@ -222,7 +267,9 @@ export class BuscarPerfiles {
   // ==========================================
 
   buscarPerfiles(): void {
-    this.busquedaAplicada = this.textoBusqueda.trim();
+
+    this.busquedaAplicada =
+      this.textoBusqueda.trim();
   }
 
   // ==========================================
@@ -230,13 +277,13 @@ export class BuscarPerfiles {
   // ==========================================
 
   limpiarFiltros(): void {
+
     this.textoBusqueda = '';
     this.busquedaAplicada = '';
 
-    this.filtroAcademico = '';
     this.filtroArea = '';
-    this.filtroExperiencia = '';
-    this.filtroDisponibilidad = '';
+    this.filtroUbicacion = '';
+    this.filtroHabilidad = '';
   }
 
   // ==========================================
@@ -251,40 +298,43 @@ export class BuscarPerfiles {
 
     return this.perfiles.filter(perfil => {
 
+      // Buscar únicamente en los datos permitidos.
       const textoPerfil = this.normalizarTexto([
         perfil.nombre,
-        perfil.profesion,
-        perfil.carrera,
-        String(perfil.anio),
+        this.nombreArea(perfil.area),
+        perfil.ubicacion,
         ...perfil.habilidades
       ].join(' '));
 
+      // Búsqueda general.
       const coincideBusqueda =
         !termino || textoPerfil.includes(termino);
 
-      const coincideAcademico =
-        !this.filtroAcademico ||
-        perfil.estadoAcademico === this.filtroAcademico;
-
+      // Filtro por área profesional.
       const coincideArea =
         !this.filtroArea ||
         perfil.area === this.filtroArea;
 
-      const coincideExperiencia =
-        !this.filtroExperiencia ||
-        perfil.experiencia === this.filtroExperiencia;
+      // NUEVO: filtro por ubicación.
+      const coincideUbicacion =
+        !this.filtroUbicacion ||
+        this.normalizarTexto(perfil.ubicacion) ===
+        this.normalizarTexto(this.filtroUbicacion);
 
-      const coincideDisponibilidad =
-        !this.filtroDisponibilidad ||
-        perfil.disponibilidad ===
-          this.filtroDisponibilidad;
+      // NUEVO: filtro por habilidad.
+      const coincideHabilidad =
+        !this.filtroHabilidad ||
+        perfil.habilidades.some(habilidad =>
+          this.normalizarTexto(habilidad) ===
+          this.normalizarTexto(this.filtroHabilidad)
+        );
 
+      // Combinar todos los filtros.
       return (
         coincideBusqueda &&
-        coincideAcademico &&
         coincideArea &&
-        coincideExperiencia &&
-        coincideDisponibilidad
+        coincideUbicacion &&
+        coincideHabilidad
       );
     });
   }
@@ -294,34 +344,32 @@ export class BuscarPerfiles {
   // ==========================================
 
   verPerfil(perfil: PerfilGraduado): void {
-    this.perfilSeleccionado = perfil;
+
+    // Consultar exclusivamente los perfiles
+    // activos disponibles en esta demostración.
+    const perfilVisible = this.perfiles.find(
+      elemento => elemento.id === perfil.id
+    );
+
+    if (!perfilVisible) {
+      return;
+    }
+
+    this.perfilSeleccionado = perfilVisible;
+
     this.cerrarNotificaciones();
   }
 
   cerrarPerfil(): void {
+
     this.perfilSeleccionado = null;
   }
 
   // ==========================================
-  // NOMBRES PARA LA VISTA DE PERFIL
+  // NOMBRES DE ÁREAS PROFESIONALES
   // ==========================================
 
-  nombreEstado(
-    estado: EstadoAcademico
-  ): string {
-
-    const estados: Record<EstadoAcademico, string> = {
-      graduado: 'Graduado',
-      egresado: 'Egresado',
-      estudiante: 'Estudiante activo'
-    };
-
-    return estados[estado];
-  }
-
-  nombreArea(
-    area: AreaProfesional
-  ): string {
+  nombreArea(area: AreaProfesional): string {
 
     const areas: Record<AreaProfesional, string> = {
       desarrollo: 'Desarrollo de software',
@@ -333,41 +381,13 @@ export class BuscarPerfiles {
     return areas[area];
   }
 
-  nombreExperiencia(
-    experiencia: Experiencia
-  ): string {
-
-    const experiencias: Record<Experiencia, string> = {
-      'sin-experiencia': 'Sin experiencia',
-      '1-2': '1 a 2 años',
-      '3-mas': '3 años o más'
-    };
-
-    return experiencias[experiencia];
-  }
-
-  nombreDisponibilidad(
-    disponibilidad: Disponibilidad
-  ): string {
-
-    const disponibilidades: Record<
-      Disponibilidad,
-      string
-    > = {
-      inmediata: 'Inmediata',
-      'tiempo-completo': 'Tiempo completo',
-      pasantia: 'Pasantía / Medio tiempo'
-    };
-
-    return disponibilidades[disponibilidad];
-  }
-
   // ==========================================
   // CERRAR CON TECLA ESCAPE
   // ==========================================
 
   @HostListener('document:keydown.escape')
   cerrarConEscape(): void {
+
     this.cerrarMenu();
     this.cerrarNotificaciones();
     this.cerrarSeguridad();
